@@ -240,7 +240,7 @@ export default class extends React.Component {
               <div>{this.state.statuses.length} アイテム</div>
               {this.state.statuses.map(status => <StatusBox status={status} host={this.state.host} />) }
             </div>
-            : '未取得またはエラー'}
+            : '取得中またはエラー'}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
             <div style={{ marginRight: 'auto' }}></div>
             <div><button onClick={this.moveDown} title='表示中のステータスの次のページを表示します'>次ページ</button></div>

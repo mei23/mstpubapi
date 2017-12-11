@@ -115,7 +115,7 @@ const StatusFooterEx = (props) => {
   const status = props.status
   return (
     <div className={'status_footer'}>
-      <span style={{margin:'0em 0.5em'}}>l
+      <span style={{margin:'0em 0.5em'}}>
         BT: {status.reblogs_count}
       </span>
       <span style={{margin:'0em 0.5em'}}>

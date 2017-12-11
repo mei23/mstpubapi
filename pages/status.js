@@ -141,7 +141,7 @@ export default class extends React.Component {
               <div>{this.state.context.ancestors.length} アイテム</div>
               {this.state.context.ancestors.map(status => <StatusBox status={status} host={this.state.host} />) }
             </div>
-            : '未取得またはエラー'}
+            : '取得中またはエラー'}
         </div>
 
         <div className='descendants'>
@@ -151,7 +151,7 @@ export default class extends React.Component {
               <div>{this.state.context.descendants.length} アイテム</div>
               {this.state.context.descendants.map(status => <StatusBox status={status} host={this.state.host} />) }
             </div>
-            : '未取得またはエラー'}
+            : '取得中またはエラー'}
         </div>
 
         <div className='boosters'>
@@ -162,7 +162,7 @@ export default class extends React.Component {
               {this.state.reblogged_by.map(account => 
                 <AccountDetail account={account} host={this.state.host} showNote={false} /> )}
             </div>
-            : '未取得またはエラー'}
+            : '取得中またはエラー'}
         </div>
 
         <div class='favters'>
@@ -173,7 +173,7 @@ export default class extends React.Component {
               {this.state.favourited_by.map(account => 
                 <AccountDetail account={account} host={this.state.host} showNote={false} /> )}
             </div>
-            : '未取得またはエラー'}
+            : '取得中またはエラー'}
        </div>
 
         <div>
