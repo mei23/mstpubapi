@@ -204,8 +204,10 @@ export default class extends React.Component {
         <div>
           {/* Pager top */}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
-            <div style={{ marginRight: 'auto' }}><button onClick={this.moveUp}>新着表示</button></div>
-            <div style={{ marginRight: 'auto' }}><button onClick={this.moveNow}>最新に戻る</button></div>
+            <div style={{ marginRight: 'auto' }}>
+              <button onClick={this.moveUp} title='新着のみを表示します'>新着表示</button></div>
+            <div style={{ marginRight: 'auto' }}>
+              <button onClick={this.moveNow} title='最新からの表示に戻ります'>最新に戻る</button></div>
             <div style={{textAlign: 'right', marginRight: '10px' }}>
               <div>
                 未来へ移動: 
@@ -230,7 +232,7 @@ export default class extends React.Component {
                 <a className='move_link' onClick={e => this.moveMax(e, -86400*30)}>30日</a>
               </div>
             </div>
-            <div><button onClick={this.moveDown}>次ページ</button></div>
+            <div><button onClick={this.moveDown} title='表示中のステータスの次のページを表示します'>次ページ</button></div>
           </div>
 
           { this.state.statuses ? 
@@ -241,8 +243,8 @@ export default class extends React.Component {
             : '未取得またはエラー'}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
             <div style={{ marginRight: 'auto' }}></div>
-            <div><button onClick={this.moveDown}>次ページ</button></div>
-          </div>
+            <div><button onClick={this.moveDown} title='表示中のステータスの次のページを表示します'>次ページ</button></div>
+            </div>
         </div>
 
         <div>
