@@ -155,7 +155,8 @@ export default class extends React.Component {
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
-        <p>各タイムラインを参照します <a href='https://github.com/mei23/mstpubapi'>ソースや説明</a></p>
+        <p>各タイムラインを参照します <a href='https://github.com/mei23/mstpubapi/blob/master/README.md#%E3%82%BF%E3%82%A4%E3%83%A0%E3%83%A9%E3%82%A4%E3%83%B3'>
+          説明</a></p>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
