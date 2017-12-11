@@ -51,13 +51,40 @@ a:active {
   color: lighten($ac_bg, 50%);
 }
 
-
 div.current_params {
   border: solid 2px lighten($ac_bg, 50%);
   border-radius: 2px;
   padding: 0.5em;
   margin: 0.5em 0em;
 }
+
+div.pager_box {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+div.json_text {
+  background: darken($bg, 5%);
+  color: lighten($bg, 30%);
+  overflow: scroll;
+  height: 100px;
+}
+
+div.json_text::-webkit-scrollbar {
+  background: darken($bg, 4%);
+  width: 12px;
+  height: 12px;
+}
+div.json_text::-webkit-scrollbar-track {
+  background: darken($bg, 4%);
+}
+div.json_text::-webkit-scrollbar-corner {
+  background: lighten($bg, 4%);
+}
+div.json_text::-webkit-scrollbar-thumb {
+  background: lighten($bg, 4%);
+}
+
 
 .layout {
   max-width: 640px;
@@ -68,7 +95,7 @@ div.current_params {
 
 .status {
   border: solid 1px #ccc;
-  border-top: 0px;
+  margin-top: -1px;
   border-right: 0px;
   border-left: 0px;
   padding: 0.2em;

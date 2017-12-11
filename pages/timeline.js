@@ -180,7 +180,7 @@ export default class extends React.Component {
         </div>
         {/* <div>{this.state.message}</div> */}
         <div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
+          <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
             <div style={{ marginRight: 'auto' }}><button onClick={this.moveUp}>新着を表示？</button></div>
             <div><button onClick={this.moveDown}>次を表示</button></div>
           </div>
@@ -190,7 +190,7 @@ export default class extends React.Component {
               {this.state.statuses.map(status => <StatusBox status={status} host={this.state.host} />) }
             </div>
             : '未取得またはエラー'}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
+          <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
             <div style={{ marginRight: 'auto' }}></div>
             <div><button onClick={this.moveDown}>次を表示</button></div>
           </div>
@@ -199,7 +199,7 @@ export default class extends React.Component {
         <div>
           <h3>JSON</h3>
           <h4>statuses</h4>
-          <div>{JSON.stringify(this.state.statuses)}</div>
+          <div className='json_text'>{JSON.stringify(this.state.statuses)}</div>
         </div>
       </Layout>
     )
