@@ -97,20 +97,22 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Layout title='Status'>
+      <Layout title='ステータス'>
         <Head>
           <link rel='stylesheet' href='../custom/style.css' />
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
+        <p>ステータス（トゥート）の様々な情報を参照します <a href='https://github.com/mei23/mstpubapi#%E3%82%B9%E3%83%86%E3%83%BC%E3%82%BF%E3%82%B9'>
+          説明</a></p>
 
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
-              required style={{width: '10em' }} />
+              required style={{width: '10em' }} title='インスタンスホスト(例: example.com)' />
             {' '}
             Id:<input type="text" ref={x => this.inputId   = x} defaultValue={this.state.id}
-            required style={{width: '20em' }} />
+            required style={{width: '20em' }} title='ステータスID' />
             <button  type="submit">変更反映</button>
           </form>
         </div>
@@ -120,12 +122,12 @@ export default class extends React.Component {
         </div>
         {/* <div>{this.state.message}</div> */}
         <div>
-          <h3>ステータス</h3>
+          <h3>ステータス情報</h3>
           {this.state.status ? <StatusBox status={this.state.status} host={this.state.host} /> : 'none'}
         </div>
 
         <div>
-          <h3>関連アカウント情報</h3>
+          <h3>アカウント情報</h3>
           {this.state.status && this.state.status.reblog ? 
             <AccountDetail account={this.state.status.reblog.account} host={this.state.host} showNote={false} /> : ''}
           {this.state.status ? 
@@ -177,13 +179,13 @@ export default class extends React.Component {
         <div>
           <h3>JSON</h3>
           <h4>status</h4>
-          <div>{JSON.stringify(this.state.status)}</div>
+          <div className='json_text'>{JSON.stringify(this.state.status)}</div>
           <h4>context (ancestors / descendants を含む)</h4>
-          <div>{JSON.stringify(this.state.context)}</div>
+          <div className='json_text'>{JSON.stringify(this.state.context)}</div>
           <h4>reblogged_by (ブースト)</h4>
-          <div>{JSON.stringify(this.state.reblogged_by)}</div>
+          <div className='json_text'>{JSON.stringify(this.state.reblogged_by)}</div>
           <h4>favourited_by (お気に入り)</h4>
-          <div>{JSON.stringify(this.state.favourited_by)}</div>
+          <div className='json_text'>{JSON.stringify(this.state.favourited_by)}</div>
         </div>
         </Layout>
     )

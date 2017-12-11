@@ -9,7 +9,7 @@ export default (props) => {
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ margin: '0.5em'}}>
-        <UserIcon account={account} text='' size={48} anim='2' />
+        <UserIcon account={account} text='' size={48} anim={0} />
       </div>
       <div style={{ margin: '0.5em'}}>
         <div>
