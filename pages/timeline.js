@@ -5,6 +5,7 @@ import Layout from '/components/Layout'
 import Mastodon from 'mstdn-api'
 import StatusBox from '/components/StatusBox'
 import AccountDetail from '/components/AccountDetail'
+import * as IDC from '/utils/idcalc'
 
 export default class extends React.Component {
   constructor(props) {
@@ -23,6 +24,8 @@ export default class extends React.Component {
     this.submitParams = this.submitParams.bind(this);
     this.moveUp = this.moveUp.bind(this);
     this.moveDown = this.moveDown.bind(this);
+    this.moveMax = this.moveMax.bind(this);
+    this.moveNow = this.moveNow.bind(this);
   }
 
   componentDidMount(){
@@ -147,6 +150,25 @@ export default class extends React.Component {
    this.refresh(this.state.host, this.state.type, max, -1)
   }
 
+  /**
+   * Maxを指定時間変更して画面更新(Sinceはリセット)
+   * @param {*} event 
+   * @param {number} sec 移動する秒数
+   */
+  moveMax(event, sec) {
+    event.preventDefault()
+
+    let max = this.state.max  // 計算起点max_id
+    if (max < 0) { max = IDC.msToId(new Date().getTime()) }
+    let newMax = IDC.addMs(max, sec * 1000)
+    this.refresh(this.state.host, this.state.type, newMax, -1)
+  }
+
+  moveNow(event) {
+    event.preventDefault()
+    this.refresh(this.state.host, this.state.type, -1, -1)
+  }
+
   render() {
     return (
       <Layout title='タイムライン'>
@@ -180,10 +202,37 @@ export default class extends React.Component {
         </div>
         {/* <div>{this.state.message}</div> */}
         <div>
-          <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
-            <div style={{ marginRight: 'auto' }}><button onClick={this.moveUp}>新着を表示？</button></div>
-            <div><button onClick={this.moveDown}>次を表示</button></div>
+          {/* Pager top */}
+          <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
+            <div style={{ marginRight: 'auto' }}><button onClick={this.moveUp}>新着表示</button></div>
+            <div style={{ marginRight: 'auto' }}><button onClick={this.moveNow}>最新に戻る</button></div>
+            <div style={{textAlign: 'right', marginRight: '10px' }}>
+              <div>
+                未来へ移動: 
+                <a className='move_link' onClick={e => this.moveMax(e, 60*10)}>10分</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, 3600*1)}>1時間</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, 3600*3)}>3時間</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, 3600*6)}>6時間</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, 86400*1)}>1日</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, 86400*3)}>3日</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, 86400*7)}>7日</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, 86400*30)}>30日</a>
+              </div>
+              <div>
+                過去へ移動: 
+                <a className='move_link' onClick={e => this.moveMax(e, -60*10)}>10分</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, -3600)}>1時間</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, -3600*3)}>3時間</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, -3600*6)}>6時間</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, -86400*1)}>1日</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, -86400*3)}>3日</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, -86400*7)}>7日</a>/
+                <a className='move_link' onClick={e => this.moveMax(e, -86400*30)}>30日</a>
+              </div>
+            </div>
+            <div><button onClick={this.moveDown}>次ページ</button></div>
           </div>
+
           { this.state.statuses ? 
             <div>
               <div>{this.state.statuses.length} アイテム</div>
@@ -192,7 +241,7 @@ export default class extends React.Component {
             : '未取得またはエラー'}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
             <div style={{ marginRight: 'auto' }}></div>
-            <div><button onClick={this.moveDown}>次を表示</button></div>
+            <div><button onClick={this.moveDown}>次ページ</button></div>
           </div>
         </div>
 

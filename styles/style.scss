@@ -59,8 +59,8 @@ div.current_params {
 }
 
 div.pager_box {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 div.json_text {
@@ -85,6 +85,9 @@ div.json_text::-webkit-scrollbar-thumb {
   background: lighten($bg, 4%);
 }
 
+a.move_link:hover {
+  cursor: pointer;
+}
 
 .layout {
   max-width: 640px;
