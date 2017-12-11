@@ -22,10 +22,11 @@ const StatusHeaderEx = (props) => {
           {inner.sensitive ? (<span> / Sensitive</span>) : ''}
           <span> / {inner.visibility}</span>
 
-          {inner.application.website
+          {inner.application ?
+             inner.application.website
               ? <span> / <a href={inner.application.website} title='アプリケーションのWebサイトを開く' target='_blank'>
                 {inner.application.name}</a></span>
-              : <span> / {inner.application.name}</span>}
+              : <span> / {inner.application.name}</span> : ''}
         </div>
 
         <div style={{ textAlign: 'right' }}>
