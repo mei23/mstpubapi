@@ -30,7 +30,7 @@ const StatusHeaderEx = (props) => {
         </div>
 
         <div style={{ textAlign: 'right' }}>
-          <span><a href={inner.url} title='インスタンスのスターテスページを開く' target='_blank'>
+          <span><a href={inner.url} title='インスタンスのステータスページを開く' target='_blank'>
             {F.formatDateString(inner.created_at, 'yyyy/m/d H:MM:ss.l')}</a></span>
         </div>
       </div>
