@@ -203,10 +203,10 @@ export default class extends React.Component {
           {/* Pager top */}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
             <div style={{ marginRight: 'auto' }}>
-              <button onClick={this.moveUp} title='新着のみを表示します'>新着表示</button></div>
+              <button onClick={this.moveUp} title='新着のみを表示します'>新着</button></div>
             <div style={{ marginRight: 'auto' }}>
               <button onClick={this.moveNow} title='最新からの表示に戻ります'>最新に戻る</button></div>
-            <div style={{textAlign: 'right', marginRight: '10px' }}>
+            <div className='timeleap_box' style={{textAlign: 'right', marginRight: '10px' }}>
               <div>
                 未来へ移動: 
                 <a className='move_link' onClick={e => this.moveMax(e, 60*10)}>10分</a>/

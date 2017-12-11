@@ -89,6 +89,9 @@ a.move_link:hover {
   cursor: pointer;
 }
 
+.timeleap_box {
+  font-size: 0.9em;
+}
 .layout {
   max-width: 640px;
   margin: auto;
@@ -103,6 +106,7 @@ a.move_link:hover {
   border-left: 0px;
   padding: 0.2em;
 }
+
 
 .attachment-image { max-width: 100%; max-height: 110px }
 .attachment-video { max-width: 100%; max-height: 110px }
