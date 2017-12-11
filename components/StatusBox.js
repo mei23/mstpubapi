@@ -13,12 +13,15 @@ const StatusHeaderEx = (props) => {
   const inner = outer.reblog || outer
   const host = props.host
 
+  let statusPath = './status'
+  if (window.location.pathname.match(/html$/)) { statusPath = './status.html' }
+
   return (
     <div>
       {/* Line 1: status info */} 
       <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right' }}>
         <div style={{ marginRight: 'auto' }}>
-          <span><a href={`/status?host=${host}&id=${inner.id}`} title='ローカルでステータス情報を表示する' target='_self'>{inner.id}</a></span>
+          <span><a href={`${statusPath}?host=${host}&id=${inner.id}`} title='ローカルでステータス情報を表示する' target='_self'>{inner.id}</a></span>
           {inner.sensitive ? (<span> / Sensitive</span>) : ''}
           <span> / {inner.visibility}</span>
 

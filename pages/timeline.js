@@ -6,17 +6,12 @@ import Mastodon from 'mstdn-api'
 import StatusBox from '/components/StatusBox'
 import AccountDetail from '/components/AccountDetail'
 import * as IDC from '/utils/idcalc'
+import querystring from 'querystring'
 
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-
-    // read parameters from querystrig or defalt
-    this.state.host = this.props.url.query.host || ''
-    this.state.type = this.props.url.query.type || 'local'
-    this.state.max   = this.props.url.query.max || -1
-    this.state.since = this.props.url.query.since || -1
 
     this.state.message = '' // message
     this.state.statuses = null
@@ -29,14 +24,15 @@ export default class extends React.Component {
   }
 
   componentDidMount(){
-    this.refresh(this.state.host, this.state.type, this.state.max, this.state.since)
+    // read parameters from querystrig or defalt
+    const q = querystring.parse(window.location.search.replace(/^[?]/, ''))
+    this.refresh(q.host || '', q.type || 'local', q.max || -1, q.since || -1)
     //window.onpopstate = (event) => {
     //  this.refresh(this.props.url.query.host, this.props.url.query.id)
     //}
   }
 
   refresh(newHost, newType, newMax, newSince) {
-    if (!newHost) return
 
     // update current params
     this.setState({host: newHost})
@@ -54,6 +50,8 @@ export default class extends React.Component {
 
     this.setState({message: ''})
 
+    if (!newHost) return
+    
     let queryUrl = null
     let queryPara = {
       limit: '40',
@@ -95,7 +93,7 @@ export default class extends React.Component {
 
         // update addressbar
         window.history.pushState({},'',
-        `${this.props.url.pathname}?host=${newHost}&type=${newType}&max=${newMax}&since=${newSince}`)
+        `${window.location.pathname}?host=${newHost}&type=${newType}&max=${newMax}&since=${newSince}`)
       })
   }
   

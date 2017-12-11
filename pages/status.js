@@ -5,15 +5,12 @@ import Layout from '/components/Layout'
 import Mastodon from 'mstdn-api'
 import StatusBox from '/components/StatusBox'
 import AccountDetail from '/components/AccountDetail'
+import querystring from 'querystring'
 
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-
-    // read parameters from querystrig or defalt
-    this.state.host = this.props.url.query.host || ''
-    this.state.id   = this.props.url.query.id   || ''
 
     this.state.message = '' // message
     this.state.status = null // fetched object
@@ -25,7 +22,9 @@ export default class extends React.Component {
   }
 
   componentDidMount(){
-    this.refresh(this.state.host, this.state.id)
+    // read parameters from querystrig or defalt
+    const q = querystring.parse(window.location.search.replace(/^[?]/, ''))
+    this.refresh(q.host || '', q.id || '')
     //window.onpopstate = (event) => {
     //  this.refresh(this.props.url.query.host, this.props.url.query.id)
     //}
@@ -36,12 +35,15 @@ export default class extends React.Component {
     this.setState({host: newHost})
     this.setState({id:   newId})
 
+    this.inputHost.value = newHost
+    this.inputId.value = newId
+
     // clear fetched object cache
     this.setState({status: null})
     this.setState({context: null})
     this.setState({reblogged_by: null})
     this.setState({favourited_by: null})
-    
+
     this.setState({message: ''})
 
     // fetch status
@@ -59,7 +61,7 @@ export default class extends React.Component {
 
         // update addressbar
         window.history.pushState({},'',
-        `${this.props.url.pathname}?host=${newHost}&id=${newId}`)
+        `${window.location.pathname}?host=${newHost}&id=${newId}`)
 
         // fetch status context
         if (status && status.id) {

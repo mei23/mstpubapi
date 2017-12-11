@@ -36,7 +36,8 @@ module.exports = {
   ,
   exportPathMap: function() {
     return {
-      '/status.html': { page: '/status' },
+      '/timeline.html': { page: '/timeline' },
+      '/status.html': { page: '/status' }
     }
   }
   ,
