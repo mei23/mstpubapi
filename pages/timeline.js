@@ -149,23 +149,26 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Layout title='Statuses'>
+      <Layout title='タイムライン'>
         <Head>
           <link rel='stylesheet' href='../custom/style.css' />
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
-
+        <p>各タイムラインを参照します <a href='https://github.com/mei23/mstpubapi'>ソースや説明</a></p>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
-              required style={{width: '10em' }} />
+              required style={{width: '10em' }} title='インスタンスホスト(例: example.com)' />
+            {' '}
             Type:<input type="text" ref={x => this.inputType = x} defaultValue={this.state.type}
-              style={{width: '10em' }} />(local/fera/タグ)
+              style={{width: '10em' }} title='種類(local=ローカル, fera=連合, その他はタグ扱い)' />(local/fera/タグ)
+            {' '}
             Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
-              style={{width: '10em' }} />
+              style={{width: '10em' }} title='このIDより前から表示(-1の場合最新から)' />
+            {' '}
             Since:<input type="text" ref={x => this.inputSince = x} defaultValue={this.state.since}
-              style={{width: '10em' }} />
+              style={{width: '10em' }}  title='このIDの手前まで表示(-1の場合最大件数まで)' />
               
             <button  type="submit">変更反映</button>
           </form>
@@ -176,17 +179,20 @@ export default class extends React.Component {
         </div>
         {/* <div>{this.state.message}</div> */}
         <div>
-          <h3>タイムライン</h3>
-          <button onClick={this.moveUp}>上に移動</button>
-          <button onClick={this.moveDown}>下に移動</button>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
+            <div style={{ marginRight: 'auto' }}><button onClick={this.moveUp}>新着を表示？</button></div>
+            <div><button onClick={this.moveDown}>次を表示</button></div>
+          </div>
           { this.state.statuses ? 
             <div>
               <div>{this.state.statuses.length} アイテム</div>
               {this.state.statuses.map(status => <StatusBox status={status} host={this.state.host} />) }
             </div>
             : '未取得またはエラー'}
-          <button onClick={this.moveDown}>下に移動</button>
-
+          <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
+            <div style={{ marginRight: 'auto' }}></div>
+            <div><button onClick={this.moveDown}>次を表示</button></div>
+          </div>
         </div>
 
         <div>

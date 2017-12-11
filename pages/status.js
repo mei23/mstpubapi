@@ -106,9 +106,10 @@ export default class extends React.Component {
 
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
-            <input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
+            Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
               required style={{width: '10em' }} />
-            <input type="text" ref={x => this.inputId   = x} defaultValue={this.state.id}
+            {' '}
+            Id:<input type="text" ref={x => this.inputId   = x} defaultValue={this.state.id}
             required style={{width: '20em' }} />
             <button  type="submit">変更反映</button>
           </form>
