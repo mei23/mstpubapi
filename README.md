@@ -6,8 +6,9 @@ Mastodonインスタンスのタイムラインやステータス(トゥート)�
 
 ## 使い方
 
-設置済みのものは以下にあります（初回アクセスは時間がかかるかもしれない）  
-https://mstpubapi.now.sh
+設置済みのものは以下にあります
+* https://mstpubapi.herokuapp.com
+* https://mstpubapi.now.sh (実験的な部分があったり、初回アクセスは少し時間がかかるかもしれない）
 
 ### タイムライン
 
