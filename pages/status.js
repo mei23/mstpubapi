@@ -167,7 +167,7 @@ export default class extends React.Component {
             : '取得中またはエラー'}
         </div>
 
-        <div class='favters'>
+        <div className='favters'>
           <h3>お気に入りしたアカウント</h3>
           { this.state.favourited_by ?
             <div>
