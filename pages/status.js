@@ -21,13 +21,15 @@ export default class extends React.Component {
     this.submitParams = this.submitParams.bind(this);
   }
 
-  componentDidMount(){
+  onNewUrl() {
     // read parameters from querystrig or defalt
     const q = querystring.parse(window.location.search.replace(/^[?]/, ''))
     this.refresh(q.host || '', q.id || '')
-    //window.onpopstate = (event) => {
-    //  this.refresh(this.props.url.query.host, this.props.url.query.id)
-    //}
+  }
+
+  componentDidMount(){
+    addEventListener('popstate', () => this.onNewUrl(), false)
+    this.onNewUrl();
   }
 
   refresh(newHost, newId) {
@@ -60,8 +62,9 @@ export default class extends React.Component {
         this.setState({status: status})
 
         // update addressbar
-        window.history.pushState({},'',
-        `${window.location.pathname}?host=${newHost}&id=${newId}`)
+        const oldAddr = window.location.pathname + window.location.search
+        const newAddr = `${window.location.pathname}?host=${newHost}&id=${newId}`
+        if (oldAddr != newAddr) window.history.pushState({},'', newAddr)
 
         // fetch status context
         if (status && status.id) {

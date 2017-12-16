@@ -12,7 +12,7 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-
+    
     this.state.message = '' // message
     this.state.statuses = null
 
@@ -23,13 +23,15 @@ export default class extends React.Component {
     this.moveNow = this.moveNow.bind(this);
   }
 
-  componentDidMount(){
+  onNewUrl() {
     // read parameters from querystrig or defalt
     const q = querystring.parse(window.location.search.replace(/^[?]/, ''))
     this.refresh(q.host || '', q.type || 'local', q.max || -1, q.since || -1)
-    //window.onpopstate = (event) => {
-    //  this.refresh(this.props.url.query.host, this.props.url.query.id)
-    //}
+  }
+
+  componentDidMount(){
+    addEventListener('popstate', () => this.onNewUrl(), false)
+    this.onNewUrl();
   }
 
   refresh(newHost, newType, newMax, newSince) {
@@ -44,6 +46,11 @@ export default class extends React.Component {
     this.inputType.value = newType
     this.inputMax.value = newMax
     this.inputSince.value = newSince
+
+    // update addressbar
+    const oldAddr = window.location.pathname + window.location.search
+    const newAddr = `${window.location.pathname}?host=${newHost}&type=${newType}&max=${newMax}&since=${newSince}`
+    if (oldAddr != newAddr) window.history.pushState({},'', newAddr)
 
     // clear fetched object cache
     this.setState({statuses: null})
@@ -90,10 +97,6 @@ export default class extends React.Component {
 
         // update show status
         this.setState({statuses: statuses})
-
-        // update addressbar
-        window.history.pushState({},'',
-        `${window.location.pathname}?host=${newHost}&type=${newType}&max=${newMax}&since=${newSince}`)
       })
   }
   
