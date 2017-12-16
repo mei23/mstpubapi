@@ -64,22 +64,22 @@ export default class extends React.Component {
         <div
           onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}
           style={{
-            'width': `${size}px`, 'height': `${size}px`, 
-            'border-radius': `${radius}px`,
-            'background-image': (this.state.hover
+            width: `${size}px`, height: `${size}px`, 
+            borderRadius: `${radius}px`,
+            backgroundImage: (this.state.hover
               ? 'url(' + urlHover + ')'
               : 'url(' + urlOut + ')'),
-            'background-size': `${size}px`,
+            backgroundSize: `${size}px`,
 
-            'display': 'table-cell',
-            'text-align': 'right',
-            'vertical-align': 'bottom',
+            display: 'table-cell',
+            textAlign: 'right',
+            verticalAlign: 'bottom',
             
-            'color': '#33f',
-            'text-decoration': 'none',
-            'text-shadow': '0px 0px 2px #eef',
+            color: '#33f',
+            textDecoration: 'none',
+            textShadow: '0px 0px 2px #eef',
         }}
-        ><span style={{ 'background-color': '#eef'}}>{text}</span>
+        ><span style={{ backgroundColor: '#eef'}}>{text}</span>
         </div>
       </a>
     )
