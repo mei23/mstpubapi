@@ -89,9 +89,13 @@ a.move_link:hover {
   cursor: pointer;
 }
 
-.timeleap_box {
+.timeshift_box {
   font-size: 0.9em;
 }
+.timeshift_box.unavailable {
+  text-decoration: line-through;
+}
+
 .layout {
   max-width: 640px;
   margin: auto;

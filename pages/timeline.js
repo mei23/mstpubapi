@@ -14,7 +14,7 @@ export default class extends React.Component {
     this.state = {}
     
     this.state.message = '' // message
-    this.state.statuses = null
+    this.state.statuses = []
 
     this.submitParams = this.submitParams.bind(this);
     this.moveUp = this.moveUp.bind(this);
@@ -177,6 +177,17 @@ export default class extends React.Component {
     this.refresh(this.state.host, this.state.type, -1, -1)
   }
 
+  /**
+   * 現在表示中のTLから時間移動可能か(0=不可能確定, 1=多分可能)
+   * @returns {number}
+   */
+  canTimeShift() {
+    if (this.state.statuses && this.state.statuses.length > 0 && this.state.statuses[0].id < 90000000000000000) {
+      return 0
+    }
+    return 1
+  }
+
   render() {
     return (
       <Layout title='タイムライン'>
@@ -216,7 +227,7 @@ export default class extends React.Component {
               <button onClick={this.moveUp} title='新着のみを表示します'>新着</button></div>
             <div style={{ marginRight: 'auto' }}>
               <button onClick={this.moveNow} title='最新からの表示に戻ります'>最新に戻る</button></div>
-            <div className='timeleap_box' style={{textAlign: 'right', marginRight: '10px' }}>
+            <div className={'timeshift_box ' + (this.canTimeShift() ? '' : 'unavailable')} style={{textAlign: 'right', marginRight: '10px' }}>
               <div>
                 未来へ移動: 
                 <a className='move_link' onClick={e => this.moveMax(e, 60*10)}>10分</a>/
