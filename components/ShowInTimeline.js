@@ -27,10 +27,10 @@ export default (props) => {
 
   return (
     <div>
-      <div><a href={hrefOnlyL} target='_self'>ローカルタイムラインでこのステータスだけを表示</a></div>
       <div><a href={hrefDownL} target='_self'>ローカルタイムラインでこのステータスと過去を表示</a></div>
-      <div><a href={hrefOnlyF} target='_self'>連合タイムラインでこのステータスだけを表示</a></div>
+      <div><a href={hrefOnlyL} target='_self'>ローカルタイムラインでこのステータスだけを表示</a></div>
       <div><a href={hrefDownF} target='_self'>連合タイムラインでこのステータスと過去を表示</a></div>
+      <div><a href={hrefOnlyF} target='_self'>連合タイムラインでこのステータスだけを表示</a></div>
     </div>
   )
 }
