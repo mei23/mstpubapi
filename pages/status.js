@@ -6,6 +6,7 @@ import Mastodon from 'mstdn-api'
 import StatusBox from '/components/StatusBox'
 import AccountDetail from '/components/AccountDetail'
 import querystring from 'querystring'
+import ShowInTimeline from '/components/ShowInTimeline'
 
 export default class extends React.Component {
   constructor(props) {
@@ -137,7 +138,7 @@ export default class extends React.Component {
           <h3>ステータス情報</h3>
           {this.state.status ? <StatusBox status={this.state.status} host={this.state.host} /> : 'none'}
         </div>
-
+        <ShowInTimeline status={this.state.status} host={this.state.host} />
         <div>
           <h3>アカウント情報</h3>
           {this.state.status && this.state.status.reblog ? 
