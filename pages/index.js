@@ -21,6 +21,8 @@ export default class extends React.Component {
           <dd>タイムライン（ローカル/連合/タグ）等を参照します</dd>
           <dt><a href="status">ステータス</a></dt>
           <dd>ステータス（トゥート）の様々な情報を参照します</dd>
+          <dt><a href="streaming">Streaming</a></dt>
+          <dd>Streaming APIを参照します</dd>
         </dl>
 
         <p><a href="https://github.com/mei23/mstpubapi" target="_blank">ソースや説明はこちら</a></p>

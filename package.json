@@ -17,7 +17,7 @@
     "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-wrap-in-js": "^1.1.1",
     "glob": "^7.1.2",
-    "mstdn-api": "^0.1.2",
+    "mstdn-api": "git://github.com/mei23/mstdn-api.git",
     "next": "^4.0.3",
     "node-sass": "^4.5.3",
     "raw-loader": "^0.5.1",
