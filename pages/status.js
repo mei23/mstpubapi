@@ -64,8 +64,15 @@ export default class extends React.Component {
         // update addressbar
         const oldAddr = window.location.pathname + window.location.search
         const newAddr = `${window.location.pathname}?host=${newHost}&id=${newId}`
-        if (oldAddr != newAddr) window.history.pushState({},'', newAddr)
-
+        if (oldAddr != newAddr) {
+          if (!oldAddr.match(/[?]/)) {  // on initial adressbar update
+            window.history.replaceState({}, '', newAddr) // do not create new history entry
+          }
+          else {
+            window.history.pushState({}, '', newAddr)
+          }
+        }
+    
         // fetch status context
         if (status && status.id) {
           M.get(`/api/v1/statuses/${newId}/context`)
