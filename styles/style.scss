@@ -11,6 +11,11 @@ body {
   font-family: $font;
 }
 
+h1 {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
 input[type=submit], button {
   padding: 0.3em 1em;
   margin: 0.2em;
