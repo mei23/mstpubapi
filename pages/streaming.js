@@ -86,17 +86,19 @@ export default class extends React.Component {
       streamUrl = `hashtag/${newType}`
     }
 
+    this.setState({message: `これまでのステータスを取得中... Host: ${newHost}, Path: ${queryUrl}`})
+
     // fetch statuses
     const M = new Mastodon("", newHost)
     M.get(queryUrl, queryPara)
-      .catch((reason) => {
-        this.setState({message: 'Error in timeline status: ' + JSON.stringify(reason)})
-      })
       .then(statuses => {
         // update show status
         this.setState({statuses: statuses})
 
+        this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${queryUrl}`})
+
         // Setup streaming
+        this.setState({message: `Streamingを継続受信中 Host: ${newHost}, Streaming: ${streamUrl}`})
 
         // close previous listener if exists
         if (this.listener) {
@@ -129,7 +131,13 @@ export default class extends React.Component {
           if (err.status === 401) {
             this.setState({message: 'エラー: このインスタンスはストリーミングに認証が必要なため、自動更新はできません。自動更新を行うにはインスタンスバージョンが v2.1.0以降である必要があります。'})
           }
+          else {
+            this.setState({message: 'Streamingでエラーが発生しました ' + JSON.stringify(err)})
+          }
         })
+      })
+      .catch((reason) => {
+        this.setState({message: 'ステータスの取得でエラーが発生しました ' + JSON.stringify(reason)})
       })
   }
   
@@ -160,9 +168,8 @@ export default class extends React.Component {
         </div>
 
         <div className='current_params'>
-          現在 Host: {this.state.host} Type: {this.state.type}
+          {this.state.message}
         </div>
-        <div>{this.state.message}</div>
         <div>
           { this.state.statuses ? 
             <div>
