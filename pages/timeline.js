@@ -94,18 +94,19 @@ export default class extends React.Component {
     console.log('queryUrl', queryUrl)
     console.log('queryPara', queryPara)
     
+    this.setState({message: `ステータスを取得中... Host: ${newHost}, Path: ${queryUrl}, Para: ${JSON.stringify(queryPara)}`})
     // fetch statuses
     const M = new Mastodon("", newHost)
     M.get(queryUrl, queryPara)
-      .catch((reason) => {
-        this.setState({message: 'Error in timeline status: ' + JSON.stringify(reason)})
-      })
       .then(statuses => {
-
         // update show status
         this.setState({statuses: statuses})
+        this.setState({message: `ステータスを取得しました Host: ${newHost}, Path: ${queryUrl}, Para: ${JSON.stringify(queryPara)}`})
       })
-  }
+      .catch((reason) => {
+        this.setState({message: 'ステータスの取得でエラーが発生しました ' + JSON.stringify(reason)})
+      })
+    }
   
   submitParams(event) {
     event.preventDefault()
@@ -201,25 +202,25 @@ export default class extends React.Component {
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
-              required style={{width: '10em' }} title='インスタンスホスト(例: example.com)' />
+              required style={{width: '14em' }} title='インスタンスホスト(例: example.com)' />
             {' '}
             Type:<input type="text" ref={x => this.inputType = x} defaultValue={this.state.type}
               style={{width: '10em' }} title='種類(local=ローカル, fera=連合, その他はタグ扱い)' />(local/fera/タグ)
             {' '}
+            <br />
             Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
-              style={{width: '10em' }} title='このIDより前から表示(-1の場合最新から)' />
+              style={{width: '12em' }} title='このIDより前から表示(-1の場合最新から)' />
             {' '}
             Since:<input type="text" ref={x => this.inputSince = x} defaultValue={this.state.since}
-              style={{width: '10em' }}  title='このIDの手前まで表示(-1の場合最大件数まで)' />
+              style={{width: '12em' }}  title='このIDの手前まで表示(-1の場合最大件数まで)' />
               
             <button  type="submit">変更反映</button>
           </form>
         </div>
 
         <div className='current_params'>
-          現在 Host: {this.state.host} Type: {this.state.type} Max: {this.state.max} Since: {this.state.since}
+          {this.state.message}
         </div>
-        {/* <div>{this.state.message}</div> */}
         <div>
           {/* Pager top */}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
