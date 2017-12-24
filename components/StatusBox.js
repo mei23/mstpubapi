@@ -143,7 +143,7 @@ export default (props) => {
         <div className={'status_left'} style={{ margin:'0.3em', width:'100%'}}>
           <StatusHeaderEx status={outer} host={host} />
           <StatusBodyEx host={host} status={inner} showAccountRegisted={false} />
-          <StatusFooterEx status={inner} />
+          {props.hideFooter ? '' : <StatusFooterEx status={inner} />}
         </div>
       </div>
     </div>
