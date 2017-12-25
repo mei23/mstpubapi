@@ -6,6 +6,7 @@ import Mastodon from 'mstdn-api'
 import StatusBox from '/components/StatusBox'
 import AccountDetail from '/components/AccountDetail'
 import * as IDC from '/utils/idcalc'
+import * as IDX from '/utils/idx'
 import querystring from 'querystring'
 
 export default class extends React.Component {
@@ -167,10 +168,36 @@ export default class extends React.Component {
   moveMax(event, sec) {
     event.preventDefault()
 
-    let max = this.state.max  // 計算起点max_id
-    if (max < 0) { max = IDC.msToId(new Date().getTime()) }
-    let newMax = IDC.addMs(max, sec * 1000)
-    this.refresh(this.state.host, this.state.type, newMax, -1)
+    // v1部分を表示中か？
+    let isV1 = false
+    if (this.state.statuses && this.state.statuses.length > 0) {
+      // 表示中のステータスがある場合
+      if (this.state.statuses[0].id < 90000000000000000) {
+        isV1 = true
+      }
+    }
+    else {
+      // 表示中のステータスがないからv1かどうかわからない
+    }
+
+    // 計算基準日付(一番上のステータスの日付 || 現在)
+    let date = new Date()
+    if (this.state.statuses && this.state.statuses.length > 0) {
+      const dateStr = this.state.statuses[0].created_at
+      date = new Date(dateStr)
+    }
+
+    const id = IDX.getShiftedId(date, sec * 1000, isV1, this.state.host)
+
+    if (id == IDX.MURI) {
+      this.setState({message: `エラー: v1.x区間 かつ IDテーブルを保持していないため移動できません。この区間では 次ページ または ID直指定のみ利用可能です。`})
+    }
+    else if (id == IDX.TOO_CLOSE) {
+      this.setState({message: `エラー: v1.x区間 では1時間以上の単位でのみ移動可能です。`})
+    }
+    else {
+      this.refresh(this.state.host, this.state.type, id, -1)
+    }
   }
 
   moveNow(event) {
@@ -228,26 +255,24 @@ export default class extends React.Component {
               <button onClick={this.moveUp} title='新着のみを表示します'>新着</button></div>
             <div style={{ marginRight: 'auto' }}>
               <button onClick={this.moveNow} title='最新からの表示に戻ります'>最新に戻る</button></div>
-            <div className={'timeshift_box ' + (this.canTimeShift() ? '' : 'unavailable')} style={{textAlign: 'right', marginRight: '10px' }}>
+            <div className={'timeshift_box '} style={{textAlign: 'right', marginRight: '10px' }}>
               <div>
                 未来へ移動: 
+                <a className='move_link' onClick={e => this.moveMax(e, 60*1)}>1分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 60*10)}>10分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 3600*1)}>1時間</a>/
-                <a className='move_link' onClick={e => this.moveMax(e, 3600*3)}>3時間</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 3600*6)}>6時間</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 86400*1)}>1日</a>/
-                <a className='move_link' onClick={e => this.moveMax(e, 86400*3)}>3日</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 86400*7)}>7日</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 86400*30)}>30日</a>
               </div>
               <div>
                 過去へ移動: 
+                <a className='move_link' onClick={e => this.moveMax(e, -60*1)}>1分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -60*10)}>10分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -3600)}>1時間</a>/
-                <a className='move_link' onClick={e => this.moveMax(e, -3600*3)}>3時間</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -3600*6)}>6時間</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -86400*1)}>1日</a>/
-                <a className='move_link' onClick={e => this.moveMax(e, -86400*3)}>3日</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -86400*7)}>7日</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -86400*30)}>30日</a>
               </div>
