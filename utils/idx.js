@@ -47,9 +47,9 @@ export function getShiftedId (date, add, v1, host){
       unixDst = unixDst + (tblDivSec / 2)
       
       let id
-      for (let i = 0; i < tbl.length; i++){
-        id = tbl[i][1]
-        if (unixDst > tbl[i][0]) break
+      for (const entry of tbl) {
+        id = entry[1]
+        if (unixDst > entry[0]) break
       }
       return id + 5 // わかりづらいので正時を超えた分を余分に表示する
     }
