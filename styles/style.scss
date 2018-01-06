@@ -45,6 +45,16 @@ input[type=submit]:hover, button:hover {
   background: lighten($ac_bg, 10%);
 }
 
+select {
+  font-family: $font;
+  padding: 0.3em;
+  margin: 0.1em;
+  background: lighten($bg, 10%);
+  color: $fg;
+  font-size: 1em;
+  border: none;
+}
+
 a {
   color: lighten($ac_bg, 30%);
   text-decoration: none;

@@ -8,6 +8,7 @@ import AccountDetail from '/components/AccountDetail'
 import * as IDC from '/utils/idcalc'
 import * as IDX from '/utils/idx'
 import querystring from 'querystring'
+import * as UrlUtil from '/utils/urlUtil'
 
 export default class extends React.Component {
   constructor(props) {
@@ -242,6 +243,8 @@ export default class extends React.Component {
               style={{width: '12em' }} name='since' placeholder='省略可' title='このIDの手前まで表示(省略時は最大件数まで)' />
               
             <button  type="submit">変更反映</button>
+            
+            <a href={UrlUtil.getPagePath('timeleap') + '?host=' + this.state.host} target='_self'>時間指定</a>
           </form>
         </div>
 
