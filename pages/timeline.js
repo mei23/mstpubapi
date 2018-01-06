@@ -27,7 +27,7 @@ export default class extends React.Component {
   onNewUrl() {
     // read parameters from querystrig or defalt
     const q = querystring.parse(window.location.search.replace(/^[?]/, ''))
-    this.refresh(q.host || '', q.type || 'local', q.max || -1, q.since || -1)
+    this.refresh(q.host || '', q.type || 'local', q.max || '', q.since || '')
   }
 
   componentDidMount(){
@@ -135,7 +135,7 @@ export default class extends React.Component {
       }
     }
 
-    this.refresh(this.state.host, this.state.type, -1, since)
+    this.refresh(this.state.host, this.state.type, '', since)
   }
 
   moveDown(event) {
@@ -157,7 +157,7 @@ export default class extends React.Component {
         max = this.state.max
       }
     }
-   this.refresh(this.state.host, this.state.type, max, -1)
+   this.refresh(this.state.host, this.state.type, max, '')
   }
 
   /**
@@ -196,13 +196,13 @@ export default class extends React.Component {
       this.setState({message: `エラー: v1.x区間 では1時間以上の単位でのみ移動可能です。`})
     }
     else {
-      this.refresh(this.state.host, this.state.type, id, -1)
+      this.refresh(this.state.host, this.state.type, id, '')
     }
   }
 
   moveNow(event) {
     event.preventDefault()
-    this.refresh(this.state.host, this.state.type, -1, -1)
+    this.refresh(this.state.host, this.state.type, '', '')
   }
 
   /**
@@ -236,10 +236,10 @@ export default class extends React.Component {
             {' '}
             <br />
             Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
-              style={{width: '12em' }} name='max' title='このIDより前から表示(-1の場合最新から)' />
+              style={{width: '12em' }} name='max' placeholder='省略可' title='このIDより前から表示(省略時は最新から)' />
             {' '}
             Since:<input type="text" ref={x => this.inputSince = x} defaultValue={this.state.since}
-              style={{width: '12em' }} name='since' title='このIDの手前まで表示(-1の場合最大件数まで)' />
+              style={{width: '12em' }} name='since' placeholder='省略可' title='このIDの手前まで表示(省略時は最大件数まで)' />
               
             <button  type="submit">変更反映</button>
           </form>

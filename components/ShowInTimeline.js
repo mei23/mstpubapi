@@ -21,9 +21,9 @@ export default (props) => {
   if (window.location.pathname.match(/html$/)) { timelinePath = './timeline.html' }
 
   const hrefOnlyL = `${timelinePath}?host=${host}&type=local&max=${strAsc}&since=${strDec}`
-  const hrefDownL = `${timelinePath}?host=${host}&type=local&max=${strAsc}&since=-1`
+  const hrefDownL = `${timelinePath}?host=${host}&type=local&max=${strAsc}&since=`
   const hrefOnlyF = `${timelinePath}?host=${host}&type=fera&max=${strAsc}&since=${strDec}`
-  const hrefDownF = `${timelinePath}?host=${host}&type=fera&max=${strAsc}&since=-1`
+  const hrefDownF = `${timelinePath}?host=${host}&type=fera&max=${strAsc}&since=`
 
   return (
     <div>
