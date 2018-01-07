@@ -16,6 +16,40 @@ export const TOO_CLOSE = -667
 const tblDivSec = 3600
 
 /**
+ * 指定日付からステータスIDを算出する
+ * @param {Date} date Date
+ * @param {string} host インスタンスホスト名
+ */
+export function getTimeId(date, host) {
+  const ts = date.getTime()        // UNIXミリ秒
+  let unixDst = ts / 1000
+
+  if (host && t1[host]) { // テーブルある？
+    const tbl = t1[host]
+    const unixTurn = tbl[0][0]  // v2移行UNIXsec
+    if (unixDst > unixTurn) {  // v2区間?
+      const longDst = Long.fromNumber(ts).shiftLeft(16)
+      return longDst.toString() // allways return as string
+    }
+    else {
+      // 移動後UNIXTime tblDivSec単位で未来方向に切り上げ
+      unixDst = unixDst + (tblDivSec / 2)
+      let id
+      for (const entry of tbl) {
+        id = entry[1]
+        if (unixDst > entry[0]) break
+      }
+      return id + 5 // わかりづらいので正時を超えた分を余分に表示する
+    }
+  }
+  else {
+    const longDst = Long.fromNumber(ts).shiftLeft(16)
+    return longDst.toString() // allways return as string
+  }
+}
+
+
+/**
  * 指定日付から指定時間移動したステータスIDを算出する
  * @param {Date} date 移動元のDate
  * @param {number} add 移動する時間(ミリ秒)
