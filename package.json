@@ -1,7 +1,10 @@
 {
   "name": "mstpubapi",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "Web application to show mastodon timeline and more, without authentication.",
+  "engines": {
+    "node": "8.9.3"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +14,7 @@
     "heroku-postbuild": "next build",
     "export": "next build && next export"
   },
-  "author": "",
+  "author": "MeiMei",
   "license": "MIT",
   "dependencies": {
     "babel-plugin-module-resolver": "^2.7.1",
