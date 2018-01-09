@@ -95,14 +95,15 @@ const StatusBodyEx = (props) => {
         <div className='status_body_l1'>
           <Twemoji>
             <span className=''>{status.account.display_name}</span>
-          </Twemoji>
-          {' '}
-          <span className=''>@{status.account.acct}</span> {showAccountRegisted ?
+          
+            {' '}
+            <span className=''>@{status.account.acct}</span> {showAccountRegisted ?
             <span className='account_registed'>
               [{F.toRelactiveString(status.account.created_at)} 
               ({F.formatDateString(status.account.created_at, 'yyyy/m/d H:MM')})]
             </span>
             : ''}
+          </Twemoji>
         </div>
         {status.spoiler_text 
           ? <div className=''>[CW: {status.spoiler_text}]</div>
