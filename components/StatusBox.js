@@ -1,6 +1,7 @@
 
 import UserIcon from '/components/UserIcon'
 import * as F from '/utils/formatter'
+import Twemoji from 'react-twemoji';
 
 /**
  * トゥートヘッダ部分
@@ -92,7 +93,9 @@ const StatusBodyEx = (props) => {
     <div>
       <div>
         <div className='status_body_l1'>
-          <span className=''>{status.account.display_name}</span>
+          <Twemoji>
+            <span className=''>{status.account.display_name}</span>
+          </Twemoji>
           {' '}
           <span className=''>@{status.account.acct}</span> {showAccountRegisted ?
             <span className='account_registed'>
@@ -104,9 +107,11 @@ const StatusBodyEx = (props) => {
         {status.spoiler_text 
           ? <div className=''>[CW: {status.spoiler_text}]</div>
           : ''}
-        <div className='' dangerouslySetInnerHTML={{
-          __html: c
-        }} />
+        <Twemoji>
+          <div className='' dangerouslySetInnerHTML={{
+            __html: c
+          }} />
+        </Twemoji>
         {status.media_attachments.length > 0 ?
           <MediaBox mediaAttachments={status.media_attachments} /> : ''}
       </div>

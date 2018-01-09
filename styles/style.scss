@@ -75,6 +75,11 @@ dl.input_list {
   }
 }
 
+img.emoji {
+  width: 1em;
+  height: 1em;
+}
+
 div.current_params {
   border: solid 1px lighten($ac_bg, 50%);
   border-radius: 2px;
