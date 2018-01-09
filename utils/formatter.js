@@ -26,7 +26,7 @@ export function toRelactiveString(datestr) {
 export function escapeContent(c) {
   c = c.replace(/^<p>/, '')
   c = c.replace(/<\/p>$/, '')
-  c = c.replace(/<script/i, '&lt;script')
+  c = c.replace(/<script/gi, '&lt;script')
   return c
 }
 
