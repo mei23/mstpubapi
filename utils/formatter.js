@@ -29,3 +29,30 @@ export function escapeContent(c) {
   c = c.replace(/<script/i, '&lt;script')
   return c
 }
+
+/**
+ * Extract custom emojis in content
+ * @param {string} content 
+ * @param {Array} emojis
+ * @param {boolean} animation 
+ */
+export const extractEmojis = (content, emojis, animation) => {
+  if (!emojis) return content
+  if (!content) return content
+
+  for (const emoji of emojis) {
+    const match = `:${emoji.shortcode}:`
+    const url = animation ? emoji.url : emoji.static_url
+    const replace = `<img src="${url}" style="width:1em; height:1em" alt="${match}" title="${match}" />`
+    content = content.replace(match, replace)
+  }
+  return content
+}
+
+export const convertContent = (status) => {
+  let c = escapeContent(status.content)
+  c = extractEmojis(c, status.emojis, false)
+  status._converted = c
+  return status
+}
+

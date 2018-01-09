@@ -7,6 +7,7 @@ import StatusBox from '/components/StatusBox'
 import AccountDetail from '/components/AccountDetail'
 import querystring from 'querystring'
 import ShowInTimeline from '/components/ShowInTimeline'
+import * as F from '/utils/formatter'
 
 export default class extends React.Component {
   constructor(props) {
@@ -59,6 +60,9 @@ export default class extends React.Component {
       .then(status => {
         this.setState({message: this.state.message + 'status 取得完了'})
         
+        // replace received content
+        status = F.convertContent(status)
+
         // update show status
         this.setState({status: status})
 

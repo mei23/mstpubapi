@@ -9,6 +9,7 @@ import * as IDC from '/utils/idcalc'
 import * as IDX from '/utils/idx'
 import querystring from 'querystring'
 import * as UrlUtil from '/utils/urlUtil'
+import * as F from '/utils/formatter'
 
 export default class extends React.Component {
   constructor(props) {
@@ -102,6 +103,7 @@ export default class extends React.Component {
     M.get(queryUrl, queryPara)
       .then(statuses => {
         // update show status
+        statuses.map(status => F.convertContent(status))
         this.setState({statuses: statuses})
         this.setState({message: `ステータスを取得しました Host: ${newHost}, Path: ${queryUrl}, Para: ${JSON.stringify(queryPara)}`})
       })

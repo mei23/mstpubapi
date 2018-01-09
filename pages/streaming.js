@@ -7,6 +7,7 @@ import StatusBox from '/components/StatusBox'
 import AccountDetail from '/components/AccountDetail'
 import * as IDC from '/utils/idcalc'
 import querystring from 'querystring'
+import * as F from '/utils/formatter'
 
 export default class extends React.Component {
   constructor(props) {
@@ -92,6 +93,9 @@ export default class extends React.Component {
     const M = new Mastodon("", newHost)
     M.get(queryUrl, queryPara)
       .then(statuses => {
+        // replace received content
+        statuses.map(status => F.convertContent(status))
+
         // update show status
         this.setState({statuses: statuses})
 
@@ -116,6 +120,9 @@ export default class extends React.Component {
             
             //this.setState({c1: this.st5.count})
             //this.setState({velo: this.st5.tootPerMin})
+
+            // replace received content
+            status = F.convertContent(status)
 
             statuses.unshift(status)
             statuses = statuses.slice(0, 40)
