@@ -1,6 +1,6 @@
 {
   "name": "mstpubapi",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Web application to show mastodon timeline and more, without authentication.",
   "engines": {
     "node": "8.9.3"
@@ -14,7 +14,7 @@
     "heroku-postbuild": "next build",
     "export": "next build && next export"
   },
-  "author": "MeiMei",
+  "author": "MeiMei <m@m544.net>",
   "license": "MIT",
   "dependencies": {
     "babel-plugin-module-resolver": "^3.0.0",
@@ -30,5 +30,9 @@
     "react-datepicker": "^1.0.4",
     "react-dom": "^16.2.0",
     "sass-loader": "^6.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mei23/mstpubapi.git"
   }
 }
