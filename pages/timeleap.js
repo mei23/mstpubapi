@@ -83,7 +83,7 @@ export default class extends React.Component {
               onChange={this.handleDateChange}
               dateFormat='YYYY/MM/DD'
               todayButton={"Today"}
-              locale="ja-jp" inline />
+              locale="ja-jp" />
           </dd>
           <dt>Time:</dt>
           <dd>
