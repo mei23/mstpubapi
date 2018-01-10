@@ -156,7 +156,9 @@ export default class extends React.Component {
           { this.state.context ? 
             <div>
               <div>{this.state.context.ancestors.length} アイテム</div>
-              {this.state.context.ancestors.map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
+              {this.state.context.ancestors
+                .map(status => F.convertContent(status))
+                .map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
             </div>
             : '取得中またはエラー'}
         </div>
@@ -166,7 +168,9 @@ export default class extends React.Component {
           { this.state.context ? 
             <div>
               <div>{this.state.context.descendants.length} アイテム</div>
-              {this.state.context.descendants.map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
+              {this.state.context.descendants
+                .map(status => F.convertContent(status))
+                .map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
             </div>
             : '取得中またはエラー'}
         </div>
