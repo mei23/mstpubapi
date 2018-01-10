@@ -24,7 +24,8 @@ const StatusHeaderEx = (props) => {
         <div style={{ marginRight: 'auto' }}>
           <span><a href={`${statusPath}?host=${host}&id=${inner.id}`} title='ローカルでステータス情報を表示する' target='_self'>{inner.id}</a></span>
           {inner.sensitive ? (<span> / Sensitive</span>) : ''}
-          <span> / {inner.visibility}</span>
+          
+          {props.hideVisibility ? '' : <span> / {inner.visibility}</span>}
 
           {inner.application ?
              inner.application.website
@@ -147,7 +148,7 @@ export default (props) => {
           <AvatarBox account={inner.account} host={host} size='48' showSts={false} />
         </div>
         <div className={'status_left'} style={{ margin:'0.3em', width:'100%'}}>
-          <StatusHeaderEx status={outer} host={host} />
+          <StatusHeaderEx status={outer} host={host} hideVisibility={props.hideVisibility} />
           <StatusBodyEx host={host} status={inner} showAccountRegisted={false} />
           {props.hideFooter ? '' : <StatusFooterEx status={inner} />}
         </div>

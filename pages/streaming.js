@@ -181,7 +181,7 @@ export default class extends React.Component {
           { this.state.statuses ? 
             <div>
               <div>{this.state.statuses.length} アイテム</div>
-              {this.state.statuses.map(status => <StatusBox key={status.id} status={status} host={this.state.host} hideFooter={true} />) }
+              {this.state.statuses.map(status => <StatusBox key={status.id} status={status} host={this.state.host} hideFooter={true} hideVisibility={true} />) }
             </div>
             : '取得中またはエラー'}
         </div>
