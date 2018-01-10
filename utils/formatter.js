@@ -53,7 +53,7 @@ export const extractEmojis = (content, emojis, animation) => {
   for (const emoji of emojis) {
     const re = genRegExpL(`:${emoji.shortcode}:`)
     const url = animation ? emoji.url : emoji.static_url
-    const replace = `<img src="${url}" style="width:1em; height:1em" alt="${emoji.shortcode}" title="${emoji.shortcode}" />`
+    const replace = `<img class='emoji' src="${url}" alt="${emoji.shortcode}" title="${emoji.shortcode}" />`
     content = content.replace(re, replace)
   }
   return content
@@ -66,7 +66,7 @@ const nicoruImage = 'https://twemoji.maxcdn.com/2/72x72/1f603.png'
 export const extractNicorus = (content) => {
   if (!content) return content
 
-  content = content.replace(nicoruRotated, `<img src='${nicoruImage}' style='width:1em; height:1em; transform:rotate($2deg)' alt='$&' title='$&' />`)
+  content = content.replace(nicoruRotated, `<img class='emoji' src='${nicoruImage}' style='transform:rotate($2deg)' alt='$&' title='$&' />`)
   return content
 }
 
@@ -77,7 +77,7 @@ export const extractProfileEmojis =  (content, emojis) => {
   for (const emoji of emojis) {
     const re = genRegExpL(`:${emoji.shortcode}:`)
     const url = emoji.url
-    const replace = `<img src="${url}" style="width:1em; height:1em" alt="${emoji.shortcode}" title="${emoji.shortcode}" />`
+    const replace = `<img class='emoji' src="${url}" alt="${emoji.shortcode}" title="${emoji.shortcode}" />`
     content = content.replace(re, replace)
   }
   return content

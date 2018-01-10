@@ -75,9 +75,16 @@ dl.input_list {
   }
 }
 
+.status_content {
+  line-height: 1.2em;
+}
+
 img.emoji {
-  width: 1em;
-  height: 1em;
+  position: relative;
+  top: 2px;
+  width: 13px;
+  height: 13px;
+  margin: 0px 2px;
 }
 
 div.current_params {

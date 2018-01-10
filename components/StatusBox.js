@@ -109,7 +109,7 @@ const StatusBodyEx = (props) => {
           ? <div className=''>[CW: {status.spoiler_text}]</div>
           : ''}
         <Twemoji>
-          <div className='' dangerouslySetInnerHTML={{
+          <div className='status_content' dangerouslySetInnerHTML={{
             __html: c
           }} />
         </Twemoji>
