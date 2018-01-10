@@ -156,7 +156,7 @@ export default class extends React.Component {
           { this.state.context ? 
             <div>
               <div>{this.state.context.ancestors.length} アイテム</div>
-              {this.state.context.ancestors.map(status => <StatusBox status={status} host={this.state.host} />) }
+              {this.state.context.ancestors.map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
             </div>
             : '取得中またはエラー'}
         </div>
@@ -166,7 +166,7 @@ export default class extends React.Component {
           { this.state.context ? 
             <div>
               <div>{this.state.context.descendants.length} アイテム</div>
-              {this.state.context.descendants.map(status => <StatusBox status={status} host={this.state.host} />) }
+              {this.state.context.descendants.map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
             </div>
             : '取得中またはエラー'}
         </div>
@@ -177,7 +177,7 @@ export default class extends React.Component {
             <div>
               <div>{this.state.reblogged_by.length} アイテム</div>
               {this.state.reblogged_by.map(account => 
-                <AccountDetail account={account} host={this.state.host} showNote={false} /> )}
+                <AccountDetail key={account.id} account={account} host={this.state.host} showNote={false} /> )}
             </div>
             : '取得中またはエラー'}
         </div>
@@ -188,7 +188,7 @@ export default class extends React.Component {
             <div>
               <div>{this.state.favourited_by.length} アイテム</div>
               {this.state.favourited_by.map(account => 
-                <AccountDetail account={account} host={this.state.host} showNote={false} /> )}
+                <AccountDetail key={account.id} account={account} host={this.state.host} showNote={false} /> )}
             </div>
             : '取得中またはエラー'}
        </div>
