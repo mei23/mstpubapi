@@ -59,9 +59,23 @@ export const extractEmojis = (content, emojis, animation) => {
   return content
 }
 
+export const extractProfileEmojis =  (content, emojis) => {
+  if (!emojis) return content
+  if (!content) return content
+
+  for (const emoji of emojis) {
+    const re = genRegExpL(`:${emoji.shortcode}:`)
+    const url = emoji.url
+    const replace = `<img src="${url}" style="width:1em; height:1em" alt="${emoji.shortcode}" title="${emoji.shortcode}" />`
+    content = content.replace(re, replace)
+  }
+  return content
+}
+
 export const convertContent = (status) => {
   let c = escapeContent(status.content)
   c = extractEmojis(c, status.emojis, false)
+  c = extractProfileEmojis(c, status.profile_emojis)
   status._converted = c
   return status
 }
