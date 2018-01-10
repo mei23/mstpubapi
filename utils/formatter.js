@@ -66,7 +66,7 @@ const nicoruImage = 'https://twemoji.maxcdn.com/2/72x72/1f603.png'
 export const extractNicorus = (content) => {
   if (!content) return content
 
-  content = content.replace(nicoruRotated, `<img src='${nicoruImage}' style='width:1em; height:1em; transform:rotate($2deg)' />`)
+  content = content.replace(nicoruRotated, `<img src='${nicoruImage}' style='width:1em; height:1em; transform:rotate($2deg)' alt='$&' title='$&' />`)
   return content
 }
 
