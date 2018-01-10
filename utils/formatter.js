@@ -59,6 +59,17 @@ export const extractEmojis = (content, emojis, animation) => {
   return content
 }
 
+// ニコる
+const nicoruRotated = new RegExp(/:(nicoru)(?:(\d+))?:/)
+const nicoruImage = 'https://twemoji.maxcdn.com/2/72x72/1f603.png'
+
+export const extractNicorus = (content) => {
+  if (!content) return content
+
+  content = content.replace(nicoruRotated, `<img src='${nicoruImage}' style='width:1em; height:1em; transform:rotate($2deg)' />`)
+  return content
+}
+
 export const extractProfileEmojis =  (content, emojis) => {
   if (!emojis) return content
   if (!content) return content
@@ -75,6 +86,7 @@ export const extractProfileEmojis =  (content, emojis) => {
 export const convertContent = (status) => {
   let c = escapeContent(status.content)
   c = extractEmojis(c, status.emojis, false)
+  c = extractNicorus(c)
   c = extractProfileEmojis(c, status.profile_emojis)
   status._converted = c
   return status
