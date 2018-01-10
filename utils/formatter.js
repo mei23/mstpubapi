@@ -60,7 +60,7 @@ export const extractEmojis = (content, emojis, animation) => {
 }
 
 // ニコる
-const nicoruRotated = new RegExp(/:(nicoru)(?:(\d+))?:/)
+const nicoruRotated = new RegExp(/:(nicoru)(?:(\d+))?:/, 'g')
 const nicoruImage = 'https://twemoji.maxcdn.com/2/72x72/1f603.png'
 
 export const extractNicorus = (content) => {
