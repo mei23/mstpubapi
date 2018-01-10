@@ -31,6 +31,16 @@ export function escapeContent(c) {
 }
 
 /**
+ * Generate literal global RegExp
+ * @param {string} str 
+ */
+const genRegExpL = (str) => {
+  const escaped = str.replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$1")
+  const re = new RegExp(escaped, 'g')
+  return re
+}
+
+/**
  * Extract custom emojis in content
  * @param {string} content 
  * @param {Array} emojis
@@ -41,10 +51,10 @@ export const extractEmojis = (content, emojis, animation) => {
   if (!content) return content
 
   for (const emoji of emojis) {
-    const match = `:${emoji.shortcode}:`
+    const re = genRegExpL(`:${emoji.shortcode}:`)
     const url = animation ? emoji.url : emoji.static_url
-    const replace = `<img src="${url}" style="width:1em; height:1em" alt="${match}" title="${match}" />`
-    content = content.replace(match, replace)
+    const replace = `<img src="${url}" style="width:1em; height:1em" alt="${emoji.shortcode}" title="${emoji.shortcode}" />`
+    content = content.replace(re, replace)
   }
   return content
 }
