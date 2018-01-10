@@ -45,6 +45,11 @@ input[type=submit]:hover, button:hover {
   background: lighten($ac_bg, 10%);
 }
 
+// Date textbox
+.react-datepicker__input-container input {
+  width: 14em;
+}
+
 select {
   font-family: $font;
   padding: 0.3em;
