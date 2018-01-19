@@ -61,7 +61,8 @@ export const extractEmojis = (content, emojis, animation) => {
 
 // ニコる
 const nicoruRotated = new RegExp(/:(nicoru)(?:(\d+))?:/, 'g')
-const nicoruImage = 'https://twemoji.maxcdn.com/2/72x72/1f603.png'
+const nicoruImage = 'https://d2zoeobnny43zx.cloudfront.net/custom_emojis/images/000/010/725/static/nicoru-000.png'
+// 本当はベタ書きではなく API https://friends.nico/api/v1/custom_emojis から nicoru をとってきたほうがいい
 
 export const extractNicorus = (content) => {
   if (!content) return content
