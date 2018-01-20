@@ -114,7 +114,7 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Layout title='ステータス'>
+      <Layout title='Status'>
         <Head>
           <link rel='stylesheet' href='../custom/style.css' />
           <base target='_blank' />

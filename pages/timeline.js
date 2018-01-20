@@ -221,7 +221,7 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Layout title='タイムライン'>
+      <Layout title='Timeline'>
         <Head>
           <link rel='stylesheet' href='../custom/style.css' />
           <base target='_blank' />

@@ -15,14 +15,16 @@ export default class extends React.Component {
   render(props) {
     return (
       <Layout title='mstpubapi'>
-        <p>Mastodonインスタンスのタイムラインやステータス(トゥート)を参照したりします</p>
+        <p>Mastodonインスタンスの情報やタイムラインを参照したりします</p>
         <dl>
-          <dt><a href="timeline">タイムライン</a></dt>
-          <dd>タイムライン（ローカル/連合/タグ）等を参照します</dd>
-          <dt><a href="status">ステータス</a></dt>
-          <dd>ステータス（トゥート）の様々な情報を参照します</dd>
+          <dt><a href="instance">Instance</a></dt>
+          <dd>インスタンス情報を参照します</dd>
+          <dt><a href="timeline">Timeline</a></dt>
+          <dd>インスタンスのタイムライン(ローカル/連合/タグ)を参照します。<br />過去のタイムラインを遡ることもできます。</dd>
           <dt><a href="streaming">Streaming</a></dt>
-          <dd>Streaming APIを参照します</dd>
+          <dd>インスタンスのタイムライン(ローカル/連合/タグ)を参照します。<br />こちらは自動更新されます。</dd>
+          <dt><a href="status">Status</a></dt>
+          <dd>ステータス(トゥート)の様々な情報を参照します</dd>
         </dl>
 
         <p><a href="https://github.com/mei23/mstpubapi" target="_blank">ソースや説明はこちら</a></p>
