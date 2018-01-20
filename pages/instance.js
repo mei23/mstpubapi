@@ -52,29 +52,29 @@ export default class extends React.Component {
       }
     }
 
-    this.setState({message: ''})
+    this.setState({message: newHost + ' から取得中...'})
 
     // fetch instance
     const M = new Mastodon("", newHost)
     M.get(`/api/v1/instance`)
-      .catch((reason) => {
-        this.setState({message: 'Error in fetch instance: ' + JSON.stringify(reason)})
-      })
       .then(instance => {
-        this.setState({message: this.state.message + 'instance 取得完了'})
+        this.setState({message: this.state.message + ' instance 取得完了'})
         // update show status
         this.setState({instance: instance})
       })
+      .catch((reason) => {
+        this.setState({message: 'Error in fetch instance: ' + JSON.stringify(reason)})
+      })
 
     M.get(`/api/v1/custom_emojis`)
-      .catch((reason) => {
-        this.setState({message: 'Error in fetch custom_emojis: ' + JSON.stringify(reason)})
-      })
       .then(custom_emojis => {
-        this.setState({message: this.state.message + 'custom_emojis 取得完了'})
+        this.setState({message: this.state.message + ' custom_emojis 取得完了'})
 
         // update show status
         this.setState({custom_emojis: custom_emojis})
+      })
+      .catch((reason) => {
+        this.setState({message: this.state.message + ' custom_emojis 取得失敗'})
       })
   }
   
@@ -97,6 +97,9 @@ export default class extends React.Component {
               required style={{width: '14em' }} name='host' placeholder='例: example.com' title='インスタンスホスト(例: example.com)' />
             <button  type="submit">変更反映</button>
           </form>
+        </div>
+        <div className='current_params'>
+          {this.state.message}
         </div>
 
         <InstanceInfo instance={this.state.instance} emojis={this.state.custom_emojis} />
