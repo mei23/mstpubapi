@@ -39,6 +39,7 @@ export default class extends React.Component {
 
     // clear fetched object cache
     this.setState({instance: null})
+    this.setState({custom_emojis: null})
 
     // update addressbar
     const oldAddr = window.location.pathname + window.location.search
@@ -52,30 +53,37 @@ export default class extends React.Component {
       }
     }
 
-    this.setState({message: newHost + ' から取得中...'})
+    const M = new Mastodon("", newHost)
 
     // fetch instance
-    const M = new Mastodon("", newHost)
+    this.setState({message: newHost + ' instance 取得中...'})
+
     M.get(`/api/v1/instance`)
-      .then(instance => {
-        this.setState({message: this.state.message + ' instance 取得完了'})
-        // update show status
-        this.setState({instance: instance})
-      })
-      .catch((reason) => {
-        this.setState({message: 'Error in fetch instance: ' + JSON.stringify(reason)})
-      })
+    .then(instance => {
+      this.setState({message: newHost + ' instance 取得完了'})
+      this.setState({instance: instance})
+      
+      // fetch custom_emojis
+      this.setState({message: newHost + ' custom_emojis 取得中...'})
 
-    M.get(`/api/v1/custom_emojis`)
+      M.get(`/api/v1/custom_emojis`)
       .then(custom_emojis => {
-        this.setState({message: this.state.message + ' custom_emojis 取得完了'})
-
-        // update show status
+        this.setState({message: newHost + ' custom_emojis 取得完了'})
         this.setState({custom_emojis: custom_emojis})
       })
       .catch((reason) => {
-        this.setState({message: this.state.message + ' custom_emojis 取得失敗'})
+        if (reason && reason.status == 404) {
+          this.setState({message: newHost + ' custom_emojis 取得失敗(未対応)'})
+        }
+        else {
+          this.setState({message: newHost + ' custom_emojis 取得失敗'+ JSON.stringify(reason)})
+        }
       })
+
+    })
+    .catch((reason) => {
+      this.setState({message: newHost + ' instance 取得失敗' + JSON.stringify(reason)})
+    })
   }
   
   submitParams(event) {
