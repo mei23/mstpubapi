@@ -52,7 +52,11 @@ export default class extends React.Component {
 
     // update addressbar
     const oldAddr = window.location.pathname + window.location.search
-    const newAddr = `${window.location.pathname}?host=${newHost}&type=${newType}&max=${newMax}&since=${newSince}`
+    const newAddr = `${window.location.pathname}?host=${newHost}`
+      + (newType ? `&type=${newType}`   : '')
+      + (newMax   > 0 ? `&max=${newMax}`     : '')
+      + (newSince > 0 ? `&since=${newSince}` : '')
+
     if (oldAddr != newAddr) {
       if (!oldAddr.match(/[?]/)) {  // on initial adressbar update
         window.history.replaceState({}, '', newAddr) // do not create new history entry
