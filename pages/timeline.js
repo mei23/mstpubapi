@@ -223,11 +223,10 @@ export default class extends React.Component {
     return (
       <Layout title='Timeline'>
         <Head>
-          <link rel='stylesheet' href='../custom/style.css' />
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
-        <p>各タイムラインを参照します <a href='https://github.com/mei23/mstpubapi/blob/master/README.md#%E3%82%BF%E3%82%A4%E3%83%A0%E3%83%A9%E3%82%A4%E3%83%B3'>
+        <p>インスタンスのタイムラインを参照します <a href='https://github.com/mei23/mstpubapi/blob/master/README.md#%E3%82%BF%E3%82%A4%E3%83%A0%E3%83%A9%E3%82%A4%E3%83%B3'>
           説明</a></p>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>

@@ -116,7 +116,6 @@ export default class extends React.Component {
     return (
       <Layout title='Status'>
         <Head>
-          <link rel='stylesheet' href='../custom/style.css' />
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}

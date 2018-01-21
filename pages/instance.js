@@ -90,7 +90,7 @@ export default class extends React.Component {
         <Head>
           <base target='_blank' />
         </Head>
-
+        <p>インスタンス情報を参照します</p>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}

@@ -157,11 +157,10 @@ export default class extends React.Component {
     return (
       <Layout title='Streaming'>
         <Head>
-          <link rel='stylesheet' href='../custom/style.css' />
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
-        <p>各Streaming APIを参照します</p>
+        <p>インスタンスのタイムラインを参照＋ストリーミングします</p>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
