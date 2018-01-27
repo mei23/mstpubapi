@@ -1,5 +1,6 @@
 
 import React from 'react'
+import HostComponent from '/components/HostComponent'
 import Head from 'next/head'
 import Layout from '/components/Layout'
 import * as IDX from '/utils/idx'
@@ -9,7 +10,7 @@ import moment from 'moment';
 import stylesheet from 'react-datepicker/dist/react-datepicker.css'
 import TimeLeapBox from '/components/TimeLeapBox'
 
-export default class extends React.Component {
+export default class extends HostComponent {
 
   constructor(props) {
     super(props)

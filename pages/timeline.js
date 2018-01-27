@@ -1,5 +1,6 @@
 
 import React from 'react'
+import HostComponent from '/components/HostComponent'
 import Head from 'next/head'
 import Layout from '/components/Layout'
 import Mastodon from 'mstdn-api'
@@ -11,7 +12,7 @@ import querystring from 'querystring'
 import * as UrlUtil from '/utils/urlUtil'
 import * as F from '/utils/formatter'
 
-export default class extends React.Component {
+export default class extends HostComponent {
   constructor(props) {
     super(props)
     this.state = {}
@@ -51,20 +52,10 @@ export default class extends React.Component {
     this.inputSince.value = newSince
 
     // update addressbar
-    const oldAddr = window.location.pathname + window.location.search
-    const newAddr = `${window.location.pathname}?host=${newHost}`
+    this.updateAddressbar(`${window.location.pathname}?host=${newHost}`
       + (newType ? `&type=${newType}`   : '')
       + (newMax   > 0 ? `&max=${newMax}`     : '')
-      + (newSince > 0 ? `&since=${newSince}` : '')
-
-    if (oldAddr != newAddr) {
-      if (!oldAddr.match(/[?]/)) {  // on initial adressbar update
-        window.history.replaceState({}, '', newAddr) // do not create new history entry
-      }
-      else {
-        window.history.pushState({}, '', newAddr)
-      }
-    }
+      + (newSince > 0 ? `&since=${newSince}` : ''))
 
     // clear fetched object cache
     this.setState({statuses: null})
