@@ -1,6 +1,6 @@
 {
   "name": "mstpubapi",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Web application to show mastodon timeline and more, without authentication.",
   "engines": {
     "node": "8.9.3"
@@ -23,7 +23,7 @@
     "long": "^3.2.0",
     "moment": "^2.20.1",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git",
-    "next": "^4.2.1",
+    "next": "^4.2.3",
     "node-sass": "^4.7.2",
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
