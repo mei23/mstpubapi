@@ -14,7 +14,7 @@ export default class extends React.Component {
 
   render(props) {
     return (
-      <Layout title='mstpubapi'>
+      <Layout>
         <p>Mastodonインスタンスの情報やタイムラインを参照したりします</p>
         <dl>
           <dt><a href="instance">Instance</a></dt>
