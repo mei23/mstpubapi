@@ -84,11 +84,21 @@ export const extractProfileEmojis =  (content, emojis) => {
   return content
 }
 
-export const convertContent = (status) => {
-  let c = escapeContent(status.content)
+/**
+ * status to converted-content
+ * @param {*} status 
+ */
+export const getConvertedContent = (status) => {
+  let c = status.content
+  c = escapeContent(c)
   c = extractEmojis(c, status.emojis, false)
   c = extractNicorus(c)
   c = extractProfileEmojis(c, status.profile_emojis)
+  return c
+}
+
+export const convertContent = (status) => {
+  const c = getConvertedContent(status)
   status._converted = c
   return status
 }

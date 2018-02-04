@@ -88,7 +88,7 @@ const AvatarBox = (props) => {
 const StatusBodyEx = (props) => {
   const status = props.status
   const showAccountRegisted = props.showAccountRegisted
-  const c = status._converted
+  const c = F.getConvertedContent(status)
 
   return (
     <div>

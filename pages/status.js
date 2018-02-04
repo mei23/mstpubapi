@@ -60,9 +60,6 @@ export default class extends HostComponent {
       })
       .then(status => {
         this.setState({message: this.state.message + 'status 取得完了'})
-        
-        // replace received content
-        status = F.convertContent(status)
 
         // update show status
         this.setState({status: status})
@@ -148,7 +145,6 @@ export default class extends HostComponent {
             <div>
               <div>{this.state.context.ancestors.length} アイテム</div>
               {this.state.context.ancestors
-                .map(status => F.convertContent(status))
                 .map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
             </div>
             : '取得中またはエラー'}
@@ -160,7 +156,6 @@ export default class extends HostComponent {
             <div>
               <div>{this.state.context.descendants.length} アイテム</div>
               {this.state.context.descendants
-                .map(status => F.convertContent(status))
                 .map(status => <StatusBox key={status.id} status={status} host={this.state.host} />) }
             </div>
             : '取得中またはエラー'}

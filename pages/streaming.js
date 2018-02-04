@@ -17,6 +17,7 @@ export default class extends HostComponent {
 
     this.state.message = '' // message
     this.state.statuses = []
+    this.state.generateds = []  // generated DOMs
     this.listener = null;
 
     this.submitParams = this.submitParams.bind(this);
@@ -47,6 +48,7 @@ export default class extends HostComponent {
 
     // clear fetched object cache
     this.setState({statuses: []})
+    this.setState({generateds: []})
 
     this.setState({message: ''})
 
@@ -85,13 +87,14 @@ export default class extends HostComponent {
     const M = new Mastodon("", newHost)
     M.get(queryUrl, queryPara)
       .then(statuses => {
-        // replace received content
-        statuses.map(status => F.convertContent(status))
 
-        // update show status
+
         this.setState({statuses: statuses})
-
         this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${queryUrl}`})
+
+        // DOM生成しておく
+        let generateds = statuses.map(status => <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} />)
+        this.setState({generateds: generateds})
 
         // Setup streaming
         this.setState({message: `Streamingを継続受信中 Host: ${newHost}, Streaming: ${streamUrl}`})
@@ -113,17 +116,19 @@ export default class extends HostComponent {
             //this.setState({c1: this.st5.count})
             //this.setState({velo: this.st5.tootPerMin})
 
-            // replace received content
-            status = F.convertContent(status)
-
             statuses.unshift(status)
             statuses = statuses.slice(0, 40)
+            this.setState({statuses: statuses})
+
+            const generated = <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} />
+            generateds.unshift(generated)
+            generateds = generateds.slice(0, 40)
+            this.setState({generateds: generateds})
+
             //statuses = [status].concat(statuses).slice(0, 40)
 
             // 表示保留 でない限りトゥート一覧更新
             //if (!this.state.noDisp) { this._updateStx() }
-
-          this.setState({statuses: statuses})
         })
         .on('error', err => {
           console.error("err", err)
@@ -171,8 +176,8 @@ export default class extends HostComponent {
         <div>
           { this.state.statuses ? 
             <div>
-              <div>{this.state.statuses.length} アイテム</div>
-              {this.state.statuses.map(status => <StatusBox key={status.id} status={status} host={this.state.host} hideFooter={true} hideVisibility={true} />) }
+              <div>{this.state.generateds.length} アイテム</div>
+              {this.state.generateds}
             </div>
             : '取得中またはエラー'}
         </div>

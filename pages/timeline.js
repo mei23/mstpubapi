@@ -97,8 +97,6 @@ export default class extends HostComponent {
     const M = new Mastodon("", newHost)
     M.get(queryUrl, queryPara)
       .then(statuses => {
-        // update show status
-        statuses.map(status => F.convertContent(status))
         this.setState({statuses: statuses})
         this.setState({message: `ステータスを取得しました Host: ${newHost}, Path: ${queryUrl}, Para: ${JSON.stringify(queryPara)}`})
       })
