@@ -78,6 +78,11 @@ export default class extends HostComponent {
         this.setState({msg2: 'ブーストなのでチェックできません、トゥートのIDでやり直してください。中断！'})
         return
       }
+      else if (status.in_reply_to_id) {
+        this.setState({msg2: 'リプライなのでチェックできません、トゥートのIDでやり直してください。中断！'})
+        return
+      }
+      
       else {
         this.setState({msg2: 'ステータス取得＆チェック前提条件OK、チェック継続'})
       }
@@ -106,7 +111,7 @@ export default class extends HostComponent {
           this.setState({msg4: 'OK: 公開TLにいました、たぶんサイレンスされていません'})
         }
         else if (statuses.length === 0) {
-          this.setState({msg4: 'NG: 公開TLにいません、たぶんサイレンスされています'})
+          this.setState({msg4: 'NG: 公開TLにいません、もしかしたらサイレンスされています'})
         }
         else {
           this.setState({msg4: 'チェックエラー、不明'})
