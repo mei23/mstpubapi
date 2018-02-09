@@ -19,6 +19,7 @@ export default class extends HostComponent {
     this.state.statuses = []
     this.state.generateds = []  // generated DOMs
     this.listener = null;
+    this.statusLimit = 40 // max status count
 
     this.submitParams = this.submitParams.bind(this);
   }
@@ -56,7 +57,7 @@ export default class extends HostComponent {
     
     let queryUrl = null
     let queryPara = {
-      limit: '40',
+      limit: this.statusLimit,
     }
     let streamUrl = null
 
@@ -88,7 +89,6 @@ export default class extends HostComponent {
     M.get(queryUrl, queryPara)
       .then(statuses => {
 
-
         this.setState({statuses: statuses})
         this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${queryUrl}`})
 
@@ -117,12 +117,12 @@ export default class extends HostComponent {
             //this.setState({velo: this.st5.tootPerMin})
 
             statuses.unshift(status)
-            statuses = statuses.slice(0, 40)
+            statuses = statuses.slice(0, this.statusLimit)
             this.setState({statuses: statuses})
 
             const generated = <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} />
             generateds.unshift(generated)
-            generateds = generateds.slice(0, 40)
+            generateds = generateds.slice(0, this.statusLimit)
             this.setState({generateds: generateds})
 
             //statuses = [status].concat(statuses).slice(0, 40)
