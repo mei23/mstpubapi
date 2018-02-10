@@ -135,7 +135,7 @@ export default class extends HostComponent {
 
   render() {
     return (
-      <Layout title='サイレンスチェック'>
+      <Layout title='サイレンスチェッカー'>
         <Head>
           <base target='_blank' />
         </Head>
