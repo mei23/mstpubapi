@@ -62,17 +62,34 @@ export default class extends HostComponent {
     }
     let streamUrl = null
 
+    let nsfwFilter = 0
+    let mediaOnly = false
+
     if (newType == '') {
       queryUrl = '/api/v1/timelines/public'
       queryPara.local = 'true'
       streamUrl = 'public/local'
     }
-    else if (newType == 'local') {
+    // Pawoo系のメディアタイムライン
+    else if (newType.match(/^local-media(-nsfw|-sfw)?$/)) {
+      queryUrl = '/api/v1/timelines/public'
+      queryPara.media = 'true'
+      queryPara.local = 'true'
+      streamUrl = 'public/local'
+      mediaOnly = true
+    }
+    else if (newType.match(/^fera-media(-nsfw|-sfw)?$/)) {
+      queryUrl = '/api/v1/timelines/public'
+      queryPara.media = 'true'
+      streamUrl = 'public'
+      mediaOnly = true
+    }
+    else if (newType.match(/^local(-nsfw|-sfw)?$/)) {
       queryUrl = '/api/v1/timelines/public'
       queryPara.local = 'true'
       streamUrl = 'public/local'
     }
-    else if (newType == 'fera') {
+    else if (newType.match(/^fera(-nsfw|-sfw)?$/)) {
       queryUrl = '/api/v1/timelines/public'
       // local=false じゃなくてキー自体送っちゃだめっぽい
       streamUrl = 'public'
@@ -83,6 +100,9 @@ export default class extends HostComponent {
       streamUrl = `hashtag/${newType}`
     }
 
+    if (newType.match(/-nsfw$/)) nsfwFilter = -1
+    if (newType.match(/-sfw$/))  nsfwFilter =  1
+
     this.setState({message: `これまでのステータスを取得中... Host: ${newHost}, Path: ${queryUrl}`})
 
     // fetch statuses
@@ -90,11 +110,15 @@ export default class extends HostComponent {
     M.get(queryUrl, queryPara)
       .then(statuses => {
 
+        // メディアのみフィルタ(MediaTimeline Endpoint がないインスタンスのためにフィルタ / TODO:inner見るべき？)
+        // statuses = statuses.filter(status => !mediaOnly || status.media_attachments.length > 0)
+
         this.setState({statuses: statuses})
         this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${queryUrl}`})
 
         // DOM生成しておく
-        let generateds = statuses.map(status => <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} />)
+        let generateds = statuses.map(status => <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true}
+          nsfwFilter={nsfwFilter} />)
         this.setState({generateds: generateds})
 
         // Setup streaming
@@ -117,11 +141,14 @@ export default class extends HostComponent {
             //this.setState({c1: this.st5.count})
             //this.setState({velo: this.st5.tootPerMin})
 
+            if (mediaOnly && status.media_attachments.length < 1) return
+
             statuses.unshift(status)
             statuses = statuses.slice(0, this.statusLimit)
             this.setState({statuses: statuses})
 
-            const generated = <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} />
+            const generated = <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} 
+              nsfwFilter={nsfwFilter} />
             generateds.unshift(generated)
             generateds = generateds.slice(0, this.statusLimit)
             this.setState({generateds: generateds})

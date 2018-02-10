@@ -140,10 +140,15 @@ export default (props) => {
   const outer = props.status
   const inner = outer.reblog || outer
   const host = props.host
+  const nsfwFilter = props.nsfwFilter || 0 // 0=none, 1=filter NSFW, -1=filter SFW
 
+  const show = (nsfwFilter == 0)
+    || (nsfwFilter > 0 && !inner.sensitive)
+    || (nsfwFilter < 0 &&  inner.sensitive)
+  
   return (
     <div>
-      <div className={'status'} style={{ display: 'flex' }}>
+      <div className={'status'} style={{ display: show ? 'flex' : 'none'}}>
         <div className={'status_right'} style={{ margin:'0.3em'}}>
           <AvatarBox account={inner.account} host={host} size='48' showSts={false} />
         </div>

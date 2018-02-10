@@ -20,6 +20,7 @@ export default class extends HostComponent {
     
     this.state.message = '' // message
     this.state.statuses = []
+    this.state.nsfwFilter = 0
 
     this.submitParams = this.submitParams.bind(this);
     this.moveUp = this.moveUp.bind(this);
@@ -60,8 +61,8 @@ export default class extends HostComponent {
 
     // clear fetched object cache
     this.setState({statuses: null})
-
     this.setState({message: ''})
+    this.setState({nsfwFilter: 0})
 
     if (!newHost) return
     
@@ -70,32 +71,39 @@ export default class extends HostComponent {
       limit: '40',
     }
 
+    let mediaOnly = false
+
     if (newType == '') {
       queryUrl = '/api/v1/timelines/public'
       queryPara.local = 'true'
     }
-    else if (newType == 'local') {
+    // Pawoo系のメディアタイムライン
+    else if (newType.match(/^local-media(-nsfw|-sfw)?$/)) {
+      queryUrl = '/api/v1/timelines/public'
+      queryPara.media = 'true'
+      queryPara.local = 'true'
+      mediaOnly = true
+    }
+    else if (newType.match(/^fera-media(-nsfw|-sfw)?$/)) {
+      queryUrl = '/api/v1/timelines/public'
+      queryPara.media = 'true'
+      mediaOnly = true
+    }
+    else if (newType.match(/^local(-nsfw|-sfw)?$/)) {
       queryUrl = '/api/v1/timelines/public'
       queryPara.local = 'true'
     }
-    else if (newType == 'fera') {
+    else if (newType.match(/^fera(-nsfw|-sfw)?$/)) {
       queryUrl = '/api/v1/timelines/public'
       // local=false じゃなくてキー自体送っちゃだめっぽい
-    }
-    // Pawoo系のメディアタイムライン
-    else if (newType == 'local-media') {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.media = 'true'
-      queryPara.local = 'true'
-    }
-    else if (newType == 'fera-media') {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.media = 'true'
     }
     else {
       queryUrl = `/api/v1/timelines/tag/${newType}`
       // local=false じゃなくてキー自体送っちゃだめっぽい
     }
+
+    if (newType.match(/-nsfw$/)) this.setState({nsfwFilter: -1})
+    if (newType.match(/-sfw$/))  this.setState({nsfwFilter:  1})
 
     if (newMax > 0)   queryPara.max_id   = newMax
     if (newSince > 0) queryPara.since_id = newSince
@@ -108,6 +116,10 @@ export default class extends HostComponent {
     const M = new Mastodon("", newHost)
     M.get(queryUrl, queryPara)
       .then(statuses => {
+
+        // メディアのみフィルタ(MediaTimeline Endpoint がないインスタンスのためにフィルタ / TODO:inner見るべき？)
+        // statuses = statuses.filter(status => !mediaOnly || status.media_attachments.length > 0)
+
         this.setState({statuses: statuses})
         this.setState({message: `ステータスを取得しました Host: ${newHost}, Path: ${queryUrl}, Para: ${JSON.stringify(queryPara)}`})
       })
@@ -291,7 +303,8 @@ export default class extends HostComponent {
           { this.state.statuses ? 
             <div>
               <div>{this.state.statuses.length} アイテム</div>
-              {this.state.statuses.map(status => <StatusBox key={status.id} status={status} host={this.state.host} hideVisibility={true} />) }
+              {this.state.statuses.map(status => <StatusBox key={status.id} status={status} host={this.state.host} hideVisibility={true} 
+                nsfwFilter={this.state.nsfwFilter} />) }
             </div>
             : '取得中またはエラー'}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>
