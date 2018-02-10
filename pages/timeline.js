@@ -81,6 +81,16 @@ export default class extends HostComponent {
       queryUrl = '/api/v1/timelines/public'
       // local=false じゃなくてキー自体送っちゃだめっぽい
     }
+    // Pawoo系のメディアタイムライン
+    else if (newType == 'local-media') {
+      queryUrl = '/api/v1/timelines/public'
+      queryPara.media = 'true'
+      queryPara.local = 'true'
+    }
+    else if (newType == 'fera-media') {
+      queryUrl = '/api/v1/timelines/public'
+      queryPara.media = 'true'
+    }
     else {
       queryUrl = `/api/v1/timelines/tag/${newType}`
       // local=false じゃなくてキー自体送っちゃだめっぽい
@@ -227,7 +237,7 @@ export default class extends HostComponent {
               required style={{width: '14em' }} name='host' placeholder='例: example.com' title='インスタンスホスト(例: example.com)' />
             {' '}
             Type:<input type="text" ref={x => this.inputType = x} defaultValue={this.state.type}
-              style={{width: '10em' }} name='type' placeholder='例: local/fera/タグ' title='種類(local=ローカル, fera=連合, その他はタグ扱い)' />(local/fera/タグ)
+              style={{width: '10em' }} name='type' placeholder='例: local/fera/タグ' title='種類(local=ローカル, fera=連合, local-media=メディア(Pawooのみ), その他はタグ扱い)' />(local/fera/タグ)
             {' '}
             <br />
             Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
