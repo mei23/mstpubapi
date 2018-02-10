@@ -9,6 +9,7 @@ import AccountDetail from '/components/AccountDetail'
 import querystring from 'querystring'
 import ShowInTimeline from '/components/ShowInTimeline'
 import * as F from '/utils/formatter'
+import DebugInfo from '/components/DebugInfo'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -183,8 +184,7 @@ export default class extends HostComponent {
             : '取得中またはエラー'}
        </div>
 
-        <div>
-          <h3>JSON</h3>
+        <DebugInfo>
           <h4>status</h4>
           <div className='json_text'>{JSON.stringify(this.state.status)}</div>
           <h4>context (ancestors / descendants を含む)</h4>
@@ -193,8 +193,8 @@ export default class extends HostComponent {
           <div className='json_text'>{JSON.stringify(this.state.reblogged_by)}</div>
           <h4>favourited_by (お気に入り)</h4>
           <div className='json_text'>{JSON.stringify(this.state.favourited_by)}</div>
-        </div>
-        </Layout>
+        </DebugInfo>
+      </Layout>
     )
   }
 }

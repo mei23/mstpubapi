@@ -28,9 +28,6 @@ export default class extends React.Component {
           <dt><a href="silence">サイレンスチェック</a></dt>
           <dd>インスタンスで特定のユーザーがサイレンスされているか調べます</dd>
         </dl>
-
-        <p><a href="https://github.com/mei23/mstpubapi" target="_blank">ソースや説明はこちら</a></p>
-        
       </Layout>
     )
   }

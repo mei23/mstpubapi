@@ -11,6 +11,7 @@ import * as IDX from '/utils/idx'
 import querystring from 'querystring'
 import * as UrlUtil from '/utils/urlUtil'
 import * as F from '/utils/formatter'
+import DebugInfo from '/components/DebugInfo'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -299,11 +300,10 @@ export default class extends HostComponent {
             </div>
         </div>
 
-        <div>
-          <h3>JSON</h3>
+        <DebugInfo>
           <h4>statuses</h4>
           <div className='json_text'>{JSON.stringify(this.state.statuses)}</div>
-        </div>
+        </DebugInfo>
       </Layout>
     )
   }

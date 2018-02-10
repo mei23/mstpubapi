@@ -16,6 +16,9 @@ export default (props) => {
         : <h1><a href='/' target='_self'>mstpubapi</a></h1>
       }
       {props.children}
+
+      <p><a href="https://github.com/mei23/mstpubapi" target="_blank">ソースコードや説明はこちら</a></p>
+
     </div>
   )
 }

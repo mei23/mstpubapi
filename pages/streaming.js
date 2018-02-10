@@ -9,6 +9,7 @@ import AccountDetail from '/components/AccountDetail'
 import * as IDC from '/utils/idcalc'
 import querystring from 'querystring'
 import * as F from '/utils/formatter'
+import DebugInfo from '/components/DebugInfo'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -182,11 +183,10 @@ export default class extends HostComponent {
             : '取得中またはエラー'}
         </div>
 
-        <div>
-          <h3>JSON</h3>
+        <DebugInfo>
           <h4>statuses</h4>
           <div className='json_text'>{JSON.stringify(this.state.statuses)}</div>
-        </div>
+        </DebugInfo>
       </Layout>
     )
   }

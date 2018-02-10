@@ -7,6 +7,7 @@ import Mastodon from 'mstdn-api'
 import InstanceInfo from '/components/InstanceInfo'
 import querystring from 'querystring'
 import * as F from '/utils/formatter'
+import DebugInfo from '/components/DebugInfo'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -103,14 +104,13 @@ export default class extends HostComponent {
 
         <InstanceInfo instance={this.state.instance} emojis={this.state.custom_emojis} />
 
-        <div style={{display: 'none'}}>
-          <h3>JSON</h3>
+        <DebugInfo>
           <h4>instance</h4>
           <div className='json_text'>{JSON.stringify(this.state.instance)}</div>
           <h4>custom_emojis</h4>
           <div className='json_text'>{JSON.stringify(this.state.custom_emojis)}</div>
-        </div>
-        </Layout>
+        </DebugInfo>
+      </Layout>
     )
   }
 }
