@@ -117,8 +117,7 @@ export default class extends HostComponent {
     }
     else {
       queryUrl = `/api/v1/timelines/tag/${newType}`
-      // local=false じゃなくてキー自体送っちゃだめっぽい
-      streamUrl = `hashtag/${newType}`
+      streamUrl = `hashtag?tag=${newType}`
     }
 
     if (newType.match(/-nsfw$/)) nsfwFilter = -1
