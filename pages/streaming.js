@@ -48,8 +48,8 @@ export default class extends HostComponent {
 
     const isMedia = inner && inner.media_attachments && inner.media_attachments.length > 0 
     const isNsfw = inner && inner.sensitive
-    console.log('isMedia', isMedia)
-    console.log('isNsfw', isNsfw)
+    //console.log('isMedia', isMedia)
+    //console.log('isNsfw', isNsfw)
 
     if (mediaOnly && !isMedia) return false
     if (nsfwFilter ==  1 &&  isNsfw) return false
