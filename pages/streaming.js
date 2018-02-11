@@ -116,8 +116,16 @@ export default class extends HostComponent {
       streamUrl = 'public'
     }
     else {
-      queryUrl = `/api/v1/timelines/tag/${newType}`
-      streamUrl = `hashtag?tag=${newType}`
+      const matchTags = newType.match(/^([^-]+)(-nsfw|-sfw)?$/)
+      if (matchTags) {
+        const tag = matchTags[1]
+        queryUrl = `/api/v1/timelines/tag/${tag}`
+        streamUrl = `hashtag?tag=${tag}`
+      }
+      else {
+        queryUrl = `/api/v1/timelines/tag/${newType}`
+        streamUrl = `hashtag?tag=${newType}`
+      }
     }
 
     if (newType.match(/-nsfw$/)) nsfwFilter = -1

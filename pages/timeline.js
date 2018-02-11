@@ -98,8 +98,14 @@ export default class extends HostComponent {
       // local=false じゃなくてキー自体送っちゃだめっぽい
     }
     else {
-      queryUrl = `/api/v1/timelines/tag/${newType}`
-      // local=false じゃなくてキー自体送っちゃだめっぽい
+      const matchTags = newType.match(/^([^-]+)(-nsfw|-sfw)?$/)
+      if (matchTags) {
+        const tag = matchTags[1]
+        queryUrl = `/api/v1/timelines/tag/${tag}`
+      }
+      else {
+        queryUrl = `/api/v1/timelines/tag/${newType}`
+      }
     }
 
     if (newType.match(/-nsfw$/)) this.setState({nsfwFilter: -1})
