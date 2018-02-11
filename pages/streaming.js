@@ -36,6 +36,27 @@ export default class extends HostComponent {
     this.onNewUrl();
   }
 
+  /**
+   * statusの表示対象判定
+   * @param {*} status 
+   * @param {boolean} mediaOnly 
+   * @param {number} nsfwFilter (1=show sfw only, -1=show nsfw only)
+   */
+  checkFilter(status, mediaOnly, nsfwFilter) {
+    const outer = status
+    const inner = outer.reblog || outer
+
+    const isMedia = inner && inner.media_attachments && inner.media_attachments.length > 0 
+    const isNsfw = inner && inner.sensitive
+    console.log('isMedia', isMedia)
+    console.log('isNsfw', isNsfw)
+
+    if (mediaOnly && !isMedia) return false
+    if (nsfwFilter ==  1 &&  isNsfw) return false
+    if (nsfwFilter == -1 && !isNsfw) return false
+    return true
+  }
+
   refresh(newHost, newType) {
 
     // update current params
@@ -141,12 +162,14 @@ export default class extends HostComponent {
             //this.setState({c1: this.st5.count})
             //this.setState({velo: this.st5.tootPerMin})
 
-            if (mediaOnly && status.media_attachments.length < 1) return
+            // Streaming受信時にMedia/NSFWフィルタ
+            if (!this.checkFilter(status, mediaOnly, nsfwFilter)) return
 
             statuses.unshift(status)
             statuses = statuses.slice(0, this.statusLimit)
             this.setState({statuses: statuses})
 
+            // TODO:本当はStreamingの場合はここでDOMフィルタしなくていい
             const generated = <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} 
               nsfwFilter={nsfwFilter} />
             generateds.unshift(generated)
