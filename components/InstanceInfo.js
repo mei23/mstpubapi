@@ -27,12 +27,70 @@ export default (props) => {
       <p dangerouslySetInnerHTML={{ __html: desc }} />
 
       <h3>タイムライン参照</h3>
-
-      <div><a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local`}>ローカルタイムライン(自動更新付き)</a></div>
-      <div><a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera`}>連合タイムライン(自動更新付き)</a></div>
-      <div><a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local`}>ローカルタイムライン(過去遡り付き)</a></div>
-      <div><a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera`}>連合タイムライン(過去遡り付き)</a></div>
-      <div><a target='_self' href={`${timeleapPath}?host=${instance.uri}`}>特定時点のタイムラインを参照</a></div>
+      <dl>
+        <dt>Streaming - 自動更新されます</dt>
+        <dd style={{marginLeft:'1em'}}>
+          <div>
+            <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local`}><b>ローカル</b></a> (
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local-nsfw`}>閲覧注意のみ</a>
+            )
+          </div>
+          <div>
+            <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera`}>連合</a> (
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera-nsfw`}>閲覧注意のみ</a>
+            )
+          </div>
+          <div>
+            <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local-media`}>ローカルメディア</a> (
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local-media-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local-media-nsfw`}>閲覧注意のみ</a>
+            ) ※一部インスタンスのみ
+          </div>
+          <div>
+            <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera-media`}>連合メディア</a> (
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera-media-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera-media-nsfw`}>閲覧注意のみ</a>
+            ) ※一部インスタンスのみ
+          </div>
+        </dd>
+        <dt>Timeline - 過去を遡ることができます</dt>
+        <dd style={{marginLeft:'1em'}}>
+          <div>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local`}><b>ローカル</b></a> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-nsfw`}>閲覧注意のみ</a>
+            )
+          </div>
+          <div>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera`}>連合</a> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-nsfw`}>閲覧注意のみ</a>
+            )
+          </div>
+          <div>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media`}>ローカルメディア</a> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media-nsfw`}>閲覧注意のみ</a>
+            ) ※一部インスタンスのみ
+          </div>
+          <div>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media`}>連合メディア</a> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media-sfw`}>閲覧注意除く</a>
+              {' / '}
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media-nsfw`}>閲覧注意のみ</a>
+            ) ※一部インスタンスのみ
+          </div>
+        </dd>
+      </dl>
 
       <h3>カスタム絵文字</h3>
       <p style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -42,5 +100,5 @@ export default (props) => {
       <h3>サムネイル</h3>
       <div>{instance.thumbnail ? <img src={instance.thumbnail} style={{maxWidth:'100%'}} /> : ''}</div>
     </div> 
-)
+  )
 }
