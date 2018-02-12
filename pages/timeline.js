@@ -248,26 +248,38 @@ export default class extends HostComponent {
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
-        <p>インスタンスのタイムラインを参照します <a href='https://github.com/mei23/mstpubapi/blob/master/README.md#%E3%82%BF%E3%82%A4%E3%83%A0%E3%83%A9%E3%82%A4%E3%83%B3'>
-          説明</a></p>
+        <p>インスタンスのタイムラインを参照します <a href='https://github.com/mei23/mstpubapi/blob/master/README.md#Timeline'>説明</a></p>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
-            Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
-              required style={{width: '14em' }} name='host' placeholder='例: example.com' title='インスタンスホスト(例: example.com)' />
-            {' '}
-            Type:<input type="text" ref={x => this.inputType = x} defaultValue={this.state.type}
-              style={{width: '10em' }} name='type' placeholder='例: local/fera/タグ' title='種類(local=ローカル, fera=連合, local-media=メディア(Pawooのみ), その他はタグ扱い)' />(local/fera/タグ)
-            {' '}
-            <br />
-            Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
-              style={{width: '12em' }} name='max' placeholder='省略可' title='このIDより前から表示(省略時は最新から)' />
-            {' '}
-            Since:<input type="text" ref={x => this.inputSince = x} defaultValue={this.state.since}
-              style={{width: '12em' }} name='since' placeholder='省略可' title='このIDの手前まで表示(省略時は最大件数まで)' />
-              
-            <button  type="submit">変更反映</button>
-            
-            <a href={UrlUtil.getPagePath('timeleap') + '?host=' + this.state.host} target='_self'>時間指定</a>
+            <div style={{display:'flex', flexWrap:'wrap', alignItems:'center'}}>
+              <div>
+                Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
+                  required style={{width: '14em' }} name='host' placeholder='例: example.com' title='インスタンスホスト(例: example.com)' />
+              </div>
+              <div>
+                Type:<input type="text" ref={x => this.inputType = x} defaultValue={this.state.type}
+                  style={{width: '10em' }} name='type' placeholder='例: local/fera/タグ' title='種類(local=ローカル, fera=連合, local-media=メディア(Pawooのみ), その他はタグ扱い)' />
+              </div>
+              <div>
+                Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
+                  style={{width: '12em' }} name='max' placeholder='省略可' title='このIDより前から表示(省略時は最新から)' />
+              </div>
+              <div>
+                Since:<input type="text" ref={x => this.inputSince = x} defaultValue={this.state.since}
+                  style={{width: '12em' }} name='since' placeholder='省略可' title='このIDの手前まで表示(省略時は最大件数まで)' />
+              </div>
+              <div>
+                <button  type="submit">変更反映</button>
+              </div>
+              <div>
+                <a href={UrlUtil.getPagePath('timeleap') + '?host=' + this.state.host} target='_self'>時間指定</a>
+              </div>
+              <style jsx>{`
+                div {
+                  margin-right: 1em;
+                }
+              `}</style>
+            </div>
           </form>
         </div>
 
@@ -276,14 +288,10 @@ export default class extends HostComponent {
         </div>
         <div>
           {/* Pager top */}
-          <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
-            <div style={{ marginRight: 'auto' }}>
-              <button onClick={this.moveUp} title='新着のみを表示します'>新着</button></div>
-            <div style={{ marginRight: 'auto' }}>
-              <button onClick={this.moveNow} title='最新からの表示に戻ります'>最新に戻る</button></div>
-            <div className={'timeshift_box '} style={{textAlign: 'right', marginRight: '10px' }}>
+          <div className='pager_box' style={{ display: 'flex', flexWrap:'wrap', justifyContent: 'flex-end', alignItems: 'center'}}>
+            <div className={'timeshift_box '} style={{textAlign: 'right', marginRight: 'auto' }}>
               <div>
-                未来へ移動: 
+                未来へ: 
                 <a className='move_link' onClick={e => this.moveMax(e, 60*1)}>1分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 60*10)}>10分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, 3600*1)}>1時間</a>/
@@ -293,7 +301,7 @@ export default class extends HostComponent {
                 <a className='move_link' onClick={e => this.moveMax(e, 86400*30)}>30日</a>
               </div>
               <div>
-                過去へ移動: 
+                過去へ: 
                 <a className='move_link' onClick={e => this.moveMax(e, -60*1)}>1分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -60*10)}>10分</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -3600)}>1時間</a>/
@@ -302,6 +310,10 @@ export default class extends HostComponent {
                 <a className='move_link' onClick={e => this.moveMax(e, -86400*7)}>7日</a>/
                 <a className='move_link' onClick={e => this.moveMax(e, -86400*30)}>30日</a>
               </div>
+            </div>
+            <div style={{ marginRight: 'auto' }}>
+              <button onClick={this.moveUp} title='新着のみを表示します'>新着</button>
+              <button onClick={this.moveNow} title='最新からの表示に戻ります'>最新に戻る</button>
             </div>
             <div><button onClick={this.moveDown} title='表示中のステータスの次のページを表示します'>次ページ</button></div>
           </div>

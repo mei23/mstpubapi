@@ -93,9 +93,15 @@ export default class extends HostComponent {
         <p>インスタンス情報を参照します</p>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
-            Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
-              required style={{width: '14em' }} name='host' placeholder='例: example.com' title='インスタンスホスト(例: example.com)' />
-            <button  type="submit">変更反映</button>
+            <div style={{display:'flex', flexWrap:'wrap', alignItems:'center'}}>
+              <div>
+                Host:<input type="text" ref={x => this.inputHost = x} defaultValue={this.state.host}
+                  required style={{width: '14em' }} name='host' placeholder='例: example.com' title='インスタンスホスト(例: example.com)' />
+              </div>
+              <div>
+                <button  type="submit">変更反映</button>
+              </div>
+            </div>
           </form>
         </div>
         <div className='current_params'>

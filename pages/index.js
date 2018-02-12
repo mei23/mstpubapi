@@ -25,6 +25,8 @@ export default class extends React.Component {
           <dd>インスタンスのタイムライン(ローカル/連合/タグ)を参照します。<br />こちらは自動更新されます。</dd>
           <dt><a href="status">Status</a></dt>
           <dd>ステータス(トゥート)の様々な情報を参照します</dd>
+        </dl>
+        <dl>
           <dt><a href="silence">サイレンスチェッカー</a></dt>
           <dd>インスタンスで特定のユーザーがサイレンスされているか調べます</dd>
         </dl>
