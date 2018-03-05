@@ -8,7 +8,7 @@ const MediaImage = (props) => {
   }
   */
   return (
-    <div>
+    <div className={'attachment-item'}>
       <a href={attachment.url}>
         <img className={'attachment-image'} src={attachment.preview_url} />
       </a><br />image
@@ -18,7 +18,7 @@ const MediaImage = (props) => {
 const MediaGifv = (props) => {
   const attachment = props.attachment
   return (
-    <div>
+    <div className={'attachment-item'}>
       <a href={attachment.url}>
         {props.hover
           ? <video className={'attachment-image'} src={attachment.url} autoplay='true' loop='true' />
@@ -32,7 +32,7 @@ const MediaGifv = (props) => {
 const MediaVideo = (props) => {
   const attachment = props.attachment
   return (
-    <div>
+    <div className={'attachment-item'}>
       <a href={attachment.url}>
         <img className={'attachment-video'} src={attachment.preview_url} />
       </a><br />video

@@ -154,16 +154,18 @@ a.move_link:hover {
   padding: 0.2em;
 }
 
+.attachment-item {
+  margin-right: 4px;
+}
+
 .attachment-image {
   max-width: 100%;
   max-height: 110px;
   transition: all 0.1s;
-  margin-right: 4px;
 }
 .attachment-image:hover {
   transform: scale(2);
   transition: all 0.2s;
-  margin-right: 16px;
 }
 
 .attachment-video { max-width: 100%; max-height: 110px }
