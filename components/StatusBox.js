@@ -1,5 +1,6 @@
 
 import UserIcon from '/components/UserIcon'
+import AttachmentMedia from '/components/AttachmentMedia'
 import * as F from '/utils/formatter'
 import Twemoji from 'react-twemoji';
 
@@ -52,24 +53,6 @@ const StatusHeaderEx = (props) => {
   )
 }
 
-const MediaBox = (props) => (
-  <div>
-    {props.mediaAttachments.map(attachment => (
-      <span key={attachment.id}>
-        <a href={attachment.url}>
-          {
-            attachment.type === 'image' || attachment.type === 'gifv'
-              ? <img className='attachment-image' src={attachment.preview_url} />
-            : attachment.type === 'video'
-              ? <video className='attachment-video' src={attachment.url} />
-              : ''
-          }
-        </a>
-      </span>
-    ))}
-  </div>
-)
-
 const AvatarBox = (props) => {
   const account = props.account
   const size = props.size > 0 ? props.size : 48
@@ -115,7 +98,9 @@ const StatusBodyEx = (props) => {
           }} />
         </Twemoji>
         {status.media_attachments.length > 0 ?
-          <MediaBox mediaAttachments={status.media_attachments} /> : ''}
+          <div style={{ display: 'flex' }}>
+            {status.media_attachments.map(att => <AttachmentMedia attachment={att} key={att.id} />)}
+          </div> : ''}
       </div>
     </div>
   )
