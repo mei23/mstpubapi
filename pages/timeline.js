@@ -21,6 +21,7 @@ export default class extends HostComponent {
     this.state.message = '' // message
     this.state.statuses = []
     this.state.nsfwFilter = 0
+    this.state.showCard = false
 
     this.submitParams = this.submitParams.bind(this);
     this.moveUp = this.moveUp.bind(this);
@@ -47,7 +48,7 @@ export default class extends HostComponent {
     this.setState({type: newType})
     this.setState({max: newMax})
     this.setState({since: newSince})
-    
+
     this.inputHost.value = newHost
     this.inputType.value = newType
     this.inputMax.value = newMax
@@ -271,9 +272,6 @@ export default class extends HostComponent {
               <div>
                 <button  type="submit">変更反映</button>
               </div>
-              <div>
-                <a href={UrlUtil.getPagePath('timeleap') + '?host=' + this.state.host} target='_self'>時間指定</a>
-              </div>
               <style jsx>{`
                 div {
                   margin-right: 1em;
@@ -281,6 +279,15 @@ export default class extends HostComponent {
               `}</style>
             </div>
           </form>
+        </div>
+        <div style={{display:'flex', flexWrap:'wrap', alignItems:'center'}}>
+          <div style={{marginRight:'1em'}}>
+            <input type="checkbox" onChange={e => this.setState({showCard: e.target.checked})} value={this.state.showCard} />
+            カード表示(次回表示後に反映)
+          </div>
+          <div style={{marginRight:'1em'}}>
+            <a href={UrlUtil.getPagePath('timeleap') + '?host=' + this.state.host} target='_self'>時間指定</a>
+          </div>
         </div>
 
         <div className='current_params'>
@@ -322,7 +329,7 @@ export default class extends HostComponent {
             <div>
               <div>{this.state.statuses.length} アイテム</div>
               {this.state.statuses.map(status => <StatusBox key={status.id} status={status} host={this.state.host} hideVisibility={true} 
-                nsfwFilter={this.state.nsfwFilter} />) }
+                nsfwFilter={this.state.nsfwFilter} showCard={this.state.showCard} />) }
             </div>
             : '取得中またはエラー'}
           <div className='pager_box' style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right'}}>

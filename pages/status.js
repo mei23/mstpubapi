@@ -165,7 +165,7 @@ export default class extends HostComponent {
         <div>
           <h3>card</h3>
           { this.state.card ? 
-            <PreviewCard card={this.state.card} /> : '取得中またはエラー'}
+            <PreviewCard card={this.state.card} mode='debug' /> : '取得中またはエラー'}
         </div>
 
         <div className='ancestors'>

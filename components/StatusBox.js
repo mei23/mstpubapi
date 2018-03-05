@@ -3,6 +3,8 @@ import UserIcon from '/components/UserIcon'
 import AttachmentMedia from '/components/AttachmentMedia'
 import * as F from '/utils/formatter'
 import Twemoji from 'react-twemoji';
+import PreviewCard from '/components/PreviewCard'
+import HostComponent from '/components/HostComponent'
 
 /**
  * トゥートヘッダ部分
@@ -120,30 +122,70 @@ const StatusFooterEx = (props) => {
   )
 }
 
-// status
-export default (props) => {
-  const outer = props.status
-  const inner = outer.reblog || outer
+const StatusCard = (props) => {
   const host = props.host
-  const nsfwFilter = props.nsfwFilter || 0 // 0=none, 1=filter NSFW, -1=filter SFW
+  const status = props.status
 
-  const show = (nsfwFilter == 0)
-    || (nsfwFilter > 0 && !inner.sensitive)
-    || (nsfwFilter < 0 &&  inner.sensitive)
-  
-  return (
-    <div>
-      <div className={'status'} style={{ display: show ? 'flex' : 'none'}}>
-        <div className={'status_right'} style={{ margin:'0.3em'}}>
-          <AvatarBox account={inner.account} host={host} size='48' showSts={false} />
-        </div>
-        <div className={'status_left'} style={{ margin:'0.3em', width:'100%'}}>
-          <StatusHeaderEx status={outer} host={host} hideVisibility={props.hideVisibility} />
-          <StatusBodyEx host={host} status={inner} showAccountRegisted={false} />
-          {props.hideFooter ? '' : <StatusFooterEx status={inner} />}
-        </div>
-      </div>
-    </div>
-  )
+  const hasLink = status.content.match(/https?:\/\//)
+  const hasMedia = status.media_attachments.length > 0
 }
 
+export default class extends HostComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      card: undefined
+    }
+  }
+
+  componentDidMount(){
+    const outer = this.props.status
+    const inner = outer.reblog || outer
+    const host = this.props.host
+
+    // card
+    if (this.props.showCard) {
+      const hasLink = inner.content.match(/https?:\/\//)
+      const hasMedia = inner.media_attachments.length > 0
+
+      if (hasLink && !hasMedia) {
+        const M = new Mastodon("", host)
+        console.log('try: ' + inner.id)
+        M.get(`/api/v1/statuses/${inner.id}/card`)
+        .then(card => {
+          this.setState({card: card})
+        })
+        .catch((reason) => {
+          console.log('Error in fetch card: ' + JSON.stringify(reason))
+        })
+      }
+    }
+  }
+
+  render() {
+    const outer = this.props.status
+    const inner = outer.reblog || outer
+    const host = this.props.host
+    const nsfwFilter = this.props.nsfwFilter || 0 // 0=none, 1=filter NSFW, -1=filter SFW
+    
+    const show = (nsfwFilter == 0)
+      || (nsfwFilter > 0 && !inner.sensitive)
+      || (nsfwFilter < 0 &&  inner.sensitive)
+
+    return (
+      <div>
+        <div className={'status'} style={{ display: show ? 'flex' : 'none'}}>
+          <div className={'status_right'} style={{ margin:'0.3em'}}>
+            <AvatarBox account={inner.account} host={host} size='48' showSts={false} />
+          </div>
+          <div className={'status_left'} style={{ margin:'0.3em', width:'100%'}}>
+            <StatusHeaderEx status={outer} host={host} hideVisibility={this.props.hideVisibility} />
+            <StatusBodyEx host={host} status={inner} showAccountRegisted={false} />
+            {this.state.card ? <PreviewCard card={this.state.card} /> : '' }
+            {this.props.hideFooter ? '' : <StatusFooterEx status={inner} />}
+          </div>
+        </div>
+      </div>
+    )
+  }
+}

@@ -170,3 +170,30 @@ a.move_link:hover {
 
 .attachment-video { max-width: 100%; max-height: 110px }
 .sts-count { text-align: right; padding: 0px; margin: 0px; }
+
+.previewcard {
+  margin: 2px;
+  width: 90%;
+  border: solid 1px lighten($bg, 10%);
+  border-radius: 2px;
+}
+
+.previewcard-title {
+  font-size: 0.8em;
+  padding: 1px;
+}
+
+.previewcard-body {
+  padding: 4px;
+  font-size: 0.5em;
+}
+
+.previewcard-image {
+  max-width: 100%;
+  max-height: 60px;
+  transition: all 0.1s;
+}
+.previewcard-image:hover {
+  transform: scale(3);
+  transition: all 0.2s;
+}
