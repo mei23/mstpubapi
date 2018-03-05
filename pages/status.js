@@ -56,10 +56,7 @@ export default class extends HostComponent {
 
     const M = new Mastodon("", newHost)
     M.get(`/api/v1/statuses/${newId}`)
-      .catch((reason) => {
-        this.setState({message: 'Error in fetch status: ' + JSON.stringify(reason)})
-      })
-      .then(status => {
+    .then(status => {
         this.setState({message: this.state.message + 'status 取得完了'})
 
         // update show status
@@ -71,29 +68,32 @@ export default class extends HostComponent {
         // fetch status context
         if (status && status.id) {
           M.get(`/api/v1/statuses/${newId}/context`)
-            .catch((reason) => {
-              this.setState({message: 'Error in fetch context: ' + JSON.stringify(reason)})
-            })
             .then(context => {
               this.setState({context: context})
             })
+            .catch((reason) => {
+              this.setState({message: 'Error in fetch context: ' + JSON.stringify(reason)})
+            })
 
           M.get(`/api/v1/statuses/${newId}/reblogged_by`, { limit: 80 })
-            .catch((reason) => {
-              this.setState({message: 'Error in fetch reblogged_by: ' + JSON.stringify(reason)})
-            })
             .then(reblogged_by => {
               this.setState({reblogged_by: reblogged_by})
             })
+            .catch((reason) => {
+              this.setState({message: 'Error in fetch reblogged_by: ' + JSON.stringify(reason)})
+            })
 
           M.get(`/api/v1/statuses/${newId}/favourited_by`, { limit: 80 })
-            .catch((reason) => {
-              this.setState({message: 'Error in fetch favourited_by: ' + JSON.stringify(reason)})
-            })
             .then(favourited_by => {
               this.setState({favourited_by: favourited_by})
             })
+            .catch((reason) => {
+              this.setState({message: 'Error in fetch favourited_by: ' + JSON.stringify(reason)})
+            })
         }
+      })
+      .catch((reason) => {
+        this.setState({message: 'Error in fetch status'　+ JSON.stringify(reason)})
       })
   }
   
@@ -136,9 +136,8 @@ export default class extends HostComponent {
         </div>
 
         <div className='current_params'>
-          現在 Host: {this.state.host}, Id: {this.state.id} を表示中
+          {this.state.message}
         </div>
-        {/* <div>{this.state.message}</div> */}
         <div>
           <h3>ステータス情報</h3>
           {this.state.status ? <StatusBox status={this.state.status} host={this.state.host} /> : 'none'}
