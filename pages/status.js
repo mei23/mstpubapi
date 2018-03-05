@@ -10,6 +10,7 @@ import querystring from 'querystring'
 import ShowInTimeline from '/components/ShowInTimeline'
 import * as F from '/utils/formatter'
 import DebugInfo from '/components/DebugInfo'
+import PreviewCard from '/components/PreviewCard'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class extends HostComponent {
     this.state.context = null
     this.state.reblogged_by = null
     this.state.favourited_by = null
+    this.state.card = null
 
     this.submitParams = this.submitParams.bind(this);
   }
@@ -49,6 +51,7 @@ export default class extends HostComponent {
     this.setState({context: null})
     this.setState({reblogged_by: null})
     this.setState({favourited_by: null})
+    this.setState({card: null})
 
     this.setState({message: ''})
 
@@ -89,6 +92,14 @@ export default class extends HostComponent {
             })
             .catch((reason) => {
               this.setState({message: 'Error in fetch favourited_by: ' + JSON.stringify(reason)})
+            })
+
+          M.get(`/api/v1/statuses/${newId}/card`)
+            .then(card => {
+              this.setState({card: card})
+            })
+            .catch((reason) => {
+              this.setState({message: 'Error in fetch card: ' + JSON.stringify(reason)})
             })
         }
       })
@@ -151,6 +162,12 @@ export default class extends HostComponent {
             <AccountDetail account={this.state.status.account} host={this.state.host} showNote={false} /> : 'none'}
         </div>
 
+        <div>
+          <h3>card</h3>
+          { this.state.card ? 
+            <PreviewCard card={this.state.card} /> : '取得中またはエラー'}
+        </div>
+
         <div className='ancestors'>
           <h3>ancestors (上方参照)</h3>
           { this.state.context ? 
@@ -204,6 +221,8 @@ export default class extends HostComponent {
           <div className='json_text'>{JSON.stringify(this.state.reblogged_by)}</div>
           <h4>favourited_by (お気に入り)</h4>
           <div className='json_text'>{JSON.stringify(this.state.favourited_by)}</div>
+          <h4>card (プレビューカード)</h4>
+          <div className='json_text'>{JSON.stringify(this.state.card)}</div>
         </DebugInfo>
       </Layout>
     )
