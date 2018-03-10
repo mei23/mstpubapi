@@ -145,7 +145,7 @@ export default class extends HostComponent {
 
     // card
     if (this.props.showCard) {
-      const hasLink = inner.content.match(/https?:\/\//)
+      const hasLink = inner.content.match(/class="invisible">https?/)
       const hasMedia = inner.media_attachments.length > 0
 
       if (hasLink && !hasMedia) {
