@@ -143,12 +143,11 @@ export default class extends HostComponent {
     const inner = outer.reblog || outer
     const host = this.props.host
 
-    const hasMedia = inner.media_attachments.length > 0
     const hasLink = inner.content.match(/class="invisible">https?/)
     const hasPixivCards = inner.pixiv_cards && inner.pixiv_cards.length > 0
 
     // media_attachmentsをpixiv_cardから補完
-    if (!hasMedia && hasPixivCards) {
+    if (!(inner.media_attachments.length > 0) && hasPixivCards) {
       let dummyId = 2147483648
       const cmp = inner.pixiv_cards.map(c => {
         return {
@@ -167,7 +166,7 @@ export default class extends HostComponent {
 
     // card
     if (this.props.showCard) {
-      if (hasLink && !hasMedia) {
+      if (hasLink && !(inner.media_attachments.length > 0)) {
         const M = new Mastodon("", host)
         console.log('try: ' + inner.id)
         M.get(`/api/v1/statuses/${inner.id}/card`)
