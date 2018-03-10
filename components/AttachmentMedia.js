@@ -11,7 +11,7 @@ const MediaImage = (props) => {
     <div className={'attachment-item'}>
       <a href={attachment.url}>
         <img className={'attachment-image'} src={attachment.preview_url} />
-      </a><br />image
+      </a><br />image{attachment._pixiv_cards_completed ? '(p)' : ''}
     </div>)
 }
 
@@ -24,7 +24,7 @@ const MediaGifv = (props) => {
           ? <video className={'attachment-image'} src={attachment.url} autoplay='true' loop='true' />
           : <img className={'attachment-image'} src={attachment.preview_url} />
         }
-      </a><br />gifv
+      </a><br />gifv{attachment._pixiv_cards_completed ? '(p)' : ''}
     </div>
     )
 }
@@ -35,7 +35,7 @@ const MediaVideo = (props) => {
     <div className={'attachment-item'}>
       <a href={attachment.url}>
         <img className={'attachment-video'} src={attachment.preview_url} />
-      </a><br />video
+      </a><br />video{attachment._pixiv_cards_completed ? '(p)' : ''}
     </div>
   )
 }
