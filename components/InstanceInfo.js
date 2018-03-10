@@ -44,7 +44,7 @@ export default (props) => {
               <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=fera-nsfw`}>閲覧注意のみ</a>
             )</small>
           </div>
-          メディア ※一部インスタンスのみ
+          メディア ※v2.3.0以降 または Pawoo系 のみ
           <div>
             <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local-media`}>ローカルメディア</a><small> (
               <a target='_self' href={`${streamingPath}?host=${instance.uri}&type=local-media-sfw`}>閲覧注意除く</a>
@@ -76,7 +76,7 @@ export default (props) => {
               <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-nsfw`}>閲覧注意のみ</a>
             )</small>
           </div>
-          メディア ※一部インスタンスのみ
+          メディア ※v2.3.0以降 または Pawoo系 のみ
           <div>
             <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media`}>ローカルメディア</a><small> (
               <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media-sfw`}>閲覧注意除く</a>

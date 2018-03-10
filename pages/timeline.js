@@ -78,16 +78,18 @@ export default class extends HostComponent {
       queryUrl = '/api/v1/timelines/public'
       queryPara.local = 'true'
     }
-    // Pawoo系のメディアタイムライン
+    // メディアタイムライン(Pawoo / v2.3.0)
     else if (newType.match(/^local-media(-nsfw|-sfw)?$/)) {
       queryUrl = '/api/v1/timelines/public'
-      queryPara.media = 'true'
+      queryPara.media = 'true'      // Pawoo
+      queryPara.only_media = 'true' // v2.3.0
       queryPara.local = 'true'
       mediaOnly = true
     }
     else if (newType.match(/^fera-media(-nsfw|-sfw)?$/)) {
       queryUrl = '/api/v1/timelines/public'
       queryPara.media = 'true'
+      queryPara.only_media = 'true'
       mediaOnly = true
     }
     else if (newType.match(/^local(-nsfw|-sfw)?$/)) {
@@ -99,10 +101,15 @@ export default class extends HostComponent {
       // local=false じゃなくてキー自体送っちゃだめっぽい
     }
     else {
-      const matchTags = newType.match(/^([^-]+)(-nsfw|-sfw)?$/)
+      const matchTags = newType.match(/^([^-]+)(-media)?(-nsfw|-sfw)?$/)
       if (matchTags) {
         const tag = matchTags[1]
         queryUrl = `/api/v1/timelines/tag/${tag}`
+        if (matchTags[2]) {
+          queryPara.media = 'true' // PawooにはタグメディアTLないけど
+          queryPara.only_media = 'true' // v2.3.0
+          mediaOnly = true
+        }
       }
       else {
         queryUrl = `/api/v1/timelines/tag/${newType}`
@@ -259,7 +266,7 @@ export default class extends HostComponent {
               </div>
               <div>
                 Type:<input type="text" ref={x => this.inputType = x} defaultValue={this.state.type}
-                  style={{width: '10em' }} name='type' placeholder='例: local/fera/タグ' title='種類(local=ローカル, fera=連合, local-media=メディア(Pawooのみ), その他はタグ扱い)' />
+                  style={{width: '10em' }} name='type' placeholder='例: local/fera/タグ' title='種類(local=ローカル, fera=連合, local-media=メディア, その他はタグ扱い)' />
               </div>
               <div>
                 Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
