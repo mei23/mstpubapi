@@ -302,8 +302,9 @@ export default class extends HostComponent {
         </div>
         <div style={{display:'flex', flexWrap:'wrap', alignItems:'center'}}>
           <div style={{marginRight:'1em'}}>
-            <input type="checkbox" onChange={e => this.setState({showCard: e.target.checked})} value={this.state.showCard} />
-            カード表示(次回表示後に反映)
+            <input type="checkbox" id='showcard' onChange={e => this.setState({showCard: e.target.checked})} value={this.state.showCard} />
+            <label for='showcard'>カード表示(次回表示後に反映)</label>
+            <style jsx>{`input[type=checkbox], label { cursor: pointer }`}</style>
           </div>
           <div style={{marginRight:'1em'}}>
             <a href={UrlUtil.getPagePath('timeleap') + '?host=' + this.state.host} target='_self'>時間指定</a>
