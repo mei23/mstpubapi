@@ -63,32 +63,32 @@ export default (props) => {
         <dt style={{marginTop:'1em',fontWeight:'bold'}}>Timeline - 過去を遡ることができます</dt>
         <dd style={{marginLeft:'1em'}}>
           <div>
-            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local`}><span style={{fontWeight:'bold',fontSize:'1.5em'}}>ローカル</span></a><small> (
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-sfw`}>閲覧注意除く</a>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local&count=20`}><span style={{fontWeight:'bold',fontSize:'1.5em'}}>ローカル</span></a><small> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-sfw&count=20`}>閲覧注意除く</a>
               {' / '}
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-nsfw`}>閲覧注意のみ</a>
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-nsfw&count=20`}>閲覧注意のみ</a>
             )</small>
           </div>
           <div>
-            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera`}>連合</a><small> (
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-sfw`}>閲覧注意除く</a>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera&count=20`}>連合</a><small> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-sfw&count=20`}>閲覧注意除く</a>
               {' / '}
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-nsfw`}>閲覧注意のみ</a>
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-nsfw&count=20`}>閲覧注意のみ</a>
             )</small>
           </div>
           メディア ※v2.3.0以降 または Pawoo系 のみ
           <div>
-            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media`}>ローカルメディア</a><small> (
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media-sfw`}>閲覧注意除く</a>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media&count=10`}>ローカルメディア</a><small> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media-sfw&count=10`}>閲覧注意除く</a>
               {' / '}
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media-nsfw`}>閲覧注意のみ</a>
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=local-media-nsfw&count=10`}>閲覧注意のみ</a>
             )</small>
           </div>
           <div>
-            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media`}>連合メディア</a><small> (
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media-sfw`}>閲覧注意除く</a>
+            <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media&count=10`}>連合メディア</a><small> (
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media-sfw&count=10`}>閲覧注意除く</a>
               {' / '}
-              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media-nsfw`}>閲覧注意のみ</a>
+              <a target='_self' href={`${timelinePath}?host=${instance.uri}&type=fera-media-nsfw&count=10`}>閲覧注意のみ</a>
             )</small>
           </div>
         </dd>

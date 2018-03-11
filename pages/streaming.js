@@ -79,7 +79,7 @@ export default class extends HostComponent {
     
     let queryUrl = null
     let queryPara = {
-      limit: this.statusLimit,
+      limit: 20,
     }
     let streamUrl = null
 
@@ -96,6 +96,7 @@ export default class extends HostComponent {
       queryUrl = '/api/v1/timelines/public'
       queryPara.media = 'true'      // Pawoo
       queryPara.only_media = 'true' // v2.3.0
+      queryPara.limit = 10
       queryPara.local = 'true'
       streamUrl = 'public/local'
       mediaOnly = true
@@ -104,6 +105,7 @@ export default class extends HostComponent {
       queryUrl = '/api/v1/timelines/public'
       queryPara.media = 'true'
       queryPara.only_media = 'true'
+      queryPara.limit = 10
       streamUrl = 'public'
       mediaOnly = true
     }

@@ -33,7 +33,7 @@ export default class extends HostComponent {
   onNewUrl() {
     // read parameters from querystrig or defalt
     const q = querystring.parse(window.location.search.replace(/^[?]/, ''))
-    this.refresh(q.host || '', q.type || 'local', q.max || '', q.since || '')
+    this.refresh(q.host || '', q.type || 'local', q.max || '', q.since || '', q.count || '20')
   }
 
   componentDidMount(){
@@ -41,22 +41,25 @@ export default class extends HostComponent {
     this.onNewUrl();
   }
 
-  refresh(newHost, newType, newMax, newSince) {
+  refresh(newHost, newType, newMax, newSince, newCount) {
 
     // update current params
     this.setState({host: newHost})
     this.setState({type: newType})
+    this.setState({count: newCount})
     this.setState({max: newMax})
     this.setState({since: newSince})
 
     this.inputHost.value = newHost
     this.inputType.value = newType
+    this.inputCount.value = newCount
     this.inputMax.value = newMax
     this.inputSince.value = newSince
 
     // update addressbar
     this.updateAddressbar(`${window.location.pathname}?host=${newHost}`
       + (newType ? `&type=${newType}`   : '')
+      + (newCount > 0 ? `&count=${newCount}` : '')
       + (newMax   > 0 ? `&max=${newMax}`     : '')
       + (newSince > 0 ? `&since=${newSince}` : ''))
 
@@ -69,7 +72,7 @@ export default class extends HostComponent {
     
     let queryUrl = null
     let queryPara = {
-      limit: '40',
+      limit: newCount > 0 ? newCount : 40,
     }
 
     let mediaOnly = false
@@ -144,7 +147,7 @@ export default class extends HostComponent {
   
   submitParams(event) {
     event.preventDefault()
-    this.refresh(this.inputHost.value, this.inputType.value, this.inputMax.value, this.inputSince.value)
+    this.refresh(this.inputHost.value, this.inputType.value, this.inputMax.value, this.inputSince.value, this.inputCount.value)
   }
 
   moveUp(event) {
@@ -168,7 +171,7 @@ export default class extends HostComponent {
       }
     }
 
-    this.refresh(this.state.host, this.state.type, '', since)
+    this.refresh(this.state.host, this.state.type, '', since, this.state.count)
   }
 
   moveDown(event) {
@@ -190,7 +193,7 @@ export default class extends HostComponent {
         max = this.state.max
       }
     }
-   this.refresh(this.state.host, this.state.type, max, '')
+   this.refresh(this.state.host, this.state.type, max, '', this.state.count)
   }
 
   /**
@@ -229,13 +232,13 @@ export default class extends HostComponent {
       this.setState({message: `エラー: v1.x区間 では1時間以上の単位でのみ移動可能です。`})
     }
     else {
-      this.refresh(this.state.host, this.state.type, id, '')
+      this.refresh(this.state.host, this.state.type, id, '', this.state.count)
     }
   }
 
   moveNow(event) {
     event.preventDefault()
-    this.refresh(this.state.host, this.state.type, '', '')
+    this.refresh(this.state.host, this.state.type, '', '', this.state.count)
   }
 
   /**
@@ -250,6 +253,9 @@ export default class extends HostComponent {
   }
 
   render() {
+
+    const countOptions = [5, 10, 20, 40].map(c => <option value={c} key={c}>{c}</option>)
+
     return (
       <Layout title='Timeline'>
         <Head>
@@ -269,6 +275,13 @@ export default class extends HostComponent {
                   style={{width: '10em' }} name='type' placeholder='例: local/fera/タグ' title='種類(local=ローカル, fera=連合, local-media=メディア, その他はタグ扱い)' />
               </div>
               <div>
+                Count:
+                <select ref={x => this.inputCount = x} defaultValue={this.state.count}
+                  name='count' title='表示件数'>
+                  {countOptions}
+                </select>
+              </div>
+              <div>
                 Max:<input type="text" ref={x => this.inputMax = x} defaultValue={this.state.max}
                   style={{width: '12em' }} name='max' placeholder='省略可' title='このIDより前から表示(省略時は最新から)' />
               </div>
@@ -281,7 +294,7 @@ export default class extends HostComponent {
               </div>
               <style jsx>{`
                 div {
-                  margin-right: 1em;
+                  margin-right: 0.8em;
                 }
               `}</style>
             </div>
