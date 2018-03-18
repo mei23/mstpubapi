@@ -4,12 +4,12 @@ import HostComponent from '/components/HostComponent'
 import Head from 'next/head'
 import Layout from '/components/Layout'
 import Mastodon from 'mstdn-api'
-import StatusBox from '/components/StatusBox'
-import AccountDetail from '/components/AccountDetail'
 import * as IDC from '/utils/idcalc'
 import querystring from 'querystring'
 import * as F from '/utils/formatter'
 import DebugInfo from '/components/DebugInfo'
+import {EventEmitter} from 'fbemitter'
+import StreamStatusList from '/components/StreamStatusList'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -17,12 +17,12 @@ export default class extends HostComponent {
     this.state = {}
 
     this.state.message = '' // message
-    this.state.statuses = []
-    this.state.generateds = []  // generated DOMs
-    this.listener = null;
-    this.statusLimit = 40 // max status count
 
+    this.listener = null;
+    
     this.submitParams = this.submitParams.bind(this);
+
+    this.emitter = new EventEmitter()
   }
 
   onNewUrl() {
@@ -69,11 +69,9 @@ export default class extends HostComponent {
     // update addressbar
     this.updateAddressbar(`${window.location.pathname}?host=${newHost}&type=${newType}`)
 
-    // clear fetched object cache
-    this.setState({statuses: []})
-    this.setState({generateds: []})
-
     this.setState({message: ''})
+
+    this.emitter.emit('init', newHost)
 
     if (!newHost) return
     
@@ -146,17 +144,12 @@ export default class extends HostComponent {
     const M = new Mastodon("", newHost)
     M.get(queryUrl, queryPara)
       .then(statuses => {
-
-        // メディアのみフィルタ(MediaTimeline Endpoint がないインスタンスのためにフィルタ / TODO:inner見るべき？)
-        // statuses = statuses.filter(status => !mediaOnly || status.media_attachments.length > 0)
-
-        this.setState({statuses: statuses})
         this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${queryUrl}`})
 
-        // DOM生成しておく
-        let generateds = statuses.map(status => <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true}
-          nsfwFilter={nsfwFilter} />)
-        this.setState({generateds: generateds})
+        // NSFW filter
+        statuses = statuses.filter(status => this.checkFilter(status, mediaOnly, nsfwFilter))
+
+        this.emitter.emit('fill', statuses)
 
         // Setup streaming
         this.setState({message: `Streamingを継続受信中 Host: ${newHost}, Streaming: ${streamUrl}`})
@@ -168,34 +161,10 @@ export default class extends HostComponent {
 
         this.listener = M.stream(streamUrl)
           .on('update', status => {
-            // インスタンスの最終 status.id 更新
-            // this.setState({ lastIState: status.id })
-            // 統計push
-            //const isNewPeriod   = this.st5.pushStatus(status)
-            //const isNewPeriod10 = this.st10.pushStatus(status)
-            //const isFujo = this.fj.pushStatus(status)
-            
-            //this.setState({c1: this.st5.count})
-            //this.setState({velo: this.st5.tootPerMin})
-
             // Streaming受信時にMedia/NSFWフィルタ
             if (!this.checkFilter(status, mediaOnly, nsfwFilter)) return
 
-            statuses.unshift(status)
-            statuses = statuses.slice(0, this.statusLimit)
-            this.setState({statuses: statuses})
-
-            // TODO:本当はStreamingの場合はここでDOMフィルタしなくていい
-            const generated = <StatusBox key={status.id} status={status} host={newHost} hideFooter={true} hideVisibility={true} 
-              nsfwFilter={nsfwFilter} />
-            generateds.unshift(generated)
-            generateds = generateds.slice(0, this.statusLimit)
-            this.setState({generateds: generateds})
-
-            //statuses = [status].concat(statuses).slice(0, 40)
-
-            // 表示保留 でない限りトゥート一覧更新
-            //if (!this.state.noDisp) { this._updateStx() }
+            this.emitter.emit('status', status)
         })
         .on('error', err => {
           console.error("err", err)
@@ -251,14 +220,7 @@ export default class extends HostComponent {
         <div className='current_params'>
           {this.state.message}
         </div>
-        <div>
-          { this.state.statuses ? 
-            <div>
-              <div>{this.state.generateds.length} アイテム</div>
-              {this.state.generateds}
-            </div>
-            : '取得中またはエラー'}
-        </div>
+        <StreamStatusList emitter={this.emitter} limit={40} />
 
         <DebugInfo>
           <h4>statuses</h4>
