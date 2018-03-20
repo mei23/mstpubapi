@@ -193,7 +193,7 @@ export default class extends HostComponent {
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
-        <p>インスタンスのタイムラインを参照＋ストリーミングします</p>
+        <div>インスタンスのタイムラインを参照＋ストリーミングします</div>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             <div style={{display:'flex', flexWrap:'wrap', alignItems:'center'}}>
