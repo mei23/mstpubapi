@@ -10,6 +10,7 @@ import * as F from '/utils/formatter'
 import DebugInfo from '/components/DebugInfo'
 import {EventEmitter} from 'fbemitter'
 import StreamStatusList from '/components/StreamStatusList'
+import tlstPara from '/lib/tlstPara'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -74,95 +75,33 @@ export default class extends HostComponent {
     this.emitter.emit('init', newHost)
 
     if (!newHost) return
-    
-    let queryUrl = null
-    let queryPara = {
-      limit: 20,
-    }
-    let streamUrl = null
 
-    let nsfwFilter = 0
-    let mediaOnly = false
-
-    if (newType == '') {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.local = 'true'
-      streamUrl = 'public/local'
-    }
-    // メディアタイムライン(Pawoo / v2.3.0)
-    else if (newType.match(/^local-media(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.media = 'true'      // Pawoo
-      queryPara.only_media = 'true' // v2.3.0
-      queryPara.limit = 10
-      queryPara.local = 'true'
-      streamUrl = 'public/local'
-      mediaOnly = true
-    }
-    else if (newType.match(/^fera-media(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.media = 'true'
-      queryPara.only_media = 'true'
-      queryPara.limit = 10
-      streamUrl = 'public'
-      mediaOnly = true
-    }
-    else if (newType.match(/^local(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.local = 'true'
-      streamUrl = 'public/local'
-    }
-    else if (newType.match(/^fera(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      // local=false じゃなくてキー自体送っちゃだめっぽい
-      streamUrl = 'public'
-    }
-    else {
-      const matchTags = newType.match(/^([^-]+)(-media)?(-nsfw|-sfw)?$/)
-      if (matchTags) {
-        const tag = matchTags[1]
-        queryUrl = `/api/v1/timelines/tag/${tag}`
-        streamUrl = `hashtag?tag=${tag}`
-        if (matchTags[2]) {
-          queryPara.media = 'true' // PawooにはタグメディアTLないけど
-          queryPara.only_media = 'true' // v2.3.0
-          mediaOnly = true
-        }
-      }
-      else {
-        queryUrl = `/api/v1/timelines/tag/${newType}`
-        streamUrl = `hashtag?tag=${newType}`
-      }
-    }
-
-    if (newType.match(/-nsfw$/)) nsfwFilter = -1
-    if (newType.match(/-sfw$/))  nsfwFilter =  1
-
-    this.setState({message: `これまでのステータスを取得中... Host: ${newHost}, Path: ${queryUrl}`})
+    const para = tlstPara.create(newType, -1, -1, -1)
+    this.setState({message: `これまでのステータスを取得中... Host: ${newHost}, Path: ${para.queryUrl}`})
 
     // fetch statuses
     const M = new Mastodon("", newHost)
-    M.get(queryUrl, queryPara)
+    M.get(para.queryUrl, para.queryPara)
       .then(statuses => {
-        this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${queryUrl}`})
+        this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${para.queryUrl}`})
 
         // NSFW filter
-        statuses = statuses.filter(status => this.checkFilter(status, mediaOnly, nsfwFilter))
+        statuses = statuses.filter(status => this.checkFilter(status, para.mediaOnly, para.nsfwFilter))
 
         this.emitter.emit('fill', statuses)
 
         // Setup streaming
-        this.setState({message: `Streamingを継続受信中 Host: ${newHost}, Streaming: ${streamUrl}`})
+        this.setState({message: `Streamingを継続受信中 Host: ${newHost}, Streaming: ${para.streamUrl}`})
 
         // close previous listener if exists
         if (this.listener) {
           this.listener.close()
         }
 
-        this.listener = M.stream(streamUrl)
+        this.listener = M.stream(para.streamUrl)
           .on('update', status => {
             // Streaming受信時にMedia/NSFWフィルタ
-            if (!this.checkFilter(status, mediaOnly, nsfwFilter)) return
+            if (!this.checkFilter(status, para.mediaOnly, para.nsfwFilter)) return
 
             this.emitter.emit('status', status)
         })

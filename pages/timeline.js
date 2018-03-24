@@ -12,6 +12,7 @@ import querystring from 'querystring'
 import * as UrlUtil from '/utils/urlUtil'
 import * as F from '/utils/formatter'
 import DebugInfo from '/components/DebugInfo'
+import tlstPara from '/lib/tlstPara'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -70,80 +71,21 @@ export default class extends HostComponent {
 
     if (!newHost) return
     
-    let queryUrl = null
-    let queryPara = {
-      limit: newCount > 0 ? newCount : 40,
-    }
-
-    let mediaOnly = false
-
-    if (newType == '') {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.local = 'true'
-    }
-    // メディアタイムライン(Pawoo / v2.3.0)
-    else if (newType.match(/^local-media(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.media = 'true'      // Pawoo
-      queryPara.only_media = 'true' // v2.3.0
-      queryPara.local = 'true'
-      mediaOnly = true
-    }
-    else if (newType.match(/^fera-media(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.media = 'true'
-      queryPara.only_media = 'true'
-      mediaOnly = true
-    }
-    else if (newType.match(/^local(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      queryPara.local = 'true'
-    }
-    else if (newType.match(/^fera(-nsfw|-sfw)?$/)) {
-      queryUrl = '/api/v1/timelines/public'
-      // local=false じゃなくてキー自体送っちゃだめっぽい
-    }
-    else {
-      const matchTags = newType.match(/^([^-]+)(-media)?(-nsfw|-sfw)?$/)
-      if (matchTags) {
-        const tag = matchTags[1]
-        queryUrl = `/api/v1/timelines/tag/${tag}`
-        if (matchTags[2]) {
-          queryPara.media = 'true' // PawooにはタグメディアTLないけど
-          queryPara.only_media = 'true' // v2.3.0
-          mediaOnly = true
-        }
-      }
-      else {
-        queryUrl = `/api/v1/timelines/tag/${newType}`
-      }
-    }
-
-    if (newType.match(/-nsfw$/)) this.setState({nsfwFilter: -1})
-    if (newType.match(/-sfw$/))  this.setState({nsfwFilter:  1})
-
-    if (newMax > 0)   queryPara.max_id   = newMax
-    if (newSince > 0) queryPara.since_id = newSince
-
-    console.log('queryUrl', queryUrl)
-    console.log('queryPara', queryPara)
+    const para = tlstPara.create(newType, newMax, newSince, newCount)
     
-    this.setState({message: `ステータスを取得中... Host: ${newHost}, Path: ${queryUrl}, Para: ${JSON.stringify(queryPara)}`})
+    this.setState({message: `ステータスを取得中... Host: ${newHost}, Path: ${para.queryUrl}, Para: ${JSON.stringify(para.queryPara)}`})
     // fetch statuses
     const M = new Mastodon("", newHost)
-    M.get(queryUrl, queryPara)
+    M.get(para.queryUrl, para.queryPara)
       .then(statuses => {
-
-        // メディアのみフィルタ(MediaTimeline Endpoint がないインスタンスのためにフィルタ / TODO:inner見るべき？)
-        // statuses = statuses.filter(status => !mediaOnly || status.media_attachments.length > 0)
-
         this.setState({statuses: statuses})
-        this.setState({message: `ステータスを取得しました Host: ${newHost}, Path: ${queryUrl}, Para: ${JSON.stringify(queryPara)}`})
+        this.setState({message: `ステータスを取得しました Host: ${newHost}, Path: ${para.queryUrl}, Para: ${JSON.stringify(para.queryPara)}`})
       })
       .catch((reason) => {
         this.setState({message: 'ステータスの取得でエラーが発生しました ' + JSON.stringify(reason)})
-      })
-    }
+      }
+    )
+  }
   
   submitParams(event) {
     event.preventDefault()
