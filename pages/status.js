@@ -55,8 +55,9 @@ export default class extends HostComponent {
 
     this.setState({message: ''})
 
-    // fetch status
+    if (!newHost) return
 
+    // fetch status
     const M = new Mastodon("", newHost)
     M.get(`/api/v1/statuses/${newId}`)
     .then(status => {
