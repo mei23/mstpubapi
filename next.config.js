@@ -36,8 +36,12 @@ module.exports = {
   ,
   exportPathMap: function() {
     return {
+      '/instance.html': { page: '/instance' },
       '/timeline.html': { page: '/timeline' },
-      '/status.html': { page: '/status' }
+      '/streaming.html': { page: '/streaming' },
+      '/status.html': { page: '/status' },
+      '/timeleap.html': { page: '/timeleap' },
+      '/silence.html': { page: '/silence' }
     }
   }
   ,
