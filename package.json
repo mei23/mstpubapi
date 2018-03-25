@@ -23,7 +23,7 @@
     "glob": "^7.1.2",
     "long": "^3.2.0",
     "moment": "^2.20.1",
-    "mstdn-api": "git://github.com/mei23/mstdn-api.git",
+    "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-link",
     "next": "^4.2.3",
     "node-sass": "^4.7.2",
     "raw-loader": "^0.5.1",
