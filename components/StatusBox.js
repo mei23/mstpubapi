@@ -185,7 +185,9 @@ export default class extends HostComponent {
     const inner = outer.reblog || outer
     const host = this.props.host
     const nsfwFilter = this.props.nsfwFilter || 0 // 0=none, 1=filter NSFW, -1=filter SFW
-    
+    const showSts = this.props.showSts
+    const showAccountRegisted = this.props.showAccountRegisted
+
     const show = (nsfwFilter == 0)
       || (nsfwFilter > 0 && !inner.sensitive)
       || (nsfwFilter < 0 &&  inner.sensitive)
@@ -194,11 +196,11 @@ export default class extends HostComponent {
       <div>
         <div className={'status'} style={{ display: show ? 'flex' : 'none'}}>
           <div className={'status_right'} style={{ margin:'0.3em'}}>
-            <AvatarBox account={inner.account} host={host} size='48' showSts={false} />
+            <AvatarBox account={inner.account} host={host} size='48' showSts={showSts} />
           </div>
           <div className={'status_left'} style={{ margin:'0.3em', width:'100%'}}>
             <StatusHeaderEx status={outer} host={host} hideVisibility={this.props.hideVisibility} />
-            <StatusBodyEx host={host} status={inner} showAccountRegisted={false} />
+            <StatusBodyEx host={host} status={inner} showAccountRegisted={showAccountRegisted} />
             {this.state.card ? <PreviewCard card={this.state.card} /> : '' }
             {this.props.hideFooter ? '' : <StatusFooterEx status={inner} />}
           </div>

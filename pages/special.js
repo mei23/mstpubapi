@@ -159,7 +159,7 @@ export default class extends HostComponent {
         <div className='current_params'>
           {this.state.message}
         </div>
-        <StreamStatusList emitter={this.emitter} />
+        <StreamStatusList emitter={this.emitter} showAccountRegisted={true} showSts={true} />
 
         <DebugInfo>
           <h4>statuses</h4>

@@ -70,16 +70,11 @@ export default class extends React.Component {
               ? 'url(' + urlHover + ')'
               : 'url(' + urlOut + ')'),
             backgroundSize: `${size}px`,
-
             display: 'table-cell',
-            textAlign: 'right',
             verticalAlign: 'bottom',
-            
-            color: '#33f',
-            textDecoration: 'none',
-            textShadow: '0px 0px 2px #eef',
-        }}
-        ><span style={{ backgroundColor: '#eef'}}>{text}</span>
+        }}>
+          <div className='userIcon-text' style={{
+            width: `${size}px`, position: 'relative', top: '17px', textAlign: 'right'}}>{text}</div>
         </div>
       </a>
     )
