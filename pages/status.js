@@ -53,6 +53,9 @@ export default class extends HostComponent {
     this.setState({favourited_by: null})
     this.setState({card: null})
 
+    // update addressbar
+    this.updateAddressbar(`${window.location.pathname}?host=${newHost}&id=${newId}`)
+
     this.setState({message: ''})
 
     if (!newHost) return
@@ -65,9 +68,6 @@ export default class extends HostComponent {
 
         // update show status
         this.setState({status: status})
-
-        // update addressbar
-        this.updateAddressbar(`${window.location.pathname}?host=${newHost}&id=${newId}`)
     
         // fetch status context
         if (status && status.id) {
