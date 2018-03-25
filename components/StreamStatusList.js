@@ -131,10 +131,8 @@ export default class extends React.Component {
           
         </div>
         { this.state.statuses ? 
-          <div onScroll={this.handleScroll}>
-            <div style={{ overflowX: 'hidden', overflowY: 'scroll', height: '800px' }}>
-              {this.state.generateds}
-            </div>
+          <div className='statusList-body' onScroll={this.handleScroll} style={{ overflowX: 'hidden', overflowY: 'scroll', height: '800px' }}>
+            {this.state.generateds}
           </div>
           : '取得中またはエラー'}
       </div>

@@ -199,6 +199,10 @@ a.move_link:hover {
   transition: all 0.2s;
 }
 
+.statusList-body {
+  background: lighten($bg, 1%);
+}
+
 .userIcon-text {
   color: #0f0;
   text-shadow: 0px 0px 2px #060;
