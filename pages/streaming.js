@@ -4,9 +4,7 @@ import HostComponent from '/components/HostComponent'
 import Head from 'next/head'
 import Layout from '/components/Layout'
 import Mastodon from 'mstdn-api'
-import * as IDC from '/utils/idcalc'
 import querystring from 'querystring'
-import * as F from '/utils/formatter'
 import DebugInfo from '/components/DebugInfo'
 import {EventEmitter} from 'fbemitter'
 import StreamStatusList from '/components/StreamStatusList'
@@ -18,12 +16,12 @@ export default class extends HostComponent {
     this.state = {}
 
     this.state.message = '' // message
-
+    /** stream listener */
     this.listener = null;
-    
-    this.submitParams = this.submitParams.bind(this);
-
+    /** emitter for status update */
     this.emitter = new EventEmitter()
+
+    this.submitParams = this.submitParams.bind(this);
   }
 
   onNewUrl() {
@@ -49,8 +47,6 @@ export default class extends HostComponent {
 
     const isMedia = inner && inner.media_attachments && inner.media_attachments.length > 0 
     const isNsfw = inner && inner.sensitive
-    //console.log('isMedia', isMedia)
-    //console.log('isNsfw', isNsfw)
 
     if (mediaOnly && !isMedia) return false
     if (nsfwFilter ==  1 &&  isNsfw) return false
@@ -58,8 +54,12 @@ export default class extends HostComponent {
     return true
   }
 
+  /**
+   * refresh(change) fetch condition
+   * @param {string} newHost 
+   * @param {string} newType 
+   */
   refresh(newHost, newType) {
-
     // update current params
     this.setState({host: newHost})
     this.setState({type: newType})
