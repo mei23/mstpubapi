@@ -158,9 +158,9 @@ export default class extends HostComponent {
         <div>
           <h3>アカウント情報</h3>
           {this.state.status && this.state.status.reblog ? 
-            <AccountDetail account={this.state.status.reblog.account} host={this.state.host} showNote={false} /> : ''}
+            <AccountDetail account={this.state.status.reblog.account} host={this.state.host} showNote={false} showRelations={true}/> : ''}
           {this.state.status ? 
-            <AccountDetail account={this.state.status.account} host={this.state.host} showNote={false} /> : 'none'}
+            <AccountDetail account={this.state.status.account} host={this.state.host} showNote={false} showRelations={true} /> : 'none'}
         </div>
 
         <div>
@@ -197,7 +197,7 @@ export default class extends HostComponent {
             <div>
               <div>{this.state.reblogged_by.length} アイテム</div>
               {this.state.reblogged_by.map(account => 
-                <AccountDetail key={account.id} account={account} host={this.state.host} showNote={false} /> )}
+                <AccountDetail key={account.id} account={account} host={this.state.host} showNote={false} showRelations={true} /> )}
             </div>
             : '取得中またはエラー'}
         </div>
@@ -208,7 +208,7 @@ export default class extends HostComponent {
             <div>
               <div>{this.state.favourited_by.length} アイテム</div>
               {this.state.favourited_by.map(account => 
-                <AccountDetail key={account.id} account={account} host={this.state.host} showNote={false} /> )}
+                <AccountDetail key={account.id} account={account} host={this.state.host} showNote={false} showRelations={true} /> )}
             </div>
             : '取得中またはエラー'}
        </div>
