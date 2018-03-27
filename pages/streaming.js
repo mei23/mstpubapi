@@ -111,7 +111,8 @@ export default class extends HostComponent {
             this.setState({message: 'エラー: このインスタンスはストリーミングに認証が必要なため、自動更新はできません。自動更新を行うにはインスタンスバージョンが v2.1.0以降である必要があります。'})
           }
           else {
-            this.setState({message: 'Streamingでエラーが発生しました ' + JSON.stringify(err)})
+            this.setState({message: 'Streamingでエラーが発生しました ' + (err ? err.toString() : '')})
+            console.log('err', err)
           }
         })
       })
