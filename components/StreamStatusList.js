@@ -24,6 +24,8 @@ export default class extends React.Component {
     this.st60 = new statusStatistics(60)
     this.st300 = new statusStatistics(300)
 
+    this.state.listBodyHeight = 800
+
     this.handlePendUpdateChange = this.handlePendUpdateChange.bind(this)
     this.handleRetentionLimitChange = this.handleRetentionLimitChange.bind(this)
     this.handleScroll = this.handleScroll.bind(this)
@@ -84,6 +86,19 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
+    if (typeof window !== 'undefined') {
+      this.setListBodyHeight()
+      window.addEventListener('resize', () => this.setListBodyHeight())
+    }
+  }
+
+  setListBodyHeight() {
+    let h = 800
+    if (typeof window !== 'undefined') {
+      if (window.innerHeight) h = window.innerHeight - 100
+      if (h < 320) h = 320
+    }
+    this.setState({ listBodyHeight: h})
   }
 
   handlePendUpdateChange(e) {
@@ -128,10 +143,10 @@ export default class extends React.Component {
           <div style={{marginLeft: '1em'}} title='Toot/分 5分平均 (5分前,10分前...)'>
             5m: {this.st300.archives.slice(0, 12).map(x => Math.round(x.count / 5)).join(',')}
           </div>
-          
         </div>
         { this.state.statuses ? 
-          <div className='statusList-body' onScroll={this.handleScroll} style={{ overflowX: 'hidden', overflowY: 'scroll', height: '800px' }}>
+          <div className='statusList-body' onScroll={this.handleScroll} style={{ overflowX: 'hidden', overflowY: 'scroll', 
+            height: `${this.state.listBodyHeight}px` }}>
             {this.state.generateds}
           </div>
           : '取得中またはエラー'}
