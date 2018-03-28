@@ -24,7 +24,7 @@ const StatusHeaderEx = (props) => {
     <div>
       {/* Line 1: status info */} 
       <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right' }}>
-        <div style={{ marginRight: 'auto' }}>
+        <div style={{ marginRight: 'auto', textAlign: 'left', fontSize: '0.9em' }}>
           <span><a href={`${statusPath}?host=${host}&id=${inner.id}`} title='ローカルでステータス情報を表示する' target='_self'>{inner.id}</a></span>
           {inner.sensitive ? (<span> / Sensitive</span>) : ''}
           
@@ -37,7 +37,7 @@ const StatusHeaderEx = (props) => {
               : <span> / {inner.application.name}</span> : ''}
         </div>
 
-        <div style={{ textAlign: 'right' }}>
+        <div style={{ fontSize: '0.9em' }}>
           <span><a href={inner.url} title='インスタンスのステータスページを開く' target='_blank'>
             {F.formatDateString(inner.created_at, 'yyyy/m/d H:MM:ss.l')}</a></span>
         </div>
@@ -73,6 +73,7 @@ const AvatarBox = (props) => {
 const StatusBodyEx = (props) => {
   const status = props.status
   const showAccountRegisted = props.showAccountRegisted
+  const showRelations = props.showRelations
   const c = F.getConvertedContent(status)
 
   return (
@@ -83,12 +84,16 @@ const StatusBodyEx = (props) => {
             <span className=''>{status.account.display_name}</span>
           
             {' '}
-            <span className=''>@{status.account.acct}</span> {showAccountRegisted ?
-            <span className='account_registed'>
-              [{F.toRelactiveString(status.account.created_at)} 
-              ({F.formatDateString(status.account.created_at, 'yyyy/m/d H:MM')})]
-            </span>
-            : ''}
+            <span className=''>@{status.account.acct}</span>
+            {showAccountRegisted ?
+              <span className='account_registed'> [{F.toRelactiveString(status.account.created_at)} 
+                ({F.formatDateString(status.account.created_at, 'yyyy/m/d H:MM')})]
+              </span>
+              : ''}
+            {showRelations ? 
+              (status.account.nico_url ? 
+                <span> <a href={status.account.nico_url}>nico</a></span> : '')
+              : ''}
           </Twemoji>
         </div>
         {status.spoiler_text 
@@ -187,6 +192,7 @@ export default class extends HostComponent {
     const nsfwFilter = this.props.nsfwFilter || 0 // 0=none, 1=filter NSFW, -1=filter SFW
     const showSts = this.props.showSts
     const showAccountRegisted = this.props.showAccountRegisted
+    const showRelations = this.props.showRelations
 
     const show = (nsfwFilter == 0)
       || (nsfwFilter > 0 && !inner.sensitive)
@@ -200,7 +206,7 @@ export default class extends HostComponent {
           </div>
           <div className={'status_left'} style={{ margin:'0.3em', width:'100%'}}>
             <StatusHeaderEx status={outer} host={host} hideVisibility={this.props.hideVisibility} />
-            <StatusBodyEx host={host} status={inner} showAccountRegisted={showAccountRegisted} />
+            <StatusBodyEx host={host} status={inner} showAccountRegisted={showAccountRegisted} showRelations={showRelations} />
             {this.state.card ? <PreviewCard card={this.state.card} /> : '' }
             {this.props.hideFooter ? '' : <StatusFooterEx status={inner} />}
           </div>

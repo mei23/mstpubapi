@@ -49,7 +49,7 @@ export default class extends React.Component {
       this.emitter.addListener('fill', (statuses) => {
         this.sts = statuses
         this.gens = statuses.map(status => <StatusBox key={status.id} status={status} host={this.newHost} hideFooter={true} hideVisibility={true} 
-          showAccountRegisted={this.props.showAccountRegisted} showSts={this.props.showSts} />)
+          showAccountRegisted={this.props.showAccountRegisted} showSts={this.props.showSts} showRelations={this.props.showRelations} />)
         this.receivedCount += this.sts.length
 
         this.refresh()
@@ -61,7 +61,7 @@ export default class extends React.Component {
         this.sts = this.sts.slice(0, this.state.retentionLimit)
 
         const generated = <StatusBox key={status.id} status={status} host={this.newHost} hideFooter={true} hideVisibility={true}
-          showAccountRegisted={this.props.showAccountRegisted} showSts={this.props.showSts} />
+          showAccountRegisted={this.props.showAccountRegisted} showSts={this.props.showSts} showRelations={this.props.showRelations} />
         this.gens.unshift(generated)
         this.gens = this.gens.slice(0, this.state.retentionLimit)
 
