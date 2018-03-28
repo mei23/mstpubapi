@@ -59,8 +59,8 @@ const AvatarBox = (props) => {
   const account = props.account
   const size = props.size > 0 ? props.size : 48
   const radius = Math.floor(size/12)
-  const showSts = props.showSts
-  
+  const showSts = props.showOptions && props.showOptions.showSts
+
   return (
     <div className='avatar-box' style={{'width':`${size}px`}}>
       <UserIcon host={props.host} account={account}
@@ -72,8 +72,8 @@ const AvatarBox = (props) => {
 
 const StatusBodyEx = (props) => {
   const status = props.status
-  const showAccountRegisted = props.showAccountRegisted
-  const showRelations = props.showRelations
+  const showAccountRegisted = props.showOptions && props.showOptions.showAccountRegisted
+  const showRelations = props.showOptions && props.showOptions.showRelations
   const c = F.getConvertedContent(status)
 
   return (
@@ -190,10 +190,7 @@ export default class extends HostComponent {
     const inner = outer.reblog || outer
     const host = this.props.host
     const nsfwFilter = this.props.nsfwFilter || 0 // 0=none, 1=filter NSFW, -1=filter SFW
-    const showSts = this.props.showSts
-    const showAccountRegisted = this.props.showAccountRegisted
-    const showRelations = this.props.showRelations
-
+    
     const show = (nsfwFilter == 0)
       || (nsfwFilter > 0 && !inner.sensitive)
       || (nsfwFilter < 0 &&  inner.sensitive)
@@ -202,11 +199,11 @@ export default class extends HostComponent {
       <div>
         <div className={'status'} style={{ display: show ? 'flex' : 'none'}}>
           <div className={'status_right'} style={{ margin:'0.3em'}}>
-            <AvatarBox account={inner.account} host={host} size='48' showSts={showSts} />
+            <AvatarBox account={inner.account} host={host} size='48' showOptions={this.props.showOptions} />
           </div>
           <div className={'status_left'} style={{ margin:'0.3em', width:'100%'}}>
             <StatusHeaderEx status={outer} host={host} hideVisibility={this.props.hideVisibility} />
-            <StatusBodyEx host={host} status={inner} showAccountRegisted={showAccountRegisted} showRelations={showRelations} />
+            <StatusBodyEx host={host} status={inner} showOptions={this.props.showOptions} />
             {this.state.card ? <PreviewCard card={this.state.card} /> : '' }
             {this.props.hideFooter ? '' : <StatusFooterEx status={inner} />}
           </div>

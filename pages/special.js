@@ -22,6 +22,12 @@ export default class extends HostComponent {
     this.emitter = new EventEmitter()
 
     this.submitParams = this.submitParams.bind(this);
+
+    this.showOptions = {
+      showAccountRegisted: true,
+      showSts: true,
+      showRelations: true,
+    }
   }
 
   onNewUrl() {
@@ -159,8 +165,7 @@ export default class extends HostComponent {
         <div className='current_params'>
           {this.state.message}
         </div>
-        <StreamStatusList emitter={this.emitter} showAccountRegisted={true} showSts={true} showRelations={true} />
-
+        <StreamStatusList emitter={this.emitter} showOptions={this.showOptions} />
         <DebugInfo>
           <h4>statuses</h4>
           <div className='json_text'>{JSON.stringify(this.state.statuses)}</div>
