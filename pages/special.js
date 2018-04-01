@@ -105,12 +105,15 @@ export default class extends HostComponent {
         }
 
         this.listener = M.stream(para.streamUrl)
-          .on('update', status => {
-            // Streaming受信時にMedia/NSFWフィルタ
-            if (!this.checkFilter(status, para.mediaOnly, para.nsfwFilter)) return
+        .on('update', status => {
+          // Streaming受信時にMedia/NSFWフィルタ
+          if (!this.checkFilter(status, para.mediaOnly, para.nsfwFilter)) return
 
-            this.emitter.emit('status', status)
+          this.emitter.emit('status', status)
         })
+        .on('delete', status => {
+            this.emitter.emit('delete', status)
+         })
         .on('error', err => {
           console.error("err", err)
           if (err.status === 401) {
@@ -133,12 +136,12 @@ export default class extends HostComponent {
 
   render() {
     return (
-      <Layout title='Streaming'>
+      <Layout title='Special'>
         <Head>
           <base target='_blank' />
         </Head>
         {/*<div>{JSON.stringify(this.props)}</div>*/}
-        <div>インスタンスのタイムラインを参照＋ストリーミングします</div>
+        <div>タイムライン参照＋ストリーミング＋α</div>
         <div className='change_form'>
           <form onSubmit={this.submitParams}>
             <div style={{display:'flex', flexWrap:'wrap', alignItems:'center'}}>

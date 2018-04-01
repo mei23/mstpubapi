@@ -74,6 +74,10 @@ export default class extends React.Component {
           this.refresh()
         }
       })
+      this.emitter.addListener('delete', (status) => {
+        this.st60.increment(true)
+        this.st300.increment(true)
+      })
     }
   }
 
@@ -138,10 +142,10 @@ export default class extends React.Component {
               onChange={this.handleRetentionLimitChange} value={this.state.retentionLimit} style={{width: '4em'}} />
           </div>
           <div style={{marginLeft: '1em'}} title='Toot/分 1分平均 (1分前,2分前...)'>
-            1m: {this.st60.archives.slice(0, 5).map(x => x.count / 1).join(',')}
+            1m: {this.st60.archives.slice(0, 5).map(x => (x.count/1) + (x.delete ? `(${x.delete/1})` : '')).join(',')}
           </div>
           <div style={{marginLeft: '1em'}} title='Toot/分 5分平均 (5分前,10分前...)'>
-            5m: {this.st300.archives.slice(0, 12).map(x => Math.round(x.count / 5)).join(',')}
+            5m: {this.st300.archives.slice(0, 12).map(x => Math.round(x.count/5)).join(',')}
           </div>
         </div>
         { this.state.statuses ? 
