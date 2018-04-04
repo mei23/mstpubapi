@@ -145,7 +145,7 @@ export default class extends React.Component {
             1m: {this.st60.archives.slice(0, 5).map(x => (x.count/1) + (x.delete ? `(${x.delete/1})` : '')).join(',')}
           </div>
           <div style={{marginLeft: '1em'}} title='Toot/分 5分平均 (5分前,10分前...)'>
-            5m: {this.st300.archives.slice(0, 12).map(x => Math.round(x.count/5)).join(',')}
+            5m: {this.st300.archives.slice(0, 12).map(x => Math.round(x.count/5) + (x.delete ? `(${Math.round(x.delete/5)})` : '')).join(',')}
           </div>
         </div>
         { this.state.statuses ? 
