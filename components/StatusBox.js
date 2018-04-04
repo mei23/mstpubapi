@@ -222,6 +222,9 @@ export default class extends HostComponent {
       if (inner._arrivedDiff > 1 * 60 * 60 * 1000) {
         classNameExtra = ' status-arrived'
       }
+      else if (inner._arrivedDiff < 0) {
+        classNameExtra = ' status-arrivedUnknown'
+      }
     }
 
     return (

@@ -157,6 +157,11 @@ a.move_link:hover {
 
 .status-arrived {
   background: #633;
+  border: solid 3px red;
+}
+
+.status-arrivedUnknown {
+  background: #633;
 }
 
 .attachment-item {
