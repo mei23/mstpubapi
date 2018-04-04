@@ -219,7 +219,7 @@ export default class extends HostComponent {
 
     let classNameExtra = ''
     if (inner._arrivedDiff) {
-      if (inner._arrivedDiff > 1 * 60 * 60 * 1000) {
+      if (inner._arrivedDiff > 3 * 60 * 60 * 1000) {
         classNameExtra = ' status-arrived'
       }
       else if (inner._arrivedDiff < 0) {
