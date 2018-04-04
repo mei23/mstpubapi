@@ -9,6 +9,7 @@ import DebugInfo from '/components/DebugInfo'
 import {EventEmitter} from 'fbemitter'
 import StreamStatusList from '/components/StreamStatusList'
 import tlstPara from '/lib/tlstPara'
+import userStatistics from '/lib/userStatistics'
 
 export default class extends HostComponent {
   constructor(props) {
@@ -20,6 +21,8 @@ export default class extends HostComponent {
     this.listener = null;
     /** emitter for status update */
     this.emitter = new EventEmitter()
+
+    this.userStatistics = new userStatistics()
 
     this.submitParams = this.submitParams.bind(this);
 
@@ -79,6 +82,7 @@ export default class extends HostComponent {
     this.setState({message: ''})
 
     this.emitter.emit('init', newHost)
+    this.userStatistics = new userStatistics()
 
     if (!newHost) return
 
@@ -108,6 +112,9 @@ export default class extends HostComponent {
         .on('update', status => {
           // Streaming受信時にMedia/NSFWフィルタ
           if (!this.checkFilter(status, para.mediaOnly, para.nsfwFilter)) return
+
+          const arrivedDiff = this.userStatistics.push(status.account)
+          status._arrivedDiff = arrivedDiff
 
           this.emitter.emit('status', status)
         })

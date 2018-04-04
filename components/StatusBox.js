@@ -76,13 +76,32 @@ const StatusBodyEx = (props) => {
   const showRelations = props.showOptions && props.showOptions.showRelations
   const c = F.getConvertedContent(status)
 
+  let arriveInfo = ''
+  if (status._arrivedDiff) {
+    if (status._arrivedDiff < 0) {
+      arriveInfo = <span> 最終=情報なし</span>
+    }
+    else if (status._arrivedDiff > 1000 * 86400) {
+      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000 / 86400)}日前</span>
+    }
+    else if (status._arrivedDiff > 1000 * 3600) {
+      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000 / 3600)}時間前</span>
+    }
+    else if (status._arrivedDiff > 1000 * 60) {
+      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000 / 60)}分前</span>
+    }
+    else {
+      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000)}秒前</span>
+    }
+  }
+
   return (
     <div>
-      <div>
+      <div className='statusBody'>
         <div className='status_body_l1'>
           <Twemoji>
             <span className=''>{status.account.display_name}</span>
-          
+
             {' '}
             <span className=''>@{status.account.acct}</span>
             {showAccountRegisted ?
@@ -94,6 +113,9 @@ const StatusBodyEx = (props) => {
               (status.account.nico_url ? 
                 <span> <a href={status.account.nico_url}>nico</a></span> : '')
               : ''}
+
+            {arriveInfo}
+            
           </Twemoji>
         </div>
         {status.spoiler_text 
@@ -195,9 +217,16 @@ export default class extends HostComponent {
       || (nsfwFilter > 0 && !inner.sensitive)
       || (nsfwFilter < 0 &&  inner.sensitive)
 
+    let classNameExtra = ''
+    if (inner._arrivedDiff) {
+      if (inner._arrivedDiff > 1 * 60 * 60 * 1000) {
+        classNameExtra = ' status-arrived'
+      }
+    }
+
     return (
       <div>
-        <div className={'status'} style={{ display: show ? 'flex' : 'none'}}>
+        <div className={'status' + classNameExtra} style={{ display: show ? 'flex' : 'none'}}>
           <div className={'status_right'} style={{ margin:'0.3em'}}>
             <AvatarBox account={inner.account} host={host} size='48' showOptions={this.props.showOptions} />
           </div>
