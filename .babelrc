@@ -3,15 +3,13 @@
     [
       "module-resolver", {
         "root": ["."],
-        "alias": {
-          "styles": "./styles"
-        },
         "cwd": "babelrc"
-    }],
+      }
+    ],
     [
-      "wrap-in-js",
+      "inline-import",
       {
-        "extensions": ["css$", "scss$"]
+        "extensions": [".css"]
       }
     ]
   ],

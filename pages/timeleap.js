@@ -69,7 +69,6 @@ export default class extends HostComponent {
       <Layout title='TimeLeap' width={640}>
         <Head>
           <base target='_blank' />
-          <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
         </Head>
         <dl className='input_list'>
           <dt>Host:</dt>
@@ -96,6 +95,7 @@ export default class extends HostComponent {
         </dl>
         
         <TimeLeapBox host={this.state.host} targetDate={this.state.targetDate} hour={this.state.hour} min={this.state.min} />
+        <style jsx global>{stylesheet}</style>
       </Layout>
     )
   }
