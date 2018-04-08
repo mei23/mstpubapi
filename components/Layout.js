@@ -1,6 +1,6 @@
 
 import Head from 'next/head'
-import stylesheet from '/styles/style.scss'
+import '/styles/style.scss'
 
 export default (props) => {
   return (
@@ -9,7 +9,6 @@ export default (props) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Expires" content="0" />
         <title>{props.title || 'mstpubapi'}</title>
-        <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
       </Head>
       { props.title
         ? <h1><a href='/' target='_self'>mstpubapi</a> / {props.title}</h1>

@@ -17,6 +17,7 @@
   "author": "MeiMei <m@m544.net>",
   "license": "MIT",
   "dependencies": {
+    "@zeit/next-sass": "^0.1.2",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-wrap-in-js": "^1.1.1",
     "dateformat": "^3.0.3",
