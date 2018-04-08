@@ -1,6 +1,6 @@
 {
   "name": "mstpubapi",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Web application to show mastodon timeline and more, without authentication.",
   "engines": {
     "node": "8.9.3"
