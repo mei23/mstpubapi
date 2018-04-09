@@ -82,9 +82,7 @@ dl.input_list {
   }
 }
 
-.status_content {
-  line-height: 1.2em;
-}
+
 
 img.emoji {
   position: relative;
@@ -164,21 +162,29 @@ a.move_link:hover {
   background: #633;
 }
 
-.attachment-item {
+.statusBody_statusContent {
+  line-height: 1.2em;
+}
+
+.media {
   margin-right: 4px;
 }
 
-.attachment-image {
+.media_image, .media_gifv {
   max-width: 100%;
   max-height: 110px;
   transition: all 0.1s;
 }
-.attachment-image:hover {
+.media_image:hover, .media_gifv:hover {
   transform: scale(2);
   transition: all 0.2s;
 }
 
-.attachment-video { max-width: 100%; max-height: 110px }
+.media_video {
+  max-width: 100%;
+  max-height: 110px;
+}
+
 .sts-count { text-align: right; padding: 0px; margin: 0px; }
 
 .previewcard {

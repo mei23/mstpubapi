@@ -98,20 +98,19 @@ const StatusBodyEx = (props) => {
   return (
     <div>
       <div className='statusBody'>
-        <div className='status_body_l1'>
+        <div>
           <Twemoji>
-            <span className=''>{status.account.display_name}</span>
-
+            <span className='statusBody_displayName'>{status.account.display_name}</span>
             {' '}
-            <span className=''>@{status.account.acct}</span>
+            <span className='statusBody_accountName'>@{status.account.acct}</span>
             {showAccountRegisted ?
-              <span className='account_registed'> [{F.toRelactiveString(status.account.created_at)} 
+              <span className='statusBody_accountRegisted'> [{F.toRelactiveString(status.account.created_at)} 
                 ({F.formatDateString(status.account.created_at, 'yyyy/m/d H:MM')})]
               </span>
               : ''}
             {showRelations ? 
               (status.account.nico_url ? 
-                <span> <a href={status.account.nico_url}>nico</a></span> : '')
+                <span className='statusBody_accountRelations'> <a href={status.account.nico_url}>nico</a></span> : '')
               : ''}
 
             {arriveInfo}
@@ -119,10 +118,10 @@ const StatusBodyEx = (props) => {
           </Twemoji>
         </div>
         {status.spoiler_text 
-          ? <div className=''>[CW: {status.spoiler_text}]</div>
+          ? <div className='statusBody_contentWorning'>[CW: {status.spoiler_text}]</div>
           : ''}
         <Twemoji>
-          <div className='status_content' dangerouslySetInnerHTML={{
+          <div className='statusBody_statusContent' dangerouslySetInnerHTML={{
             __html: c
           }} />
         </Twemoji>
@@ -138,12 +137,12 @@ const StatusBodyEx = (props) => {
 const StatusFooterEx = (props) => {
   const status = props.status
   return (
-    <div className={'status_footer'}>
+    <div className={'statusFooter'}>
       <span style={{margin:'0em 0.5em'}}>
-        BT: {status.reblogs_count}
+      BT: {status.reblogs_count}
       </span>
       <span style={{margin:'0em 0.5em'}}>
-        ★: {status.favourites_count}
+      ★: {status.favourites_count}
       </span>
     </div>
   )

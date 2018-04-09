@@ -4,25 +4,27 @@ const MediaImage = (props) => {
   /*
   let info = ''
   if (attachment.meta && attachment.meta.original) {
-    info = attachment.meta.original.size
+    info = `(${attachment.meta.original.size})`
   }
   */
   return (
-    <div className={'attachment-item'}>
+    <div className={'media'}>
       <a href={attachment.url}>
-        <img className={'attachment-image'} src={attachment.preview_url} />
-      </a><br />image{attachment._pixiv_cards_completed ? '(p)' : ''}
+        <img className={'media_image'} src={attachment.preview_url} />
+      </a>
+      <br />image{attachment._pixiv_cards_completed ? '(p)' : ''}
     </div>)
 }
 
 const MediaGifv = (props) => {
   const attachment = props.attachment
+
   return (
-    <div className={'attachment-item'}>
+    <div className={'media'}>
       <a href={attachment.url}>
         {props.hover
-          ? <video className={'attachment-image'} src={attachment.url} autoplay='true' loop='true' />
-          : <img className={'attachment-image'} src={attachment.preview_url} />
+          ? <video className={'media_gifv'} src={attachment.url} autoplay='true' loop='true' />
+          : <img className={'media_gifv'} src={attachment.preview_url} />
         }
       </a><br />gifv{attachment._pixiv_cards_completed ? '(p)' : ''}
     </div>
@@ -32,9 +34,9 @@ const MediaGifv = (props) => {
 const MediaVideo = (props) => {
   const attachment = props.attachment
   return (
-    <div className={'attachment-item'}>
+    <div className={'media'}>
       <a href={attachment.url}>
-        <img className={'attachment-video'} src={attachment.preview_url} />
+        <img className={'media_video'} src={attachment.preview_url} />
       </a><br />video{attachment._pixiv_cards_completed ? '(p)' : ''}
     </div>
   )
