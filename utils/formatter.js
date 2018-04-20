@@ -20,7 +20,7 @@ export function toRelactiveString(datestr) {
   if (sec < 3600) { return util.format('%d分前',　Math.floor(sec/60)) }
   if (sec < 86400) { return util.format('%d時間前', Math.floor(sec/3600)) }
   if (sec < 86400*365) { return util.format('%d日前', Math.floor(sec/86400)) }
-  return util.format('%d年前', Math.floor(sec/86400*365))
+  return util.format('%d年前', Math.floor(sec/(86400*365)))
 }
 
 export function escapeContent(c) {
