@@ -14,7 +14,7 @@ export default (props) => {
       </div>
       <div style={{ margin: '0.5em'}}>
         <div>
-          {account.display_name} (@{account.username}@{props.host})
+          {F.escapeDF(account.display_name)} (@{account.username}@{props.host})
         </div>
         <div>
           投稿={account.statuses_count}, 

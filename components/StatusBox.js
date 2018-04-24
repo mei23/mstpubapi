@@ -100,7 +100,7 @@ const StatusBodyEx = (props) => {
       <div className='statusBody'>
         <div>
           <Twemoji>
-            <span className='statusBody_displayName'>{status.account.display_name}</span>
+            <span className='statusBody_displayName'>{F.escapeDF(status.account.display_name)}</span>
             {' '}
             <span className='statusBody_accountName'>@{status.account.acct}</span>
             {showAccountRegisted ?

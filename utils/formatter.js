@@ -30,6 +30,14 @@ export function escapeContent(c) {
   return c
 }
 
+export function escapeDF(s) {
+  if (!s) return s
+  if (s.match(/[\u202D\u202E]/)) {
+    s += '\u202c'
+  }
+  return s
+}
+
 /**
  * Generate literal global RegExp
  * @param {string} str 
