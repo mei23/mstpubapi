@@ -79,19 +79,19 @@ const StatusBodyEx = (props) => {
   let arriveInfo = ''
   if (status._arrivedDiff) {
     if (status._arrivedDiff < 0) {
-      arriveInfo = <span> 最終=情報なし</span>
+      arriveInfo = <span> d:情報なし</span>
     }
     else if (status._arrivedDiff > 1000 * 86400) {
-      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000 / 86400)}日前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 86400)}日前</span>
     }
     else if (status._arrivedDiff > 1000 * 3600) {
-      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000 / 3600)}時間前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 3600)}時間前</span>
     }
     else if (status._arrivedDiff > 1000 * 60) {
-      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000 / 60)}分前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 60)}分前</span>
     }
     else {
-      arriveInfo = <span> 最終={Math.floor(status._arrivedDiff / 1000)}秒前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000)}秒前</span>
     }
   }
 
@@ -105,12 +105,12 @@ const StatusBodyEx = (props) => {
             <span className='statusBody_accountName'>@{status.account.acct}</span>
             {showAccountRegisted ?
               <span className='statusBody_accountRegisted'> [{F.toRelactiveString(status.account.created_at)} 
-                ({F.formatDateString(status.account.created_at, 'yyyy/m/d H:MM')})]
+                ({F.formatDateString(status.account.created_at, 'yyyy/m/d')})]
               </span>
               : ''}
             {showRelations ? 
               (status.account.nico_url ? 
-                <span className='statusBody_accountRelations'> <a href={status.account.nico_url}>nico</a></span> : '')
+                <span className='statusBody_accountRelations'> <a href={status.account.nico_url}>n</a></span> : '')
               : ''}
 
             {arriveInfo}
