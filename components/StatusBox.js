@@ -82,16 +82,16 @@ const StatusBodyEx = (props) => {
       arriveInfo = <span> d:情報なし</span>
     }
     else if (status._arrivedDiff > 1000 * 86400) {
-      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 86400)}日前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 86400)}d</span>
     }
     else if (status._arrivedDiff > 1000 * 3600) {
-      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 3600)}時間前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 3600)}h</span>
     }
     else if (status._arrivedDiff > 1000 * 60) {
-      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 60)}分前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000 / 60)}m</span>
     }
     else {
-      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000)}秒前</span>
+      arriveInfo = <span> d:{Math.floor(status._arrivedDiff / 1000)}s</span>
     }
   }
 
