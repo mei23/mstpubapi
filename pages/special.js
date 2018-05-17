@@ -10,13 +10,15 @@ import {EventEmitter} from 'fbemitter'
 import StreamStatusList from '/components/StreamStatusList'
 import tlstPara from '/lib/tlstPara'
 import userStatistics from '/lib/userStatistics'
+import * as FilterUtil from '/lib/FilterUtil'
 
 export default class extends HostComponent {
   constructor(props) {
     super(props)
     this.state = {}
-
+    this.state.muteWords = '' // muteWords(RegExp)
     this.state.message = '' // message
+
     /** stream listener */
     this.listener = null;
     /** emitter for status update */
@@ -25,6 +27,7 @@ export default class extends HostComponent {
     this.userStatistics = new userStatistics()
 
     this.submitParams = this.submitParams.bind(this);
+    this.handleMuteWordsChange = this.handleMuteWordsChange.bind(this)
 
     this.showOptions = {
       showAccountRegisted: true,
@@ -50,7 +53,7 @@ export default class extends HostComponent {
    * @param {boolean} mediaOnly 
    * @param {number} nsfwFilter (1=show sfw only, -1=show nsfw only)
    */
-  checkFilter(status, mediaOnly, nsfwFilter) {
+  checkFilter(status, mediaOnly, nsfwFilter, muteWords) {
     const outer = status
     const inner = outer.reblog || outer
 
@@ -60,6 +63,15 @@ export default class extends HostComponent {
     if (mediaOnly && !isMedia) return false
     if (nsfwFilter ==  1 &&  isNsfw) return false
     if (nsfwFilter == -1 && !isNsfw) return false
+
+    if (muteWords) {
+      const regs = FilterUtil.parseDef(muteWords)
+      let targets = []
+      if (inner.content != null) targets.push(inner.content)
+      if (inner.account.acct != null) targets.push(inner.account.acct)
+
+      if (FilterUtil.checkStrReg(targets, regs)) return false
+    }
     return true
   }
 
@@ -96,7 +108,7 @@ export default class extends HostComponent {
         this.setState({message: `これまでのステータスの取得が完了しました Host: ${newHost}, Streaming: ${para.queryUrl}`})
 
         // NSFW filter
-        statuses = statuses.filter(status => this.checkFilter(status, para.mediaOnly, para.nsfwFilter))
+        statuses = statuses.filter(status => this.checkFilter(status, para.mediaOnly, para.nsfwFilter, this.state.muteWords))
 
         this.emitter.emit('fill', statuses)
 
@@ -111,7 +123,7 @@ export default class extends HostComponent {
         this.listener = M.stream(para.streamUrl)
         .on('update', status => {
           // Streaming受信時にMedia/NSFWフィルタ
-          if (!this.checkFilter(status, para.mediaOnly, para.nsfwFilter)) return
+          if (!this.checkFilter(status, para.mediaOnly, para.nsfwFilter, this.state.muteWords)) return
 
           const arrivedDiff = this.userStatistics.push(status.account)
           status._arrivedDiff = arrivedDiff
@@ -132,6 +144,7 @@ export default class extends HostComponent {
         })
       })
       .catch((reason) => {
+        console.log("x", reason)
         this.setState({message: 'ステータスの取得でエラーが発生しました ' + JSON.stringify(reason)})
       })
   }
@@ -139,6 +152,10 @@ export default class extends HostComponent {
   submitParams(event) {
     event.preventDefault()
     this.refresh(this.inputHost.value, this.inputType.value)
+  }
+
+  handleMuteWordsChange(e) {
+    this.setState({muteWords: e.target.value})
   }
 
   render() {
@@ -171,7 +188,9 @@ export default class extends HostComponent {
             </div>
           </form>
         </div>
-
+        <div>
+          Mute:<input type="text" id='muteWords' onChange={this.handleMuteWordsChange} value={this.state.muteWords} style={{width: '24em'}} />
+        </div>
         <div className='current_params'>
           {this.state.message}
         </div>
