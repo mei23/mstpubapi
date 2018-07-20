@@ -6,6 +6,7 @@ import Layout from '/components/Layout'
 import Mastodon from 'mstdn-api'
 import querystring from 'querystring'
 import DebugInfo from '/components/DebugInfo'
+import Paka from '/components/Paka'
 import {EventEmitter} from 'fbemitter'
 import StreamStatusList from '/components/StreamStatusList'
 import tlstPara from '/lib/tlstPara'
@@ -45,6 +46,9 @@ export default class extends HostComponent {
   componentDidMount(){
     addEventListener('popstate', () => this.onNewUrl(), false)
     this.onNewUrl();
+
+    const muteWords = window.localStorage.getItem('muteWords')
+    if (muteWords) this.setState({muteWords: muteWords})
   }
 
   /**
@@ -156,6 +160,7 @@ export default class extends HostComponent {
 
   handleMuteWordsChange(e) {
     this.setState({muteWords: e.target.value})
+    window.localStorage.setItem('muteWords', e.target.value)
   }
 
   render() {
@@ -188,9 +193,9 @@ export default class extends HostComponent {
             </div>
           </form>
         </div>
-        <div>
+        <Paka open='詳細設定を開く' close='詳細設定を閉じる'>
           Mute:<input type="text" id='muteWords' onChange={this.handleMuteWordsChange} value={this.state.muteWords} style={{width: '24em'}} />
-        </div>
+        </Paka>
         <div className='current_params'>
           {this.state.message}
         </div>
