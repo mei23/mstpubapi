@@ -17,8 +17,8 @@
   "author": "MeiMei <m@m544.net>",
   "license": "MIT",
   "dependencies": {
-    "@zeit/next-sass": "^0.2.0",
-    "babel-plugin-inline-import": "^2.0.6",
+    "@zeit/next-sass": "^1.0.1",
+    "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "dateformat": "^3.0.3",
     "fbemitter": "^2.1.1",
@@ -26,12 +26,12 @@
     "mime-db": "^1.33.0",
     "moment": "^2.22.0",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
-    "next": "^6.0.3",
-    "node-sass": "^4.8.3",
-    "react": "^16.3.1",
+    "next": "^8.1.0",
+    "node-sass": "^4.12.0",
+    "react": "^16.8.6",
     "react-datepicker": "^1.4.1",
-    "react-dom": "^16.3.1",
-    "react-twemoji": "0.0.8",
+    "react-dom": "^16.8.6",
+    "react-twemoji": "0.1.0",
     "sass-loader": "^7.0.1"
   },
   "repository": {
