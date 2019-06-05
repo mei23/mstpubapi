@@ -4,6 +4,28 @@ $bg: #131;
 $ac_bg: purple;
 $ac_fg: white;
 $font: 'sans-serif';
+$scrollbar_track: darken($bg, 4%);
+$scrollbar_thumb: lighten($bg, 4%);
+
+* {
+  scrollbar-color: $scrollbar_thumb $scrollbar_track;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  background: $scrollbar_track;
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: $scrollbar_track;
+}
+::-webkit-scrollbar-corner {
+  background: $scrollbar_thumb;
+}
+::-webkit-scrollbar-thumb {
+  background: $scrollbar_thumb;
+}
 
 body {
   background-color: $bg;
@@ -110,21 +132,6 @@ div.json_text {
   color: lighten($bg, 30%);
   overflow: scroll;
   height: 100px;
-}
-
-div.json_text::-webkit-scrollbar {
-  background: darken($bg, 4%);
-  width: 12px;
-  height: 12px;
-}
-div.json_text::-webkit-scrollbar-track {
-  background: darken($bg, 4%);
-}
-div.json_text::-webkit-scrollbar-corner {
-  background: lighten($bg, 4%);
-}
-div.json_text::-webkit-scrollbar-thumb {
-  background: lighten($bg, 4%);
 }
 
 a.move_link:hover {
