@@ -3,7 +3,7 @@
   "version": "1.9.0",
   "description": "Web application to show mastodon timeline and more, without authentication.",
   "engines": {
-    "node": "8.9.3"
+    "node": "8.16.2"
   },
   "main": "index.js",
   "scripts": {
@@ -19,19 +19,19 @@
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "babel-plugin-inline-import": "^3.0.0",
-    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-module-resolver": "^3.2.0",
     "dateformat": "^3.0.3",
     "fbemitter": "^2.1.1",
     "long": "^4.0.0",
     "mime-db": "^1.33.0",
-    "moment": "^2.22.0",
+    "moment": "^2.24.0",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
-    "next": "^8.1.0",
-    "node-sass": "^4.12.0",
-    "react": "^16.8.6",
+    "next": "^9.1.4",
+    "node-sass": "^4.13.0",
+    "react": "^16.12.0",
     "react-datepicker": "^1.4.1",
-    "react-dom": "^16.8.6",
-    "react-twemoji": "0.1.0",
+    "react-dom": "^16.12.0",
+    "react-twemoji": "0.2.3",
     "sass-loader": "^7.0.1"
   },
   "repository": {
