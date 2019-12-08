@@ -14,6 +14,9 @@
     "heroku-postbuild": "next build",
     "export": "next build && next export"
   },
+	"resolutions": {
+		"devalue": "^2.0.1"
+	},
   "author": "MeiMei <m@m544.net>",
   "license": "MIT",
   "dependencies": {
