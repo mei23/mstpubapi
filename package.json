@@ -12,7 +12,9 @@
     "build": "next build",
     "start": "next start -p $PORT",
     "heroku-postbuild": "next build",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "MeiMei <m@m544.net>",
   "license": "MIT",
@@ -32,10 +34,12 @@
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.12.0",
     "react-twemoji": "0.2.3",
-    "sass-loader": "^7.0.1"
+    "sass-loader": "^7.0.1",
+    "snyk": "^1.258.1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mei23/mstpubapi.git"
-  }
+  },
+  "snyk": true
 }
