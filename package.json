@@ -30,7 +30,7 @@
     "moment": "^2.24.0",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
     "next": "^9.1.4",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.12.0",
