@@ -3,7 +3,7 @@
   "version": "1.9.1",
   "description": "Web application to show mastodon timeline and more, without authentication.",
   "engines": {
-    "node": ">=10.0.0 <13.0.0"
+    "node": ">=8.0.0 <13.0.0"
   },
   "main": "index.js",
   "scripts": {
