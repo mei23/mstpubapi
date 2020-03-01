@@ -26,7 +26,7 @@
     "dateformat": "^3.0.3",
     "fbemitter": "^2.1.1",
     "long": "^4.0.0",
-    "mime-db": "^1.33.0",
+    "mime-db": "^1.43.0",
     "moment": "^2.24.0",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
     "next": "^9.1.4",
