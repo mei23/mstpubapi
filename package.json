@@ -29,7 +29,7 @@
     "mime-db": "^1.43.0",
     "moment": "^2.24.0",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
-    "next": "^9.2.2",
+    "next": "^9.3.0",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
     "react-datepicker": "^1.4.1",
