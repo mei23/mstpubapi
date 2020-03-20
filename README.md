@@ -69,7 +69,7 @@
 
 ## 実行方法
 
-Node.js 8.10.x 以降で動きます  
+Node.js 10.x 以降で動きます  
 
     yarn install
 
