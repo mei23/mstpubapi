@@ -35,7 +35,7 @@
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.13.1",
     "react-twemoji": "0.2.3",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^9.0.0"
   },
   "repository": {
     "type": "git",
