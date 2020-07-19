@@ -15,6 +15,7 @@
     "export": "next build && next export"
   },
 	"resolutions": {
+    "lodash": "^4.17.19",
 		"devalue": "^2.0.1"
 	},
   "author": "MeiMei <m@m544.net>",
