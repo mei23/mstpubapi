@@ -14,10 +14,10 @@
     "heroku-postbuild": "next build",
     "export": "next build && next export"
   },
-	"resolutions": {
+  "resolutions": {
     "lodash": "^4.17.19",
-		"devalue": "^2.0.1"
-	},
+    "devalue": "^2.0.1"
+  },
   "author": "MeiMei <m@m544.net>",
   "license": "MIT",
   "dependencies": {
@@ -31,11 +31,11 @@
     "moment": "^2.24.0",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
     "next": "^9.3.6",
-    "node-sass": "^4.14.0",
     "react": "^16.13.1",
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.13.1",
     "react-twemoji": "0.2.3",
+    "sass": "^1.26.10",
     "sass-loader": "^9.0.3"
   },
   "repository": {
