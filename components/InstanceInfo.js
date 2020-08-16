@@ -1,9 +1,8 @@
-
 import * as F from '/utils/formatter'
 import Emoji from '/components/Emoji'
 import * as UrlUtil from '/utils/urlUtil'
 
-export default (props) => {
+const InstanceInfo = (props) => {
   const instance = props.instance
   const emojis = props.emojis
   if (!instance) return <div></div>
@@ -104,3 +103,5 @@ export default (props) => {
     </div> 
   )
 }
+
+export default InstanceInfo;

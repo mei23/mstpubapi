@@ -1,8 +1,7 @@
-
 import UserIcon from '/components/UserIcon'
 import * as F from '/utils/formatter'
 
-export default (props) => {
+const AccountDetail = (props) => {
   const account = props.account
   const showNote = props.showNote
   const showRelations = props.showRelations
@@ -52,3 +51,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default AccountDetail;

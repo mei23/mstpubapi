@@ -1,9 +1,8 @@
-
 // status から timeline に飛べるリンク
 
 import Long from 'long'
 
-export default (props) => {
+const ShowInTimeline = (props) => {
   const status = props.status
   const host = props.host
 
@@ -34,3 +33,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default ShowInTimeline;

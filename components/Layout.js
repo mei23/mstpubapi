@@ -1,8 +1,7 @@
-
 import Head from 'next/head'
 import '/styles/style.scss'
 
-export default (props) => {
+const Layout = (props) => {
   return (
     <div className='layout'>
       <Head>
@@ -21,3 +20,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default Layout;

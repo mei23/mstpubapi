@@ -1,5 +1,4 @@
-
-export default (props) => {
+const PreviewCard = (props) => {
   const card = props.card
   const mode = props.mode
 
@@ -62,5 +61,6 @@ export default (props) => {
       </div>
     </div>
   )
-
 }
+
+export default PreviewCard;

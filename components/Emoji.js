@@ -1,5 +1,4 @@
-
-export default (props) => {
+const Emoji = (props) => {
   const emoji = props.emoji
 
   return (
@@ -9,3 +8,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default Emoji;

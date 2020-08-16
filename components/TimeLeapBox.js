@@ -1,7 +1,7 @@
 import * as IDX from '/utils/idx'
 import * as UrlUtil from '/utils/urlUtil'
 
-export default (props) => {
+const TimeLeapBox = (props) => {
 
   const host = props.host
 
@@ -22,3 +22,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default TimeLeapBox;
