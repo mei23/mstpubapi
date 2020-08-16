@@ -245,7 +245,7 @@ export default class extends HostComponent {
         <div style={{display:'flex', flexWrap:'wrap', alignItems:'center'}}>
           <div style={{marginRight:'1em'}}>
             <input type="checkbox" id='showcard' onChange={e => this.setState({showCard: e.target.checked})} value={this.state.showCard} />
-            <label for='showcard'>カード表示(次回表示後に反映)</label>
+            <label htmlFor='showcard'>カード表示(次回表示後に反映)</label>
             <style jsx>{`input[type=checkbox], label { cursor: pointer }`}</style>
           </div>
           <div style={{marginRight:'1em'}}>
