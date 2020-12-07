@@ -36,7 +36,7 @@
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.13.1",
     "react-twemoji": "0.2.3",
-    "sass": "^1.26.10",
+    "sass": "^1.30.0",
     "sass-loader": "^9.0.3"
   },
   "repository": {
