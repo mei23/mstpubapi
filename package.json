@@ -35,7 +35,7 @@
     "react": "^16.14.0",
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.13.1",
-    "react-twemoji": "0.2.3",
+    "react-twemoji": "0.3.0",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0"
   },
