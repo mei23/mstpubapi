@@ -24,7 +24,7 @@
     "@zeit/next-sass": "^1.0.1",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "dateformat": "^4.3.1",
+    "dateformat": "^4.4.0",
     "fbemitter": "^2.1.1",
     "fibers": "^5.0.0",
     "long": "^4.0.0",
