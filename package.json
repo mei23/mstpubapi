@@ -28,7 +28,7 @@
     "fbemitter": "^2.1.1",
     "fibers": "^5.0.0",
     "long": "^4.0.0",
-    "mime-db": "^1.45.0",
+    "mime-db": "^1.46.0",
     "moment": "^2.29.1",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
     "next": "^10.0.3",
