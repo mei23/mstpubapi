@@ -31,7 +31,7 @@
     "mime-db": "^1.45.0",
     "moment": "^2.29.1",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
-    "next": "^10.0.3",
+    "next": "^10.0.7",
     "react": "^16.14.0",
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.13.1",
