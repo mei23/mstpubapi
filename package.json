@@ -29,7 +29,7 @@
     "fibers": "^5.0.0",
     "long": "^4.0.0",
     "mime-db": "^1.45.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mstdn-api": "git://github.com/mei23/mstdn-api.git#mei-stconn",
     "next": "^10.0.3",
     "react": "^16.14.0",
